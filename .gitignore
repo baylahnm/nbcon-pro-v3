@@ -34,3 +34,6 @@ coverage/
 .cache/
 .vite/
 .tmp/
+
+# Documentation
+README.txt
