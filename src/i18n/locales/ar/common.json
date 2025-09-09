@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "project": "المشروع",
+    "revenue": "الإيرادات",
+    "insights": "الرؤى",
+    "analytics": "التحليلات",
+    "contracts": "العقود",
+    "payments": "المدفوعات",
+    "notifications": "الإشعارات",
+    "settings": "الإعدادات",
+    "help": "مركز المساعدة",
+    "logout": "تسجيل الخروج",
+    "client": {
+      "jobs": "الوظائف",
+      "postNewJob": "نشر وظيفة جديدة",
+      "active": "نشط",
+      "archive": "الأرشيف",
+      "favorites": "المفضلة",
+      "vendors": "الموردون",
+      "browseProfiles": "تصفح الملفات الشخصية"
+    },
+    "engineer": {
+      "jobs": "الوظائف",
+      "invites": "الدعوات",
+      "assigned": "المكلف",
+      "completed": "مكتمل",
+      "availability": "التوفر",
+      "portfolio": "المحفظة",
+      "rates": "الأسعار"
+    },
+    "enterprise": {
+      "projects": "المشاريع",
+      "team": "الفريق",
+      "rfps": "طلبات العروض",
+      "vendors": "الموردون",
+      "browseProfiles": "تصفح الملفات الشخصية",
+      "businessIntelligence": "ذكاء الأعمال",
+      "compliance": "الامتثال"
+    },
+    "admin": {
+      "users": "المستخدمون",
+      "moderation": "الإشراف",
+      "financeOps": "عمليات المالية",
+      "system": "النظام",
+      "reports": "التقارير",
+      "businessIntelligence": "ذكاء الأعمال",
+      "security": "الأمان"
+    }
+  },
+  "actions": {
+    "continue": "متابعة",
+    "back": "رجوع",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "submit": "إرسال",
+    "confirm": "تأكيد",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "download": "تحميل",
+    "upload": "رفع"
+  },
+  "status": {
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "pending": "في الانتظار",
+    "completed": "مكتمل",
+    "cancelled": "ملغي",
+    "draft": "مسودة"
+  },
+  "errors": {
+    "required": "هذا الحقل مطلوب",
+    "invalid": "إدخال غير صحيح",
+    "network": "خطأ في الشبكة. يرجى المحاولة مرة أخرى.",
+    "unauthorized": "وصول غير مصرح به",
+    "notFound": "غير موجود"
+  },
+  "success": {
+    "saved": "تم الحفظ بنجاح",
+    "updated": "تم التحديث بنجاح",
+    "deleted": "تم الحذف بنجاح",
+    "sent": "تم الإرسال بنجاح"
+  },
+  "loading": {
+    "loading": "جاري التحميل...",
+    "saving": "جاري الحفظ...",
+    "processing": "جاري المعالجة...",
+    "uploading": "جاري الرفع..."
+  },
+  "empty": {
+    "noData": "لا توجد بيانات متاحة",
+    "noResults": "لم يتم العثور على نتائج",
+    "noNotifications": "لا توجد إشعارات",
+    "noJobs": "لا توجد وظائف متاحة"
+  }
+}

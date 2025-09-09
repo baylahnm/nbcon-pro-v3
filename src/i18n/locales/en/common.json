@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "project": "Project",
+    "revenue": "Revenue",
+    "insights": "Insights",
+    "analytics": "Analytics",
+    "contracts": "Contracts",
+    "payments": "Payments",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "help": "Help Center",
+    "logout": "Logout",
+    "client": {
+      "jobs": "Jobs",
+      "postNewJob": "Post New Job",
+      "active": "Active",
+      "archive": "Archive",
+      "favorites": "Favorites",
+      "vendors": "Vendors",
+      "browseProfiles": "Browse Profiles"
+    },
+    "engineer": {
+      "jobs": "Jobs",
+      "invites": "Invites",
+      "assigned": "Assigned",
+      "completed": "Completed",
+      "availability": "Availability",
+      "portfolio": "Portfolio",
+      "rates": "Rates"
+    },
+    "enterprise": {
+      "projects": "Projects",
+      "team": "Team",
+      "rfps": "RFPs",
+      "vendors": "Vendors",
+      "browseProfiles": "Browse Profiles",
+      "businessIntelligence": "Business Intelligence",
+      "compliance": "Compliance"
+    },
+    "admin": {
+      "users": "Users",
+      "moderation": "Moderation",
+      "financeOps": "Finance Ops",
+      "system": "System",
+      "reports": "Reports",
+      "businessIntelligence": "Business Intelligence",
+      "security": "Security"
+    }
+  },
+  "actions": {
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "draft": "Draft"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalid": "Invalid input",
+    "network": "Network error. Please try again.",
+    "unauthorized": "Unauthorized access",
+    "notFound": "Not found"
+  },
+  "success": {
+    "saved": "Saved successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully",
+    "sent": "Sent successfully"
+  },
+  "loading": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "processing": "Processing...",
+    "uploading": "Uploading..."
+  },
+  "empty": {
+    "noData": "No data available",
+    "noResults": "No results found",
+    "noNotifications": "No notifications",
+    "noJobs": "No jobs available"
+  }
+}
