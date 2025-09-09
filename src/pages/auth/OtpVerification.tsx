@@ -3,16 +3,20 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { useThemeStore } from '@/stores/themeStore'
 import { ArrowLeft, Shield, RotateCcw } from 'lucide-react'
 
 const OtpVerification = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { language } = useThemeStore()
   const [otp, setOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [resendTimer, setResendTimer] = useState(0)
   const [phoneNumber, setPhoneNumber] = useState('')
+  
+  const isRTL = language === 'ar'
 
   useEffect(() => {
     // Get phone number from localStorage
@@ -65,7 +69,7 @@ const OtpVerification = () => {
         setError('Invalid verification code')
       }
     } catch (err) {
-      setError(t('common.errors.network'))
+      setError(t('errors.network', { ns: 'common' }))
     } finally {
       setIsLoading(false)
     }
@@ -123,7 +127,7 @@ const OtpVerification = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
           >
-            {t('auth.otpVerification.title')}
+            {t('otpVerification.title', { ns: 'auth' })}
           </motion.h1>
           
           <motion.p
@@ -132,7 +136,7 @@ const OtpVerification = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="text-gray-600 dark:text-gray-300"
           >
-            {t('auth.otpVerification.subtitle')}
+            {t('otpVerification.subtitle', { ns: 'auth' })}
           </motion.p>
           
           {phoneNumber && (
@@ -155,8 +159,10 @@ const OtpVerification = () => {
           className="space-y-6"
         >
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('auth.otpVerification.codeLabel')}
+            <label className={`block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ${
+              isRTL ? 'text-right' : 'text-left'
+            }`}>
+              {t('otpVerification.codeLabel', { ns: 'auth' })}
             </label>
             <input
               type="text"
@@ -180,15 +186,15 @@ const OtpVerification = () => {
           <div className="text-center">
             {resendTimer > 0 ? (
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t('auth.otpVerification.resendIn', { seconds: resendTimer })}
+                {t('otpVerification.resendIn', { ns: 'auth', seconds: resendTimer })}
               </p>
             ) : (
               <button
                 onClick={handleResend}
                 className="text-sm text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 font-medium"
               >
-                <RotateCcw className="inline w-4 h-4 mr-1" />
-                {t('auth.otpVerification.resend')}
+                <RotateCcw className={`inline w-4 h-4 ${isRTL ? 'ml-1' : 'mr-1'}`} />
+                {t('otpVerification.resend', { ns: 'auth' })}
               </button>
             )}
           </div>
@@ -202,9 +208,9 @@ const OtpVerification = () => {
             className="w-full bg-brand-500 hover:bg-brand-600 text-white"
           >
             {isLoading ? (
-              t('common.loading.processing')
+              t('loading.processing', { ns: 'common' })
             ) : (
-              t('auth.otpVerification.verify')
+              t('otpVerification.verify', { ns: 'auth' })
             )}
           </Button>
         </motion.div>
@@ -222,8 +228,8 @@ const OtpVerification = () => {
             size="lg"
             className="w-full"
           >
-            <ArrowLeft className="mr-2 w-5 h-5" />
-            {t('auth.otpVerification.back')}
+            <ArrowLeft className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('otpVerification.back', { ns: 'auth' })}
           </Button>
         </motion.div>
 

@@ -937,7 +937,7 @@ export const sidebarNavigation = [
     label: 'Browse',
     labelAr: 'تصفح',
     icon: '🔍',
-    path: '/browse',
+    path: '/browse-services',
     roles: ['client', 'engineer']
   },
   {
@@ -945,7 +945,7 @@ export const sidebarNavigation = [
     label: 'Jobs',
     labelAr: 'الوظائف',
     icon: '💼',
-    path: '/jobs'
+    path: '/jobs/browse'
   },
   {
     id: 'payments',

@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/themeStore'
 import { Globe, ArrowRight } from 'lucide-react'
+import i18n from '@/i18n'
 
 const SplashScreen = () => {
   const { t } = useTranslation()
@@ -12,8 +13,15 @@ const SplashScreen = () => {
   const { language, setLanguage } = useThemeStore()
   const [isLoading, setIsLoading] = useState(false)
 
+  // Sync i18n language with store on mount
+  useEffect(() => {
+    i18n.changeLanguage(language)
+  }, [language])
+
   const handleLanguageChange = (newLanguage: 'en' | 'ar') => {
     setLanguage(newLanguage)
+    // Change i18n language
+    i18n.changeLanguage(newLanguage)
   }
 
   const handleContinue = async () => {
@@ -45,7 +53,7 @@ const SplashScreen = () => {
             NBCON Pro
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-lg">
-            {t('auth.splash.subtitle')}
+            {t('splash.subtitle', { ns: 'auth' })}
           </p>
         </motion.div>
 
@@ -57,7 +65,7 @@ const SplashScreen = () => {
           className="mb-8"
         >
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            {t('auth.splash.selectLanguage')}
+            {t('splash.selectLanguage', { ns: 'auth' })}
           </h2>
           
           <div className="grid grid-cols-2 gap-3">
@@ -99,7 +107,7 @@ const SplashScreen = () => {
             size="lg"
             className="w-full bg-brand-500 hover:bg-brand-600 text-white"
           >
-            {t('auth.splash.continue')}
+            {t('splash.continue', { ns: 'auth' })}
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </motion.div>
@@ -111,7 +119,7 @@ const SplashScreen = () => {
           transition={{ delay: 0.8, duration: 0.5 }}
           className="mt-8 text-sm text-gray-500 dark:text-gray-400"
         >
-          <p>© 2024 NBCON Pro. All rights reserved.</p>
+          <p>{t('splash.copyright', { ns: 'auth' })}</p>
         </motion.div>
       </motion.div>
     </div>

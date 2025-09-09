@@ -79,15 +79,15 @@ const CredentialsUpload = () => {
   const uploadSections = [
     {
       id: 'sce',
-      title: t('auth.credentialsUpload.sceCard'),
-      description: t('auth.credentialsUpload.sceDescription'),
+      title: t('credentialsUpload.sceCard', { ns: 'auth' }),
+      description: t('credentialsUpload.sceDescription', { ns: 'auth' }),
       icon: Award,
       required: true
     },
     {
       id: 'certificates',
-      title: t('auth.credentialsUpload.certificates'),
-      description: t('auth.credentialsUpload.certificatesDescription'),
+      title: t('credentialsUpload.certificates', { ns: 'auth' }),
+      description: t('credentialsUpload.certificatesDescription', { ns: 'auth' }),
       icon: FileText,
       required: false
     },

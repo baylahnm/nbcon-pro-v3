@@ -20,7 +20,8 @@ import {
   BookOpen,
   Video,
   Download,
-  ExternalLink
+  ExternalLink,
+  Shield
 } from 'lucide-react'
 
 const SupportHelp = () => {

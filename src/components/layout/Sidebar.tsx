@@ -54,6 +54,30 @@ export default function Sidebar() {
     const isActive = isActiveRoute(item.path);
     const label = isRTL && item.labelAr ? item.labelAr : item.label;
 
+    // Handle logout specially
+    if (item.id === 'logout') {
+      return (
+        <button
+          key={item.id}
+          onClick={() => {
+            const { logout } = useAuthStore.getState();
+            logout();
+            setIsOpen(false);
+          }}
+          className={cn(
+            'flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 w-full text-left',
+            'hover:bg-red-50 dark:hover:bg-red-900/20',
+            'text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300'
+          )}
+        >
+          <span className="text-xl" role="img" aria-label={label}>
+            {item.icon}
+          </span>
+          <span className="flex-1">{label}</span>
+        </button>
+      );
+    }
+
     return (
       <Link
         key={item.id}

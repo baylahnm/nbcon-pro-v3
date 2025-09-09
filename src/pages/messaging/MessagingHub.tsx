@@ -29,7 +29,8 @@ import {
   Copy,
   Flag,
   VolumeX,
-  UserX
+  UserX,
+  MessageCircle
 } from 'lucide-react'
 
 const MessagingHub = () => {

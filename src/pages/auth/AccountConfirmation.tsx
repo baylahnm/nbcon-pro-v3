@@ -298,7 +298,7 @@ const AccountConfirmation = () => {
           className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
         >
           <p>
-            By confirming, you agree to our Terms of Service and Privacy Policy.
+            {t('auth.termsFooter', { ns: 'common' })}
           </p>
         </motion.div>
       </motion.div>

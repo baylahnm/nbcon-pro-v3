@@ -1,9 +1,13 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
 import { useAuthStore } from './stores/authStore'
 import { useThemeStore } from './stores/themeStore'
 import Layout from './components/layout/Layout'
+
+// Import design system
+import './design-system'
+import { performanceMonitor, mobileOptimization } from './design-system'
 
 // Auth & Onboarding Pages
 import SplashScreen from './pages/auth/SplashScreen'
@@ -57,11 +61,23 @@ import NotificationCenter from './pages/notifications/NotificationCenter'
 import FeedbackRating from './pages/feedback/FeedbackRating'
 import SupportHelp from './pages/support/SupportHelp'
 import CommunityForums from './pages/community/CommunityForums'
+import Settings from './pages/settings/Settings'
+import Payments from './pages/payments/Payments'
+import Jobs from './pages/jobs/Jobs'
+import Analytics from './pages/analytics/Analytics'
+import LogoutHandler from './components/auth/LogoutHandler'
 
 function App() {
   const { i18n } = useTranslation()
   const { isAuthenticated, user } = useAuthStore()
-  const { theme } = useThemeStore()
+  const { theme, language } = useThemeStore()
+
+  // Sync i18n language with theme store
+  useEffect(() => {
+    if (i18n.language !== language) {
+      i18n.changeLanguage(language)
+    }
+  }, [language, i18n])
 
   // Set document direction based on language
   useEffect(() => {
@@ -74,6 +90,29 @@ function App() {
   useEffect(() => {
     document.documentElement.className = theme
   }, [theme])
+
+  // Initialize performance monitoring and mobile optimization
+  useEffect(() => {
+    // Monitor app initialization performance
+    performanceMonitor.measure('App Initialization', () => {
+      // App initialization logic
+    })
+
+    // Apply mobile optimizations
+    mobileOptimization.optimizeViewport()
+    mobileOptimization.reduceMotion()
+
+    // Monitor performance budget
+    const checkPerformance = () => {
+      const budget = performanceMonitor.getMetrics()
+      if (budget) {
+        console.log('Performance Metrics:', budget)
+      }
+    }
+
+    // Check performance after initial load
+    setTimeout(checkPerformance, 1000)
+  }, [])
 
   // Show splash screen if not authenticated
   if (!isAuthenticated) {
@@ -107,6 +146,7 @@ function App() {
         } />
         
         {/* Common Routes */}
+        <Route path="/browse" element={<BrowseServices />} />
         <Route path="/browse-services" element={<BrowseServices />} />
         <Route path="/job-request" element={<JobRequestWizard />} />
         <Route path="/ai-matches" element={<AIMatches />} />
@@ -115,6 +155,7 @@ function App() {
         <Route path="/profile-verification" element={<ProfileVerification />} />
 
         {/* Jobs Routes */}
+        <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/quick-post" element={<QuickJobPost />} />
         <Route path="/jobs/advanced-builder" element={<AdvancedJobBuilder />} />
         <Route path="/jobs/templates" element={<JobTemplatesLibrary />} />
@@ -123,7 +164,7 @@ function App() {
         <Route path="/jobs/status-tracking" element={<JobStatusTracking />} />
         <Route path="/jobs/emergency" element={<EmergencyJobRequest />} />
         <Route path="/jobs/archive" element={<JobArchive />} />
-        <Route path="/jobs/browse" element={<BrowseServices />} />
+        <Route path="/jobs/browse" element={<Jobs />} />
         <Route path="/jobs/recommendations" element={<AIMatches />} />
         <Route path="/jobs/drafts" element={<JobRequestWizard />} />
         <Route path="/jobs/bulk-post" element={<AdvancedJobBuilder />} />
@@ -136,18 +177,19 @@ function App() {
         <Route path="/engineers/favorites" element={<EngineerFiltering />} />
 
         {/* Financial Routes */}
-        <Route path="/financial/earnings" element={<ClientDashboard />} />
-        <Route path="/financial/payment-methods" element={<ClientDashboard />} />
-        <Route path="/financial/escrow" element={<ClientDashboard />} />
-        <Route path="/financial/payouts" element={<ClientDashboard />} />
-        <Route path="/financial/time-billing" element={<ClientDashboard />} />
+        <Route path="/financial/earnings" element={<Payments />} />
+        <Route path="/financial/payment-methods" element={<Payments />} />
+        <Route path="/financial/escrow" element={<Payments />} />
+        <Route path="/financial/payouts" element={<Payments />} />
+        <Route path="/financial/time-billing" element={<Payments />} />
         <Route path="/financial/quote-builder" element={<QuoteComparison />} />
 
         {/* Budget Routes */}
-        <Route path="/budget/tracker" element={<ClientDashboard />} />
-        <Route path="/payments/methods" element={<ClientDashboard />} />
-        <Route path="/payments/escrow" element={<ClientDashboard />} />
-        <Route path="/budget/intelligence" element={<ClientDashboard />} />
+        <Route path="/budget/tracker" element={<Payments />} />
+        <Route path="/payments" element={<Payments />} />
+        <Route path="/payments/methods" element={<Payments />} />
+        <Route path="/payments/escrow" element={<Payments />} />
+        <Route path="/budget/intelligence" element={<Payments />} />
 
         {/* Profile Routes */}
         <Route path="/profile/view" element={<ProfileVerification />} />
@@ -181,10 +223,10 @@ function App() {
         <Route path="/notifications/advanced" element={<NotificationCenter />} />
 
         {/* Analytics Routes */}
-        <Route path="/analytics" element={<ClientDashboard />} />
-        <Route path="/analytics/business" element={<ClientDashboard />} />
-        <Route path="/analytics/dashboard" element={<ClientDashboard />} />
-        <Route path="/analytics/visualization" element={<ClientDashboard />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/analytics/business" element={<Analytics />} />
+        <Route path="/analytics/dashboard" element={<Analytics />} />
+        <Route path="/analytics/visualization" element={<Analytics />} />
 
         {/* Admin Routes */}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -210,16 +252,19 @@ function App() {
         <Route path="/admin/system" element={<AdminDashboard />} />
 
         {/* Settings Routes */}
-        <Route path="/settings" element={<ClientDashboard />} />
-        <Route path="/settings/theme" element={<ClientDashboard />} />
-        <Route path="/settings/notifications" element={<NotificationCenter />} />
-        <Route path="/settings/accessibility" element={<ClientDashboard />} />
-        <Route path="/settings/performance" element={<ClientDashboard />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings/theme" element={<Settings />} />
+        <Route path="/settings/notifications" element={<Settings />} />
+        <Route path="/settings/accessibility" element={<Settings />} />
+        <Route path="/settings/performance" element={<Settings />} />
 
         {/* Support Routes */}
         <Route path="/support" element={<SupportHelp />} />
         <Route path="/feedback" element={<FeedbackRating />} />
         <Route path="/community" element={<CommunityForums />} />
+
+        {/* Logout Route */}
+        <Route path="/logout" element={<LogoutHandler />} />
 
         {/* Advanced Features Routes */}
         <Route path="/ai/matching" element={<AIMatches />} />
@@ -236,6 +281,26 @@ function App() {
         {/* Dashboard Routes for different roles */}
         <Route path="/engineer/dashboard" element={<EngineerDashboard />} />
         <Route path="/client/dashboard" element={<ClientDashboard />} />
+        
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                404 - Page Not Found
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 mb-8">
+                The page you're looking for doesn't exist.
+              </p>
+              <Link 
+                to="/" 
+                className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Go Home
+              </Link>
+            </div>
+          </div>
+        } />
       </Route>
     </Routes>
   )
