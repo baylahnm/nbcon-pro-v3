@@ -20,13 +20,12 @@ import {
   Filter,
   MoreVertical,
   Share,
-  Record,
+  Circle,
   StopCircle,
   ScreenShare,
   ScreenShareOff,
-  Chat,
+  MessageSquare,
   Hand,
-  HandOff,
   Volume2,
   VolumeX,
   Camera,
@@ -385,7 +384,7 @@ const VideoCalls = () => {
                 size="lg"
                 className="text-white"
               >
-                {isRecording ? <StopCircle className="w-5 h-5" /> : <Record className="w-5 h-5" />}
+                {isRecording ? <StopCircle className="w-5 h-5" /> : <Circle className="w-5 h-5 text-red-500" />}
               </Button>
               
               <Button
@@ -403,7 +402,7 @@ const VideoCalls = () => {
                 size="lg"
                 className="text-white"
               >
-                <Chat className="w-5 h-5" />
+                <MessageSquare className="w-5 h-5" />
               </Button>
               
               <Button

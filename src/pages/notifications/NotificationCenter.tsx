@@ -24,8 +24,8 @@ import {
   Bell,
   BellOff,
   RefreshCw,
-  MarkAsRead,
-  MarkAllRead
+  CheckCircle2,
+  CheckCheck
 } from 'lucide-react'
 
 const NotificationCenter = () => {
@@ -243,7 +243,7 @@ const NotificationCenter = () => {
                 variant="outline"
                 size="sm"
               >
-                <MarkAllRead className="w-4 h-4 mr-2" />
+                <CheckCheck className="w-4 h-4 mr-2" />
                 Mark All Read
               </Button>
               
@@ -315,7 +315,7 @@ const NotificationCenter = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <MarkAsRead className="w-4 h-4 mr-2" />
+                  <CheckCircle2 className="w-4 h-4 mr-2" />
                   Mark as Read
                 </Button>
                 
@@ -418,7 +418,7 @@ const NotificationCenter = () => {
                               variant="outline"
                               size="sm"
                             >
-                              <MarkAsRead className="w-4 h-4 mr-1" />
+                              <CheckCircle2 className="w-4 h-4 mr-1" />
                               Mark Read
                             </Button>
                           )}

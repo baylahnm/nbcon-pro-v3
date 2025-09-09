@@ -9,7 +9,6 @@ import {
   MicOff, 
   Play, 
   Pause, 
-  Stop, 
   Square,
   Download,
   Share,
@@ -40,10 +39,9 @@ import {
   Bookmark,
   BookmarkCheck,
   Headphones,
-  Waveform,
-  Zap,
-  Shield,
-  Crown
+  Activity,
+  Bolt,
+  Shield
 } from 'lucide-react'
 
 const VoiceNotes = () => {
@@ -483,7 +481,7 @@ const VoiceNotes = () => {
                   size="lg"
                   className={isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-brand-500 hover:bg-brand-600'}
                 >
-                  {isRecording ? <Stop className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                  {isRecording ? <Square className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
                 </Button>
                 
                 <div className="text-center">
@@ -627,7 +625,7 @@ const VoiceNotes = () => {
                       <CheckCircle className="w-4 h-4 text-green-500" />
                     )}
                     {note.isPremium && (
-                      <Crown className="w-4 h-4 text-yellow-500" />
+                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
                     )}
                     <button
                       onClick={() => handleNoteSelect(note.id)}

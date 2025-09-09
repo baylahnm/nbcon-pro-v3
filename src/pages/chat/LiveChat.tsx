@@ -15,7 +15,6 @@ import {
   Users,
   Globe,
   Languages,
-  Translate,
   Volume2,
   VolumeX,
   Smile,
@@ -29,17 +28,15 @@ import {
   AlertCircle,
   Star,
   Flag,
-  Mute,
-  Block,
+  UserX,
   RefreshCw,
   Copy,
   Share,
   Bookmark,
   BookmarkCheck,
   MessageCircle,
-  Zap,
-  Shield,
-  Crown
+  Bolt,
+  Shield
 } from 'lucide-react'
 
 const LiveChat = () => {
@@ -391,13 +388,13 @@ const LiveChat = () => {
                             <Star className="w-3 h-3 text-yellow-500 fill-current" />
                           )}
                           {chat.isMuted && (
-                            <Mute className="w-3 h-3 text-gray-400" />
+                            <VolumeX className="w-3 h-3 text-gray-400" />
                           )}
                           {chat.isVerified && (
                             <CheckCircle className="w-3 h-3 text-green-500" />
                           )}
                           {chat.isPremium && (
-                            <Crown className="w-3 h-3 text-yellow-500" />
+                            <Star className="w-3 h-3 text-yellow-500 fill-current" />
                           )}
                           <span className="text-xs text-gray-500 dark:text-gray-400">
                             {formatTime(chat.lastMessageTime)}
@@ -515,7 +512,7 @@ const LiveChat = () => {
                                   onClick={() => handleTranslationToggle()}
                                   className="text-xs opacity-75 hover:opacity-100"
                                 >
-                                  <Translate className="w-3 h-3" />
+                                  <Languages className="w-3 h-3" />
                                 </button>
                               )}
                             </div>

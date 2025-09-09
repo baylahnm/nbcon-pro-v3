@@ -28,8 +28,8 @@ import {
   Forward,
   Copy,
   Flag,
-  Mute,
-  Block
+  VolumeX,
+  UserX
 } from 'lucide-react'
 
 const MessagingHub = () => {
@@ -339,7 +339,7 @@ const MessagingHub = () => {
                             <Star className="w-3 h-3 text-yellow-500 fill-current" />
                           )}
                           {conversation.isMuted && (
-                            <Mute className="w-3 h-3 text-gray-400" />
+                            <VolumeX className="w-3 h-3 text-gray-400" />
                           )}
                           <span className="text-xs text-gray-500 dark:text-gray-400">
                             {formatTime(conversation.lastMessageTime)}
