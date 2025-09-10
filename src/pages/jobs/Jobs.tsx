@@ -35,7 +35,7 @@ export default function Jobs() {
 
   const tabs = [
     { id: 'browse', label: t('jobs.browse', 'Browse Jobs'), icon: Search },
-    { id: 'my-jobs', label: t('jobs.myJobs', 'My Jobs'), icon: Briefcase },
+    { id: 'my-jobs', label: t('jobs.myJobsLabel', 'My Jobs'), icon: Briefcase },
     { id: 'recommendations', label: t('jobs.recommendations', 'Recommendations'), icon: Target },
     { id: 'saved', label: t('jobs.saved', 'Saved Jobs'), icon: Bookmark },
     { id: 'applications', label: t('jobs.applications', 'Applications'), icon: CheckCircle }

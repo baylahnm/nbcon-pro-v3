@@ -191,6 +191,7 @@
     "description": "Find engineering jobs and manage your applications",
     "browse": "Browse Jobs",
     "myJobs": "My Jobs",
+    "myJobsLabel": "My Jobs",
     "recommendations": "Recommendations",
     "saved": "Saved Jobs",
     "applications": "Applications",
