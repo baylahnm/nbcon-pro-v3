@@ -235,7 +235,7 @@ const EngineerFiltering = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
+              <Button variant="ghost" size="sm" className="me-4" onClick={() => navigate('/')}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -249,7 +249,7 @@ const EngineerFiltering = () => {
                 variant={showFilters ? 'default' : 'outline'}
                 size="sm"
               >
-                <SlidersHorizontal className="w-4 h-4 mr-2" />
+                <SlidersHorizontal className="w-4 h-4 me-2" />
                 Filters
               </Button>
             </div>
@@ -431,13 +431,13 @@ const EngineerFiltering = () => {
               className="mb-8"
             >
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search engineers by name, skills, or expertise..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="w-full ps-10 pe-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 />
               </div>
             </motion.div>
@@ -493,7 +493,7 @@ const EngineerFiltering = () => {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="w-16 h-16 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center mr-4">
+                        <div className="w-16 h-16 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center me-4">
                           <span className="text-xl font-bold text-brand-600 dark:text-brand-400">
                             {engineer.name.split(' ').map(n => n[0]).join('')}
                           </span>
@@ -504,10 +504,10 @@ const EngineerFiltering = () => {
                               {engineer.name}
                             </h3>
                             {engineer.isVerified && (
-                              <CheckCircle className="w-4 h-4 text-green-500 ml-2" />
+                              <CheckCircle className="w-4 h-4 text-green-500 ms-2" />
                             )}
                             {engineer.isOnline && (
-                              <div className="w-2 h-2 bg-green-500 rounded-full ml-2"></div>
+                              <div className="w-2 h-2 bg-green-500 rounded-full ms-2"></div>
                             )}
                           </div>
                           <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -533,19 +533,19 @@ const EngineerFiltering = () => {
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600 dark:text-gray-400">
                       <div className="flex items-center">
-                        <Star className="w-4 h-4 mr-1 text-yellow-400 fill-current" />
+                        <Star className="w-4 h-4 me-1 text-yellow-400 fill-current" />
                         {engineer.rating} ({engineer.reviews} reviews)
                       </div>
                       <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
+                        <MapPin className="w-4 h-4 me-1" />
                         {engineer.location}
                       </div>
                       <div className="flex items-center">
-                        <Clock className="w-4 h-4 mr-1" />
+                        <Clock className="w-4 h-4 me-1" />
                         {engineer.experience}
                       </div>
                       <div className="flex items-center">
-                        <DollarSign className="w-4 h-4 mr-1" />
+                        <DollarSign className="w-4 h-4 me-1" />
                         {engineer.hourlyRate}/hour
                       </div>
                     </div>

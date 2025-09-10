@@ -28,7 +28,7 @@ import {
 } from 'lucide-react'
 
 export default function Jobs() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation('common')
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('browse')
   const [isRTL, setIsRTL] = useState(i18n.language === 'ar')

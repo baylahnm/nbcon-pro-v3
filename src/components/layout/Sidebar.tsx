@@ -65,7 +65,7 @@ export default function Sidebar() {
             setIsOpen(false);
           }}
           className={cn(
-            'flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 w-full text-left',
+            'flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 w-full text-start',
             'hover:bg-red-50 dark:hover:bg-red-900/20',
             'text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300'
           )}
@@ -141,7 +141,7 @@ export default function Sidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg"
+        className="fixed top-4 inset-s-4 z-50 lg:hidden p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg"
       >
         {isOpen ? (
           <X className="w-6 h-6" />
@@ -161,7 +161,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed top-0 left-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl z-40 overflow-y-auto',
+          'fixed top-0 inset-s-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl z-40 overflow-y-auto',
           'transform transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-x-0' : '-translate-x-full',
           'lg:translate-x-0 lg:sticky lg:top-0'

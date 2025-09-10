@@ -3,33 +3,33 @@ import { useTranslation } from 'react-i18next';
 import { Briefcase, Users, Clock, TrendingUp } from 'lucide-react';
 
 export default function ClientDashboard() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   const isRTL = i18n.language === 'ar';
 
   const stats = [
     {
-      title: isRTL ? 'المشاريع النشطة' : 'Active Projects',
+      title: t('analytics.activeProjects', 'Active Projects'),
       value: '8',
       icon: Briefcase,
       change: '+3',
       changeType: 'positive'
     },
     {
-      title: isRTL ? 'المهندسون المعينون' : 'Engineers Hired',
+      title: t('analytics.users', 'Users'),
       value: '12',
       icon: Users,
       change: '+5',
       changeType: 'positive'
     },
     {
-      title: isRTL ? 'متوسط وقت الإنجاز' : 'Avg. Completion Time',
+      title: t('analytics.completionRate', 'Completion Rate'),
       value: '4.2 days',
       icon: Clock,
       change: '-15%',
       changeType: 'positive'
     },
     {
-      title: isRTL ? 'رضا المشروع' : 'Project Satisfaction',
+      title: t('analytics.performance', 'Performance'),
       value: '4.8/5',
       icon: TrendingUp,
       change: '+0.3',
@@ -42,10 +42,10 @@ export default function ClientDashboard() {
       {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-          {isRTL ? 'لوحة تحكم العميل' : 'Client Dashboard'}
+          {t('nav.clientDashboard', 'Client Dashboard')}
         </h1>
         <p className="mt-2 text-gray-600 dark:text-gray-400">
-          {isRTL ? 'مرحباً بعودتك! إليك نظرة عامة على مشاريعك.' : 'Welcome back! Here\'s an overview of your projects.'}
+          {t('analytics.description', "Track your business performance and insights")}
         </p>
       </div>
 
@@ -84,7 +84,7 @@ export default function ClientDashboard() {
       {/* Active Projects */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          {isRTL ? 'المشاريع النشطة' : 'Active Projects'}
+          {t('analytics.activeProjects', 'Active Projects')}
         </h2>
         <div className="space-y-4">
           {[
@@ -114,7 +114,7 @@ export default function ClientDashboard() {
                     {project.title}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                    {isRTL ? 'المهندس:' : 'Engineer:'} {project.engineer}
+                    {t('analytics.engineerLabel', 'Engineer:')} {project.engineer}
                   </p>
                 </div>
                 <span className="text-sm font-medium text-primary">
@@ -128,7 +128,7 @@ export default function ClientDashboard() {
                 />
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                {project.progress}% {isRTL ? 'مكتمل' : 'Complete'}
+                {project.progress}% {t('jobs.complete', 'Complete')}
               </p>
             </div>
           ))}

@@ -97,4 +97,79 @@
   "auth": {
     "termsFooter": "بالمتابعة، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا"
   }
+  ,
+  "servicesPage": {
+    "headerTitle": "تصفح الخدمات",
+    "searchPlaceholder": "ابحث عن الخدمات أو المهندسين أو الكلمات المفتاحية...",
+    "categories": {
+      "all": "جميع الخدمات",
+      "civil": "الهندسة المدنية",
+      "mechanical": "الهندسة الميكانيكية",
+      "electrical": "الهندسة الكهربائية",
+      "structural": "الهندسة الإنشائية",
+      "architectural": "الهندسة المعمارية"
+    },
+    "resultsCount": "عرض {{count}} خدمة",
+    "by": "بواسطة",
+    "viewDetails": "عرض التفاصيل",
+    "noResultsTitle": "لم يتم العثور على خدمات",
+    "noResultsHint": "حاول تعديل معايير البحث أو تصفح الفئات المختلفة.",
+    "clearFilters": "مسح عوامل التصفية"
+  }
+  ,
+  "jobs": {
+    "title": "الوظائف"
+  }
+  ,
+  "payments": {
+    "title": "المدفوعات"
+  }
+  ,
+  "notifications": {
+    "title": "الإشعارات",
+    "all": "كل الإشعارات"
+  }
+  ,
+  "messages": {
+    "title": "الرسائل",
+    "searchConversations": "البحث في المحادثات",
+    "typeMessage": "اكتب رسالة...",
+    "selectConversation": "اختر محادثة",
+    "chooseConversation": "اختر محادثة من القائمة لبدء المراسلة"
+  }
+  ,
+  "support": {
+    "title": "مركز المساعدة",
+    "searchPlaceholder": "ابحث في مقالات المساعدة...",
+    "categories": "الفئات",
+    "gettingStarted": "البدء",
+    "accountProfile": "الحساب والملف الشخصي",
+    "projectsJobs": "المشاريع والوظائف",
+    "paymentsBilling": "المدفوعات والفوترة",
+    "technicalSupport": "الدعم الفني",
+    "safetySecurity": "السلامة والأمان",
+    "articles": "مقالات",
+    "relatedArticles": "مقالات ذات صلة",
+    "needMoreHelp": "هل تحتاج إلى مزيد من المساعدة؟",
+    "contactSupport": "الاتصال بالدعم"
+  }
+  ,
+  "files": {
+    "title": "مدير الملفات",
+    "newFolder": "مجلد جديد",
+    "uploadFiles": "رفع الملفات",
+    "search": "ابحث عن الملفات والمجلدات...",
+    "sortBy": "ترتيب حسب",
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل",
+    "itemsSelected": "عناصر محددة",
+    "move": "نقل",
+    "copy": "نسخ",
+    "size": "الحجم",
+    "modified": "تم التعديل",
+    "owner": "المالك",
+    "version": "الإصدار",
+    "folder": "مجلد",
+    "emptyHint": "حاول تعديل معايير البحث أو قم برفع بعض الملفات."
+  }
 }

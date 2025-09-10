@@ -320,4 +320,23 @@
     "loggingOut": "Logging out...",
     "logoutSuccess": "You have been logged out successfully"
   }
+  ,
+  "servicesPage": {
+    "headerTitle": "Browse Services",
+    "searchPlaceholder": "Search services, engineers, or keywords...",
+    "categories": {
+      "all": "All Services",
+      "civil": "Civil Engineering",
+      "mechanical": "Mechanical Engineering",
+      "electrical": "Electrical Engineering",
+      "structural": "Structural Engineering",
+      "architectural": "Architecture"
+    },
+    "resultsCount": "Showing {{count}} services",
+    "by": "by",
+    "viewDetails": "View Details",
+    "noResultsTitle": "No services found",
+    "noResultsHint": "Try adjusting your search criteria or browse different categories.",
+    "clearFilters": "Clear Filters"
+  }
 }

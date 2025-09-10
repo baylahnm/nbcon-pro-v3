@@ -25,19 +25,19 @@ import {
 } from 'lucide-react'
 
 const SupportHelp = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('getting-started')
   const [selectedArticle, setSelectedArticle] = useState<string | null>(null)
 
   const categories = [
-    { id: 'getting-started', label: 'Getting Started', icon: BookOpen, count: 12 },
-    { id: 'account', label: 'Account & Profile', icon: User, count: 8 },
-    { id: 'projects', label: 'Projects & Jobs', icon: FileText, count: 15 },
-    { id: 'payments', label: 'Payments & Billing', icon: CheckCircle, count: 6 },
-    { id: 'technical', label: 'Technical Support', icon: AlertCircle, count: 10 },
-    { id: 'safety', label: 'Safety & Security', icon: Shield, count: 5 }
+    { id: 'getting-started', label: t('support.gettingStarted', 'Getting Started'), icon: BookOpen, count: 12 },
+    { id: 'account', label: t('support.accountProfile', 'Account & Profile'), icon: User, count: 8 },
+    { id: 'projects', label: t('support.projectsJobs', 'Projects & Jobs'), icon: FileText, count: 15 },
+    { id: 'payments', label: t('support.paymentsBilling', 'Payments & Billing'), icon: CheckCircle, count: 6 },
+    { id: 'technical', label: t('support.technicalSupport', 'Technical Support'), icon: AlertCircle, count: 10 },
+    { id: 'safety', label: t('support.safetySecurity', 'Safety & Security'), icon: Shield, count: 5 }
   ]
 
   const articles = [
@@ -104,7 +104,7 @@ const SupportHelp = () => {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Support & Help Center
+                {t('support.title', 'Help Center')}
               </h1>
             </div>
             
@@ -115,7 +115,7 @@ const SupportHelp = () => {
                 size="sm"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
-                Contact Support
+                {t('support.contactSupport', 'Contact Support')}
               </Button>
             </div>
           </div>
@@ -134,7 +134,7 @@ const SupportHelp = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search help articles..."
+              placeholder={t('support.searchPlaceholder', 'Search help articles...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent text-lg"
@@ -152,7 +152,7 @@ const SupportHelp = () => {
           >
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Categories
+                {t('support.categories', 'Categories')}
               </h3>
               
               <div className="space-y-2">
@@ -192,10 +192,10 @@ const SupportHelp = () => {
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  {categories.find(c => c.id === activeCategory)?.label} Articles
+                  {categories.find(c => c.id === activeCategory)?.label} {t('support.articles', 'Articles')}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
-                  {filteredArticles.length} articles found
+                  {filteredArticles.length} {t('support.relatedArticles', 'Related Articles')}
                 </p>
               </div>
               
@@ -239,10 +239,10 @@ const SupportHelp = () => {
                   <div className="text-center py-12">
                     <HelpCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                      No articles found
+                      {t('empty.noResults', 'No results found')}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Try adjusting your search terms or browse different categories.
+                      {t('support.needMoreHelp', 'Need more help?')}
                     </p>
                   </div>
                 )}

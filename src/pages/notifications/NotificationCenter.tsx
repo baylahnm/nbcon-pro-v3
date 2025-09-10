@@ -29,7 +29,7 @@ import {
 } from 'lucide-react'
 
 const NotificationCenter = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [filterType, setFilterType] = useState('all')
@@ -37,12 +37,12 @@ const NotificationCenter = () => {
   const [showSettings, setShowSettings] = useState(false)
 
   const filterTypes = [
-    { id: 'all', label: 'All Notifications', count: 0 },
-    { id: 'unread', label: 'Unread', count: 0 },
-    { id: 'urgent', label: 'Urgent', count: 0 },
-    { id: 'project', label: 'Project Updates', count: 0 },
-    { id: 'message', label: 'Messages', count: 0 },
-    { id: 'system', label: 'System', count: 0 }
+    { id: 'all', label: t('notifications.all', 'All Notifications'), count: 0 },
+    { id: 'unread', label: t('notifications.unread', 'Unread'), count: 0 },
+    { id: 'urgent', label: t('notifications.urgent', 'Urgent'), count: 0 },
+    { id: 'project', label: t('notifications.projectUpdates', 'Project Updates'), count: 0 },
+    { id: 'message', label: t('notifications.messages', 'Messages'), count: 0 },
+    { id: 'system', label: t('notifications.system', 'System'), count: 0 }
   ]
 
   const notifications = [
@@ -233,7 +233,7 @@ const NotificationCenter = () => {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Notifications
+                {t('notifications.title', 'Notifications')}
               </h1>
             </div>
             
@@ -244,7 +244,7 @@ const NotificationCenter = () => {
                 size="sm"
               >
                 <CheckCheck className="w-4 h-4 mr-2" />
-                Mark All Read
+                {t('notifications.markAllRead', 'Mark All Read')}
               </Button>
               
               <Button
@@ -253,7 +253,7 @@ const NotificationCenter = () => {
                 size="sm"
               >
                 <Settings className="w-4 h-4 mr-2" />
-                Settings
+                {t('notifications.settings', 'Settings')}
               </Button>
             </div>
           </div>
@@ -273,7 +273,7 @@ const NotificationCenter = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search notifications..."
+                placeholder={t('notifications.search', 'Search notifications...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
@@ -306,7 +306,7 @@ const NotificationCenter = () => {
           >
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                {selectedNotifications.length} notifications selected
+                {selectedNotifications.length} {t('notifications.selected', 'notifications selected')}
               </span>
               
               <div className="flex items-center space-x-2">
@@ -316,7 +316,7 @@ const NotificationCenter = () => {
                   size="sm"
                 >
                   <CheckCircle2 className="w-4 h-4 mr-2" />
-                  Mark as Read
+                  {t('notifications.markRead', 'Mark as Read')}
                 </Button>
                 
                 <Button
@@ -325,7 +325,7 @@ const NotificationCenter = () => {
                   size="sm"
                 >
                   <Archive className="w-4 h-4 mr-2" />
-                  Archive
+                  {t('notifications.archive', 'Archive')}
                 </Button>
                 
                 <Button
@@ -335,7 +335,7 @@ const NotificationCenter = () => {
                   className="text-red-600 hover:text-red-700"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Delete
+                  {t('actions.delete', 'Delete')}
                 </Button>
               </div>
             </div>
@@ -407,8 +407,8 @@ const NotificationCenter = () => {
                       
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
-                          <span>Project: {notification.project}</span>
-                          <span>From: {notification.sender}</span>
+                          <span>{t('notifications.project', 'Project')}: {notification.project}</span>
+                          <span>{t('notifications.from', 'From')}: {notification.sender}</span>
                         </div>
                         
                         <div className="flex items-center space-x-2">
@@ -419,7 +419,7 @@ const NotificationCenter = () => {
                               size="sm"
                             >
                               <CheckCircle2 className="w-4 h-4 mr-1" />
-                              Mark Read
+                              {t('notifications.markRead', 'Mark Read')}
                             </Button>
                           )}
                           
@@ -429,7 +429,7 @@ const NotificationCenter = () => {
                             size="sm"
                           >
                             <Eye className="w-4 h-4 mr-1" />
-                            View
+                            {t('actions.view', 'View')}
                           </Button>
                           
                           <Button
@@ -461,17 +461,17 @@ const NotificationCenter = () => {
               <Bell className="w-12 h-12 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No notifications found
+              {t('notifications.emptyTitle', 'No notifications found')}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              You're all caught up! New notifications will appear here.
+              {t('notifications.emptyHint', "You're all caught up! New notifications will appear here.")}
             </p>
             <Button
               onClick={() => setShowSettings(true)}
               variant="outline"
             >
               <Settings className="w-4 h-4 mr-2" />
-              Notification Settings
+              {t('notifications.settings', 'Notification Settings')}
             </Button>
           </motion.div>
         )}

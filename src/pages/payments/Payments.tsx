@@ -27,7 +27,7 @@ import {
 } from 'lucide-react'
 
 export default function Payments() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation('common')
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('overview')
   const [isRTL, setIsRTL] = useState(i18n.language === 'ar')

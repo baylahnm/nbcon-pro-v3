@@ -242,3 +242,36 @@
 - `common.empty.noJobs`
   - EN: "No jobs available"
   - AR: "لا توجد وظائف متاحة"
+
+## i18n/RTL Conventions
+
+- Always use `useTranslation('common')` and `t('ns.key')` for UI strings. No hardcoded literals in JSX.
+- Add both EN and AR strings for any new key. Place general UI strings under `common.*` and page-specific under a page section (e.g., `servicesPage.*`).
+- Arabic sets `dir="rtl"` globally (handled in `App.tsx`). Use logical classes or helpers; avoid hardcoded left/right unless wrapped with RTL helpers.
+- Numbers/dates: use helpers in `src/i18n/format.ts` (`formatNumber`, `formatCurrency`, `formatDate`) with optional Arabic‑Indic numerals and Hijri display placeholder.
+- Testing: E2E sets `localStorage.i18nextLng = 'ar'` and asserts AR labels. See `tests/i18n.ar.spec.ts`.
+- Linting: Rule blocks literal UI strings in `.tsx`.
+
+## i18n Review Checklist
+
+- Keys exist in EN and AR locales and render correctly.
+- Page titles, buttons, placeholders, empty/error/loading states are translated.
+- `dir` is RTL in Arabic and key layouts/chevrons mirror properly.
+- No clipped text in AR; labels fit and are readable.
+- Dates/currency format as expected for locale.
+
+## Page Key Map (namespaces/sections)
+
+- Services (BrowseServices): `common.servicesPage.*`
+- Jobs (Jobs): `common.jobs.*`
+- Payments: `common.payments.*`
+- Dashboards:
+  - Engineer: `common.nav.engineerDashboard`, `common.analytics.*`, `common.payments.thisMonth`
+  - Client: `common.nav.clientDashboard`, `common.analytics.*`, `common.jobs.*`
+  - Enterprise: `common.nav.enterpriseDashboard`, `common.analytics.*`, `common.jobs.*`
+  - Admin: `common.nav.adminDashboard`, `common.analytics.*`
+- Notifications: `common.notifications.*`, `common.actions.*`
+- Messaging Hub: `common.messages.*`, `common.actions.*`
+- Support/Help: `common.support.*`, `common.empty.*`
+- Files/File Manager: `common.files.*`, `common.actions.*`, `common.empty.*`
+- Auth/Permissions: `auth.permissions.*`, shared `common.actions.*`, `common.loading.*`

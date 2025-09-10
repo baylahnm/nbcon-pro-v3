@@ -3,33 +3,33 @@ import { useTranslation } from 'react-i18next';
 import { Users, DollarSign, Activity, Shield } from 'lucide-react';
 
 export default function AdminDashboard() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   const isRTL = i18n.language === 'ar';
 
   const stats = [
     {
-      title: isRTL ? 'إجمالي المستخدمين' : 'Total Users',
+      title: t('analytics.activeUsers', 'Active Users'),
       value: '15,482',
       icon: Users,
       change: '+425',
       changeType: 'positive'
     },
     {
-      title: isRTL ? 'إيرادات المنصة' : 'Platform Revenue',
+      title: t('analytics.revenue', 'Revenue'),
       value: 'SAR 2.4M',
       icon: DollarSign,
       change: '+18%',
       changeType: 'positive'
     },
     {
-      title: isRTL ? 'المعاملات اليومية' : 'Daily Transactions',
+      title: t('analytics.transactions', 'Daily Transactions'),
       value: '3,245',
       icon: Activity,
       change: '+12%',
       changeType: 'positive'
     },
     {
-      title: isRTL ? 'حالة النظام' : 'System Status',
+      title: t('analytics.systemStatus', 'System Status'),
       value: '99.9%',
       icon: Shield,
       change: 'Operational',
@@ -42,10 +42,10 @@ export default function AdminDashboard() {
       {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-          {isRTL ? 'لوحة تحكم المسؤول' : 'Admin Dashboard'}
+          {t('nav.adminDashboard', 'Admin Dashboard')}
         </h1>
         <p className="mt-2 text-gray-600 dark:text-gray-400">
-          {isRTL ? 'نظرة عامة على أداء المنصة وحالة النظام.' : 'Platform performance and system status overview.'}
+          {t('analytics.description', 'Track your business performance and insights')}
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
                   <span>{stat.change}</span>
                   {index !== 3 && (
                     <span className="ml-2 text-gray-600 dark:text-gray-400">
-                      {isRTL ? 'من الأسبوع الماضي' : 'from last week'}
+                      {t('analytics.fromLastWeek', 'from last week')}
                     </span>
                   )}
                 </div>
@@ -88,14 +88,14 @@ export default function AdminDashboard() {
         {/* Recent Registrations */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            {isRTL ? 'التسجيلات الأخيرة' : 'Recent Registrations'}
+            {t('analytics.recentRegistrations', 'Recent Registrations')}
           </h2>
           <div className="space-y-3">
             {[
-              { name: isRTL ? 'محمد الشمري' : 'Mohammed Al-Shammari', role: 'Engineer', time: '5 min ago' },
-              { name: isRTL ? 'شركة البناء المتقدم' : 'Advanced Construction Co.', role: 'Client', time: '12 min ago' },
-              { name: isRTL ? 'سارة العتيبي' : 'Sara Al-Otaibi', role: 'Engineer', time: '1 hour ago' },
-              { name: isRTL ? 'مؤسسة الهندسة الحديثة' : 'Modern Engineering Est.', role: 'Enterprise', time: '2 hours ago' }
+              { name: 'Mohammed Al-Shammari', role: t('engineer', 'Engineer'), time: t('analytics.last5min', '5 min ago') },
+              { name: 'Advanced Construction Co.', role: t('client', 'Client'), time: t('analytics.last12min', '12 min ago') },
+              { name: 'Sara Al-Otaibi', role: t('engineer', 'Engineer'), time: t('analytics.last1hour', '1 hour ago') },
+              { name: 'Modern Engineering Est.', role: t('enterprise', 'Enterprise'), time: t('analytics.last2hours', '2 hours ago') }
             ].map((user, index) => (
               <div key={index} className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-3">
@@ -118,24 +118,24 @@ export default function AdminDashboard() {
         {/* System Alerts */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            {isRTL ? 'تنبيهات النظام' : 'System Alerts'}
+            {t('analytics.systemAlerts', 'System Alerts')}
           </h2>
           <div className="space-y-3">
             {[
               { 
                 type: 'success', 
-                message: isRTL ? 'تم تحديث النظام بنجاح إلى الإصدار 2.4.1' : 'System successfully updated to version 2.4.1',
-                time: '1 hour ago'
+                message: t('analytics.alertUpdated', 'System successfully updated to version 2.4.1'),
+                time: t('analytics.last1hour', '1 hour ago')
               },
               { 
                 type: 'warning', 
-                message: isRTL ? 'ارتفاع استخدام الخادم (85%)' : 'High server usage detected (85%)',
-                time: '3 hours ago'
+                message: t('analytics.alertHighUsage', 'High server usage detected (85%)'),
+                time: t('analytics.last3hours', '3 hours ago')
               },
               { 
                 type: 'info', 
-                message: isRTL ? 'النسخ الاحتياطي المجدول مكتمل' : 'Scheduled backup completed',
-                time: '6 hours ago'
+                message: t('analytics.alertBackupDone', 'Scheduled backup completed'),
+                time: t('analytics.last6hours', '6 hours ago')
               }
             ].map((alert, index) => (
               <div key={index} className="flex items-start gap-3 py-2">

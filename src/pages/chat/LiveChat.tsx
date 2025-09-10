@@ -306,7 +306,7 @@ const LiveChat = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
+              <Button variant="ghost" size="sm" className="me-4" onClick={() => navigate('/')}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -327,7 +327,7 @@ const LiveChat = () => {
                 variant="outline"
                 size="sm"
               >
-                <Video className="w-4 h-4 mr-2" />
+                <Video className="w-4 h-4 me-2" />
                 Video Calls
               </Button>
             </div>
@@ -342,13 +342,13 @@ const LiveChat = () => {
             {/* Search Bar */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search conversations..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="w-full ps-10 pe-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -374,7 +374,7 @@ const LiveChat = () => {
                         </span>
                       </div>
                       {chat.isOnline && (
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
+                        <div className="absolute -bottom-1 -inset-e-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
                       )}
                     </div>
                     
@@ -519,7 +519,7 @@ const LiveChat = () => {
                           </div>
                         )}
                         
-                        <p className="text-sm">
+                        <p className="text-sm bidi-plaintext" dir="auto">
                           {showTranslation && message.translatedContent ? message.translatedContent : message.content}
                         </p>
                         
@@ -530,7 +530,7 @@ const LiveChat = () => {
                                 key={attachment.id}
                                 className="flex items-center p-2 bg-white dark:bg-gray-800 rounded border"
                               >
-                                <FileText className="w-4 h-4 text-gray-400 mr-2" />
+                                <FileText className="w-4 h-4 text-gray-400 me-2" />
                                 <div className="flex-1 min-w-0">
                                   <p className="text-xs font-medium text-gray-900 dark:text-white truncate">
                                     {attachment.name}

@@ -34,7 +34,7 @@ import {
 } from 'lucide-react'
 
 const MessagingHub = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null)
@@ -269,7 +269,7 @@ const MessagingHub = () => {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Messages
+                {t('messages.title', 'Messages')}
               </h1>
             </div>
             
@@ -280,7 +280,7 @@ const MessagingHub = () => {
                 size="sm"
               >
                 <Video className="w-4 h-4 mr-2" />
-                Video Calls
+                {t('videoCall', 'Video Calls')}
               </Button>
             </div>
           </div>
@@ -297,7 +297,7 @@ const MessagingHub = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
-                  placeholder="Search conversations..."
+                  placeholder={t('messages.searchConversations', 'Search conversations...')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
@@ -512,7 +512,7 @@ const MessagingHub = () => {
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder="Type a message..."
+                        placeholder={t('messages.typeMessage', 'Type a message...')}
                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                       />
                     </div>
@@ -541,10 +541,10 @@ const MessagingHub = () => {
                 <div className="text-center">
                   <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                    Select a conversation
+                    {t('messages.selectConversation', 'Select a conversation')}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Choose a conversation from the list to start messaging
+                    {t('messages.chooseConversation', 'Choose a conversation from the list to start messaging')}
                   </p>
                 </div>
               </div>

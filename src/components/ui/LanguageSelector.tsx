@@ -82,7 +82,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             <span className="text-2xl" role="img" aria-label={lang.name}>
               {lang.flag}
             </span>
-            <div className="flex-1 text-left">
+            <div className="flex-1 text-start">
               <div className="font-medium text-gray-900 dark:text-gray-100">
                 {lang.name}
               </div>

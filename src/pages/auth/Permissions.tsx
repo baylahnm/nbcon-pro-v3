@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/themeStore'
 import { ArrowLeft, MapPin, Bell, Camera, Folder, Shield } from 'lucide-react'
+import { DirectionalIcon } from '@/components/system/DirectionalIcon'
 
 const Permissions = () => {
   const { t } = useTranslation()
@@ -225,7 +226,9 @@ const Permissions = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <ArrowLeft className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            <DirectionalIcon className="me-2">
+              <ArrowLeft className="w-5 h-5" />
+            </DirectionalIcon>
             {t('actions.back', { ns: 'common' })}
           </Button>
           

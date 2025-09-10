@@ -1,0 +1,6 @@
+/* Basic padding fix for RTL preview */
+[dir="rtl"] .sbdocs-content, [dir="rtl"] .sb-show-main {
+  direction: rtl;
+}
+
+

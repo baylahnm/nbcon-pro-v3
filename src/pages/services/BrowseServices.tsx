@@ -15,18 +15,18 @@ import {
 } from 'lucide-react'
 
 const BrowseServices = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   const categories = [
-    { id: 'all', name: 'All Services' },
-    { id: 'civil', name: 'Civil Engineering' },
-    { id: 'mechanical', name: 'Mechanical Engineering' },
-    { id: 'electrical', name: 'Electrical Engineering' },
-    { id: 'structural', name: 'Structural Engineering' },
-    { id: 'architectural', name: 'Architecture' }
+    { id: 'all', name: t('servicesPage.categories.all') },
+    { id: 'civil', name: t('servicesPage.categories.civil') },
+    { id: 'mechanical', name: t('servicesPage.categories.mechanical') },
+    { id: 'electrical', name: t('servicesPage.categories.electrical') },
+    { id: 'structural', name: t('servicesPage.categories.structural') },
+    { id: 'architectural', name: t('servicesPage.categories.architectural') }
   ]
 
   const services = [
@@ -129,7 +129,7 @@ const BrowseServices = () => {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Browse Services
+                {t('servicesPage.headerTitle')}
               </h1>
             </div>
             
@@ -156,7 +156,7 @@ const BrowseServices = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Search services, engineers, or keywords..."
+                placeholder={t('servicesPage.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
@@ -206,7 +206,7 @@ const BrowseServices = () => {
           className="mb-6"
         >
           <p className="text-gray-600 dark:text-gray-300">
-            Showing {filteredServices.length} services
+            {t('servicesPage.resultsCount', { count: filteredServices.length })}
           </p>
         </motion.div>
 
@@ -257,7 +257,7 @@ const BrowseServices = () => {
                 </div>
 
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                  by {service.engineer}
+                  {t('servicesPage.by')} {service.engineer}
                 </p>
 
                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
@@ -280,7 +280,7 @@ const BrowseServices = () => {
                     {service.price}
                   </div>
                   <Button size="sm" className="bg-brand-500 hover:bg-brand-600 text-white">
-                    View Details
+                    {t('servicesPage.viewDetails')}
                   </Button>
                 </div>
               </div>
@@ -300,10 +300,10 @@ const BrowseServices = () => {
               <Search className="w-12 h-12 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No services found
+              {t('servicesPage.noResultsTitle')}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Try adjusting your search criteria or browse different categories.
+              {t('servicesPage.noResultsHint')}
             </p>
             <Button
               onClick={() => {
@@ -312,7 +312,7 @@ const BrowseServices = () => {
               }}
               variant="outline"
             >
-              Clear Filters
+              {t('servicesPage.clearFilters')}
             </Button>
           </motion.div>
         )}

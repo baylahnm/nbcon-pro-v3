@@ -93,7 +93,7 @@ const QuickJobPost = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={handleBack}>
+              <Button variant="ghost" size="sm" className="me-4" onClick={handleBack}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -118,7 +118,7 @@ const QuickJobPost = () => {
           className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 mb-8"
         >
           <div className="flex items-start">
-            <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-0.5" />
+            <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400 me-3 mt-0.5" />
             <div>
               <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">
                 Quick Job Post
@@ -141,7 +141,7 @@ const QuickJobPost = () => {
           {/* Basic Information */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-              <FileText className="w-5 h-5 mr-2 text-brand-500" />
+              <FileText className="w-5 h-5 me-2 text-brand-500" />
               Basic Information
             </h3>
             
@@ -214,7 +214,7 @@ const QuickJobPost = () => {
           {/* Urgency & Timeline */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-              <Clock className="w-5 h-5 mr-2 text-brand-500" />
+              <Clock className="w-5 h-5 me-2 text-brand-500" />
               Urgency & Timeline
             </h3>
             
@@ -232,7 +232,7 @@ const QuickJobPost = () => {
                         value={level.id}
                         checked={formData.urgency === level.id}
                         onChange={(e) => handleInputChange('urgency', e.target.value)}
-                        className="mr-3"
+                        className="me-3"
                       />
                       <div>
                         <div className={`font-medium ${level.color}`}>
@@ -271,7 +271,7 @@ const QuickJobPost = () => {
           {/* Location */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-              <MapPin className="w-5 h-5 mr-2 text-brand-500" />
+              <MapPin className="w-5 h-5 me-2 text-brand-500" />
               Location
             </h3>
             
@@ -292,7 +292,7 @@ const QuickJobPost = () => {
           {/* Required Skills */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-              <Users className="w-5 h-5 mr-2 text-brand-500" />
+              <Users className="w-5 h-5 me-2 text-brand-500" />
               Required Skills
             </h3>
             
