@@ -44,49 +44,49 @@ export default function Jobs() {
   const mockJobs = [
     {
       id: 'JOB-001',
-      title: 'Electrical System Design for Residential Complex',
-      company: 'Al-Rashid Construction',
-      location: 'Riyadh, Saudi Arabia',
-      type: 'Full-time',
-      duration: '3 months',
-      budget: '15,000 - 20,000 SAR',
-      posted: '2 hours ago',
+      title: t('jobs.sampleJobs.job1.title'),
+      company: t('jobs.sampleJobs.job1.company'),
+      location: t('jobs.sampleJobs.job1.location'),
+      type: t('jobs.sampleJobs.job1.type'),
+      duration: t('jobs.sampleJobs.job1.duration'),
+      budget: t('jobs.sampleJobs.job1.budget'),
+      posted: t('jobs.sampleJobs.job1.posted'),
       applicants: 12,
       rating: 4.8,
-      skills: ['Electrical Engineering', 'AutoCAD', 'Project Management'],
-      description: 'We need an experienced electrical engineer to design the complete electrical system for a 200-unit residential complex...',
+      skills: t('jobs.sampleJobs.job1.skills', { returnObjects: true }) as string[],
+      description: t('jobs.sampleJobs.job1.description'),
       urgent: false,
       featured: true
     },
     {
       id: 'JOB-002',
-      title: 'HVAC System Installation Supervision',
-      company: 'Saudi Engineering Group',
-      location: 'Jeddah, Saudi Arabia',
-      type: 'Contract',
-      duration: '6 months',
-      budget: '25,000 - 30,000 SAR',
-      posted: '1 day ago',
+      title: t('jobs.sampleJobs.job2.title'),
+      company: t('jobs.sampleJobs.job2.company'),
+      location: t('jobs.sampleJobs.job2.location'),
+      type: t('jobs.sampleJobs.job2.type'),
+      duration: t('jobs.sampleJobs.job2.duration'),
+      budget: t('jobs.sampleJobs.job2.budget'),
+      posted: t('jobs.sampleJobs.job2.posted'),
       applicants: 8,
       rating: 4.6,
-      skills: ['HVAC', 'Mechanical Engineering', 'Supervision'],
-      description: 'Supervise the installation of HVAC systems for commercial buildings in Jeddah...',
+      skills: t('jobs.sampleJobs.job2.skills', { returnObjects: true }) as string[],
+      description: t('jobs.sampleJobs.job2.description'),
       urgent: true,
       featured: false
     },
     {
       id: 'JOB-003',
-      title: 'Structural Analysis for Bridge Project',
-      company: 'Ministry of Transport',
-      location: 'Dammam, Saudi Arabia',
-      type: 'Consulting',
-      duration: '2 months',
-      budget: '18,000 - 22,000 SAR',
-      posted: '3 days ago',
+      title: t('jobs.sampleJobs.job3.title'),
+      company: t('jobs.sampleJobs.job3.company'),
+      location: t('jobs.sampleJobs.job3.location'),
+      type: t('jobs.sampleJobs.job3.type'),
+      duration: t('jobs.sampleJobs.job3.duration'),
+      budget: t('jobs.sampleJobs.job3.budget'),
+      posted: t('jobs.sampleJobs.job3.posted'),
       applicants: 15,
       rating: 4.9,
-      skills: ['Structural Engineering', 'STAAD Pro', 'Bridge Design'],
-      description: 'Conduct structural analysis and design for a new bridge project in Eastern Province...',
+      skills: t('jobs.sampleJobs.job3.skills', { returnObjects: true }) as string[],
+      description: t('jobs.sampleJobs.job3.description'),
       urgent: false,
       featured: true
     }
@@ -95,30 +95,30 @@ export default function Jobs() {
   const mockMyJobs = [
     {
       id: 'MY-001',
-      title: 'Mechanical System Design',
+      title: t('jobs.myJobs.sample1.title', 'Mechanical System Design'),
       status: 'in-progress',
       progress: 65,
       deadline: '2024-02-15',
-      client: 'Al-Noor Industries',
-      budget: '12,000 SAR'
+      client: t('jobs.myJobs.sample1.client', 'Al-Noor Industries'),
+      budget: t('jobs.myJobs.sample1.budget', '12,000 SAR')
     },
     {
       id: 'MY-002',
-      title: 'Building Inspection Report',
+      title: t('jobs.myJobs.sample2.title', 'Building Inspection Report'),
       status: 'pending-review',
       progress: 100,
       deadline: '2024-01-30',
-      client: 'Riyadh Municipality',
-      budget: '8,500 SAR'
+      client: t('jobs.myJobs.sample2.client', 'Riyadh Municipality'),
+      budget: t('jobs.myJobs.sample2.budget', '8,500 SAR')
     },
     {
       id: 'MY-003',
-      title: 'Renovation Project Planning',
+      title: t('jobs.myJobs.sample3.title', 'Renovation Project Planning'),
       status: 'completed',
       progress: 100,
       deadline: '2024-01-20',
-      client: 'Private Client',
-      budget: '5,000 SAR'
+      client: t('jobs.myJobs.sample3.client', 'Private Client'),
+      budget: t('jobs.myJobs.sample3.budget', '5,000 SAR')
     }
   ]
 
