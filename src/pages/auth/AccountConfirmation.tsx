@@ -144,7 +144,7 @@ const AccountConfirmation = () => {
           {/* Personal Information */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-              <User className="w-5 h-5 mr-2 text-brand-500" />
+              <User className="w-5 h-5 me-2 text-brand-500" />
               {t('accountConfirmation.role', { ns: 'auth' })}
             </h3>
             
@@ -190,7 +190,7 @@ const AccountConfirmation = () => {
           {/* Service Area */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-              <MapPin className="w-5 h-5 mr-2 text-brand-500" />
+              <MapPin className="w-5 h-5 me-2 text-brand-500" />
               {t('accountConfirmation.serviceArea', { ns: 'auth' })}
             </h3>
             
@@ -218,7 +218,7 @@ const AccountConfirmation = () => {
           {/* Rates */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-              <DollarSign className="w-5 h-5 mr-2 text-brand-500" />
+              <DollarSign className="w-5 h-5 me-2 text-brand-500" />
               {t('accountConfirmation.rates', { ns: 'auth' })}
             </h3>
             
@@ -266,7 +266,7 @@ const AccountConfirmation = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <ArrowLeft className="mr-2 w-5 h-5" />
+            <ArrowLeft className="me-2 w-5 h-5" />
             {t('actions.back', { ns: 'common' })}
           </Button>
           
@@ -276,7 +276,7 @@ const AccountConfirmation = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <Edit className="mr-2 w-5 h-5" />
+            <Edit className="me-2 w-5 h-5" />
             {t('accountConfirmation.edit', { ns: 'auth' })}
           </Button>
           

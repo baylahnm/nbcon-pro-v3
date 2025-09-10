@@ -46,8 +46,8 @@ export const logicalProperties = {
   
   // Text alignment
   textAlign: {
-    start: () => rtl.isRTL() ? 'text-right' : 'text-left',
-    end: () => rtl.isRTL() ? 'text-left' : 'text-right',
+    start: () => 'text-start',
+    end: () => 'text-end',
     inlineStart: 'text-inline-start',
     inlineEnd: 'text-inline-end',
   }
@@ -132,12 +132,12 @@ export const form = {
   
   // Get appropriate placeholder alignment
   getPlaceholderAlign: () => {
-    return rtl.isRTL() ? 'text-right' : 'text-left';
+    return 'text-start';
   },
   
   // Get appropriate label alignment
   getLabelAlign: () => {
-    return rtl.isRTL() ? 'text-right' : 'text-left';
+    return 'text-start';
   }
 };
 

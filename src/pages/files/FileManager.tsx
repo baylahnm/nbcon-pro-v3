@@ -364,7 +364,7 @@ const FileManager = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
+              <Button variant="ghost" size="sm" className="me-4" onClick={() => navigate('/')}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -378,7 +378,7 @@ const FileManager = () => {
                 variant="outline"
                 size="sm"
               >
-                <FolderPlus className="w-4 h-4 mr-2" />
+                <FolderPlus className="w-4 h-4 me-2" />
                 {t('files.newFolder', 'New Folder')}
               </Button>
               
@@ -387,7 +387,7 @@ const FileManager = () => {
                 size="sm"
                 className="bg-brand-500 hover:bg-brand-600 text-white"
               >
-                <Upload className="w-4 h-4 mr-2" />
+                <Upload className="w-4 h-4 me-2" />
                 {t('files.uploadFiles', 'Upload Files')}
               </Button>
             </div>
@@ -406,13 +406,13 @@ const FileManager = () => {
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
             {/* Search Bar */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder={t('files.search', 'Search files and folders...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="w-full ps-10 pe-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
               />
             </div>
             
@@ -515,7 +515,7 @@ const FileManager = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="w-4 h-4 me-2" />
                   {t('actions.download', 'Download')}
                 </Button>
                 
@@ -524,7 +524,7 @@ const FileManager = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <Move className="w-4 h-4 mr-2" />
+                  <Move className="w-4 h-4 me-2" />
                   {t('files.move', 'Move')}
                 </Button>
                 
@@ -533,7 +533,7 @@ const FileManager = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <Copy className="w-4 h-4 mr-2" />
+                  <Copy className="w-4 h-4 me-2" />
                   {t('files.copy', 'Copy')}
                 </Button>
                 
@@ -543,7 +543,7 @@ const FileManager = () => {
                   size="sm"
                   className="text-red-600 hover:text-red-700"
                 >
-                  <Trash2 className="w-4 h-4 mr-2" />
+                  <Trash2 className="w-4 h-4 me-2" />
                   {t('actions.delete', 'Delete')}
                 </Button>
               </div>
@@ -581,7 +581,7 @@ const FileManager = () => {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center mr-3">
+                        <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center me-3">
                           <Icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -628,7 +628,7 @@ const FileManager = () => {
                       </div>
                       <div className="flex justify-between">
                         <span>{t('files.owner', 'Owner')}:</span>
-                        <span className="truncate ml-2">{item.owner}</span>
+                        <span className="truncate ms-2">{item.owner}</span>
                       </div>
                       {item.type === 'file' && item.version && (
                         <div className="flex justify-between">
@@ -774,7 +774,7 @@ const FileManager = () => {
               onClick={() => setShowUpload(true)}
               className="bg-brand-500 hover:bg-brand-600 text-white"
             >
-              <Upload className="w-4 h-4 mr-2" />
+              <Upload className="w-4 h-4 me-2" />
               {t('files.uploadFiles', 'Upload Files')}
             </Button>
           </motion.div>

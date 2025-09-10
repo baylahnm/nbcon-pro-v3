@@ -165,7 +165,7 @@ const SlideToAct: React.FC<SlideToActProps> = ({
         <div
           ref={sliderRef}
           className={cn(
-            'absolute top-1 left-1 w-10 h-10 rounded-full transition-all duration-200',
+            'absolute top-1 inset-s-1 w-10 h-10 rounded-full transition-all duration-200',
             'flex items-center justify-center text-white font-medium',
             'focus:outline-none focus:ring-2 focus:ring-primary',
             getSliderColor()
@@ -184,7 +184,7 @@ const SlideToAct: React.FC<SlideToActProps> = ({
         
         {showProgress && slidePosition > 0 && slidePosition < threshold && (
           <div 
-            className="absolute top-0 left-0 h-full bg-primary/20 transition-all duration-200"
+            className="absolute top-0 inset-s-0 h-full bg-primary/20 transition-all duration-200"
             style={{ width: `${slidePosition}%` }}
           />
         )}

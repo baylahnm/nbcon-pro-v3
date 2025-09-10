@@ -88,7 +88,7 @@ export default function Analytics() {
             <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
               <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
-            <div className="ml-4">
+            <div className="ms-4">
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('analytics.totalRevenue', 'Total Revenue')}
               </p>
@@ -107,7 +107,7 @@ export default function Analytics() {
             <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
               <Briefcase className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
-            <div className="ml-4">
+            <div className="ms-4">
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('analytics.totalJobs', 'Total Jobs')}
               </p>
@@ -126,7 +126,7 @@ export default function Analytics() {
             <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
               <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
-            <div className="ml-4">
+            <div className="ms-4">
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('analytics.activeUsers', 'Active Users')}
               </p>
@@ -145,7 +145,7 @@ export default function Analytics() {
             <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
               <CheckCircle className="w-6 h-6 text-orange-600 dark:text-orange-400" />
             </div>
-            <div className="ml-4">
+            <div className="ms-4">
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('analytics.completionRate', 'Completion Rate')}
               </p>
@@ -164,7 +164,7 @@ export default function Analytics() {
             <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
               <Target className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
             </div>
-            <div className="ml-4">
+            <div className="ms-4">
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('analytics.avgJobValue', 'Avg Job Value')}
               </p>
@@ -183,7 +183,7 @@ export default function Analytics() {
             <div className="p-2 bg-pink-100 dark:bg-pink-900 rounded-lg">
               <TrendingUp className="w-6 h-6 text-pink-600 dark:text-pink-400" />
             </div>
-            <div className="ml-4">
+            <div className="ms-4">
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('analytics.growthRate', 'Growth Rate')}
               </p>
@@ -249,7 +249,7 @@ export default function Analytics() {
             </select>
           </div>
           <Button variant="outline">
-            <Download className="w-4 h-4 mr-2" />
+            <Download className="w-4 h-4 me-2" />
             {t('analytics.export', 'Export')}
           </Button>
         </div>
@@ -281,16 +281,16 @@ export default function Analytics() {
           <table className="w-full">
             <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   {t('analytics.month', 'Month')}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   {t('analytics.revenue', 'Revenue')}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   {t('analytics.jobs', 'Jobs')}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   {t('analytics.growth', 'Growth')}
                 </th>
               </tr>
@@ -337,7 +337,7 @@ export default function Analytics() {
                   {stat.revenue.toLocaleString()} SAR
                 </p>
               </div>
-              <div className="text-right">
+              <div className="text-end">
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                   +{stat.growth}%
                 </span>
@@ -382,7 +382,7 @@ export default function Analytics() {
                   {stat.active} {t('analytics.active', 'active')}
                 </p>
               </div>
-              <div className="text-right">
+              <div className="text-end">
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                   +{stat.growth}%
                 </span>
@@ -504,7 +504,7 @@ export default function Analytics() {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate(-1)}
-                className="mr-4"
+                className="me-4"
               >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
@@ -514,11 +514,11 @@ export default function Analytics() {
             </div>
             <div className="flex gap-2">
               <Button variant="outline">
-                <RefreshCw className="w-4 h-4 mr-2" />
+                <RefreshCw className="w-4 h-4 me-2" />
                 {t('analytics.refresh', 'Refresh')}
               </Button>
               <Button variant="outline">
-                <Download className="w-4 h-4 mr-2" />
+                <Download className="w-4 h-4 me-2" />
                 {t('analytics.export', 'Export')}
               </Button>
             </div>
@@ -544,7 +544,7 @@ export default function Analytics() {
                         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
-                    <Icon className="w-5 h-5 mr-3" />
+                    <Icon className="w-5 h-5 me-3" />
                     {tab.label}
                   </button>
                 )
