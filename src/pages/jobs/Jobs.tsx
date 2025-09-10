@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   Search, 
   Filter, 
   Plus,
@@ -24,11 +24,8 @@ import {
   AlertCircle,
   Zap,
   Target,
-  Award,
-  Grid,
-  List
+  Award
 } from 'lucide-react'
-import { DirectionalIcon } from '@/components/system/DirectionalIcon'
 
 export default function Jobs() {
   const { t } = useTranslation('common')
@@ -433,107 +430,25 @@ export default function Jobs() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate(-1)}
-                className="me-4"
-              >
-                <DirectionalIcon>
-                  <ArrowLeft className="w-5 h-5" />
-                </DirectionalIcon>
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t('jobs.title', 'Jobs')}
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button>
-                <Plus className="w-4 h-4 me-2" />
-                {t('jobs.postJob', 'Post Job')}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search and Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <div className="flex flex-col lg:flex-row gap-4 mb-6">
-            {/* Search Bar */}
-            <div className="flex-1 relative">
-              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder={t('jobs.searchJobs', 'Search jobs...')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full ps-10 pe-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-            </div>
-            
-            {/* View Mode Toggle */}
-            <div className="flex items-center space-x-2">
-              <Button
-                variant={viewMode === 'grid' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('grid')}
-              >
-                <Grid className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={viewMode === 'list' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('list')}
-              >
-                <List className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2">
-            {tabs.map((tab) => {
-              const Icon = tab.icon
-              return (
-                <Button
-                  key={tab.id}
-                  variant={activeTab === tab.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setActiveTab(tab.id)}
-                  className="mb-2"
-                >
-                  <Icon className="w-4 h-4 me-2" />
-                  {tab.label}
-                </Button>
-              )
-            })}
-          </div>
-        </motion.div>
-
-        {/* Content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {renderTabContent()}
-        </motion.div>
-      </div>
-    </div>
+    <PageLayout
+      title={t('jobs.title', 'Jobs')}
+      description={t('jobs.description', 'Find engineering jobs and manage your applications')}
+      searchPlaceholder={t('jobs.searchJobs', 'Search jobs...')}
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      viewMode={viewMode}
+      onViewModeChange={setViewMode}
+      filterTabs={tabs}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      headerActions={
+        <Button>
+          <Plus className="w-4 h-4 me-2" />
+          {t('jobs.postJob', 'Post Job')}
+        </Button>
+      }
+    >
+      {renderTabContent()}
+    </PageLayout>
   )
 }
