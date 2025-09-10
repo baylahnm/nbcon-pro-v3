@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   BarChart3, 
   TrendingUp, 
   Users, 
@@ -494,77 +494,28 @@ export default function Analytics() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate(-1)}
-                className="me-4"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </Button>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {t('analytics.title', 'Analytics')}
-              </h1>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <RefreshCw className="w-4 h-4 me-2" />
-                {t('analytics.refresh', 'Refresh')}
-              </Button>
-              <Button variant="outline">
-                <Download className="w-4 h-4 me-2" />
-                {t('analytics.export', 'Export')}
-              </Button>
-            </div>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t('analytics.description', 'Track your business performance and insights')}
-          </p>
+    <PageLayout
+      title={t('analytics.title', 'Analytics')}
+      description={t('analytics.description', 'Track your business performance and insights')}
+      filterTabs={tabs}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      showSearch={false}
+      showViewToggle={false}
+      headerActions={
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <RefreshCw className="w-4 h-4 me-2" />
+            {t('analytics.refresh', 'Refresh')}
+          </Button>
+          <Button variant="outline">
+            <Download className="w-4 h-4 me-2" />
+            {t('analytics.export', 'Export')}
+          </Button>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                      activeTab === tab.id
-                        ? 'bg-primary text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 me-3" />
-                    {tab.label}
-                  </button>
-                )
-              })}
-            </nav>
-          </div>
-
-          {/* Content */}
-          <div className="lg:col-span-3">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {renderTabContent()}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </div>
+      }
+    >
+      {renderTabContent()}
+    </PageLayout>
   )
 }
