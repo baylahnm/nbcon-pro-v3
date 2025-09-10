@@ -24,7 +24,9 @@ import {
   AlertCircle,
   Zap,
   Target,
-  Award
+  Award,
+  Grid,
+  List
 } from 'lucide-react'
 import { DirectionalIcon } from '@/components/system/DirectionalIcon'
 
@@ -32,6 +34,10 @@ export default function Jobs() {
   const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('browse')
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('browse')
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   const tabs = [
     { id: 'browse', label: t('jobs.browse', 'Browse Jobs'), icon: Search },
@@ -124,19 +130,9 @@ export default function Jobs() {
 
   const renderBrowseJobs = () => (
     <div className="space-y-6">
-      {/* Search and Filters */}
+      {/* Additional Filters */}
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
         <div className="flex flex-col lg:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder={t('jobs.searchJobs', 'Search jobs...')}
-                className="w-full ps-10 pe-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
-              />
-            </div>
-          </div>
           <div className="flex gap-2">
             <select className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
               <option>{t('jobs.allCategories', 'All Categories')}</option>
@@ -438,10 +434,10 @@ export default function Jobs() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+      {/* Header */}
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <Button
                 variant="ghost"
@@ -450,59 +446,93 @@ export default function Jobs() {
                 className="me-4"
               >
                 <DirectionalIcon>
-                  <ArrowLeft className="w-4 h-4" />
+                  <ArrowLeft className="w-5 h-5" />
                 </DirectionalIcon>
               </Button>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t('jobs.title', 'Jobs')}
               </h1>
             </div>
-            <Button>
-              <Plus className="w-4 h-4 me-2" />
-              {t('jobs.postJob', 'Post Job')}
-            </Button>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t('jobs.description', 'Find engineering jobs and manage your applications')}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                      activeTab === tab.id
-                        ? 'bg-primary text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 me-3" />
-                    {tab.label}
-                  </button>
-                )
-              })}
-            </nav>
-          </div>
-
-          {/* Content */}
-          <div className="lg:col-span-3">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {renderTabContent()}
-            </motion.div>
+            
+            <div className="flex items-center space-x-4">
+              <Button>
+                <Plus className="w-4 h-4 me-2" />
+                {t('jobs.postJob', 'Post Job')}
+              </Button>
+            </div>
           </div>
         </div>
+      </header>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search and Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
+            {/* Search Bar */}
+            <div className="flex-1 relative">
+              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder={t('jobs.searchJobs', 'Search jobs...')}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full ps-10 pe-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            
+            {/* View Mode Toggle */}
+            <div className="flex items-center space-x-2">
+              <Button
+                variant={viewMode === 'grid' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('grid')}
+              >
+                <Grid className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+              >
+                <List className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Category Filters */}
+          <div className="flex flex-wrap gap-2">
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              return (
+                <Button
+                  key={tab.id}
+                  variant={activeTab === tab.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab(tab.id)}
+                  className="mb-2"
+                >
+                  <Icon className="w-4 h-4 me-2" />
+                  {tab.label}
+                </Button>
+              )
+            })}
+          </div>
+        </motion.div>
+
+        {/* Content */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {renderTabContent()}
+        </motion.div>
       </div>
     </div>
   )
