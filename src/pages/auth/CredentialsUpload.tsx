@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { useThemeStore } from '@/stores/themeStore'
 import { ArrowLeft, Upload, FileText, Award, Briefcase, X } from 'lucide-react'
 
 const CredentialsUpload = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { language } = useThemeStore()
   const [isLoading, setIsLoading] = useState(false)
+  
+  const isRTL = language === 'ar'
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File[]>>({
     sce: [],
     certificates: [],
@@ -17,7 +21,6 @@ const CredentialsUpload = () => {
 
   const handleFileUpload = (category: string, files: FileList | null) => {
     if (!files) return
-    
     const fileArray = Array.from(files)
     setUploadedFiles(prev => ({
       ...prev,
@@ -52,17 +55,11 @@ const CredentialsUpload = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true)
-    
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // Store credentials data
       localStorage.setItem('credentialsData', JSON.stringify(uploadedFiles))
-      
       navigate('/service-area')
     } catch (err) {
-      // Handle error
     } finally {
       setIsLoading(false)
     }
@@ -93,8 +90,8 @@ const CredentialsUpload = () => {
     },
     {
       id: 'portfolio',
-      title: t('auth.credentialsUpload.portfolio'),
-      description: t('auth.credentialsUpload.portfolioDescription'),
+      title: t('credentialsUpload.portfolio', { ns: 'auth' }),
+      description: t('credentialsUpload.portfolioDescription', { ns: 'auth' }),
       icon: Briefcase,
       required: false
     }
@@ -118,23 +115,21 @@ const CredentialsUpload = () => {
           >
             <Upload className="w-10 h-10 text-white" />
           </motion.div>
-          
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
+            className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center"
           >
-            {t('auth.credentialsUpload.title')}
+            {t('credentialsUpload.title', { ns: 'auth' })}
           </motion.h1>
-          
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-gray-600 dark:text-gray-300"
+            className="text-gray-600 dark:text-gray-300 text-center"
           >
-            {t('auth.credentialsUpload.subtitle')}
+            {t('credentialsUpload.subtitle', { ns: 'auth' })}
           </motion.p>
         </div>
 
@@ -148,7 +143,6 @@ const CredentialsUpload = () => {
           {uploadSections.map((section, index) => {
             const Icon = section.icon
             const files = uploadedFiles[section.id]
-            
             return (
               <motion.div
                 key={section.id}
@@ -157,16 +151,31 @@ const CredentialsUpload = () => {
                 transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm"
               >
-                <div className="flex items-start mb-4">
-                  <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center mr-4">
+                <div className={`flex items-start mb-4 ${isRTL ? 'flex-row-reverse justify-start' : ''}`}>
+                  <div className={`w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center ${
+                    isRTL ? 'ml-4' : 'mr-4'
+                  }`}>
                     <Icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                      {section.title}
-                      {section.required && <span className="text-red-500 ml-1">*</span>}
+                    <h3 className={`text-lg font-semibold text-gray-900 dark:text-white mb-1 ${
+                      isRTL ? 'text-right' : 'text-left'
+                    }`}>
+                      {isRTL ? (
+                        <>
+                          {section.title}
+                          {section.required && <span className="text-red-500 mr-1">*</span>}
+                        </>
+                      ) : (
+                        <>
+                          {section.title}
+                          {section.required && <span className="text-red-500 ml-1">*</span>}
+                        </>
+                      )}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    <p className={`text-gray-600 dark:text-gray-300 text-sm ${
+                      isRTL ? 'text-right' : 'text-left'
+                    }`}>
                       {section.description}
                     </p>
                   </div>
@@ -180,11 +189,15 @@ const CredentialsUpload = () => {
                   onClick={() => document.getElementById(`file-input-${section.id}`)?.click()}
                 >
                   <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-600 dark:text-gray-300 mb-1">
-                    {t('auth.credentialsUpload.dragDrop')}
+                  <p className={`text-gray-600 dark:text-gray-300 mb-1 ${
+                    isRTL ? 'text-right' : 'text-center'
+                  }`}>
+                    {t('credentialsUpload.dragDrop', { ns: 'auth' })}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {t('auth.credentialsUpload.acceptedFormats')}
+                  <p className={`text-sm text-gray-500 dark:text-gray-400 ${
+                    isRTL ? 'text-right' : 'text-center'
+                  }`}>
+                    {t('credentialsUpload.acceptedFormats', { ns: 'auth' })}
                   </p>
                   <input
                     id={`file-input-${section.id}`}
@@ -206,12 +219,8 @@ const CredentialsUpload = () => {
                       >
                         <div className="flex items-center">
                           <FileText className="w-4 h-4 text-gray-500 mr-2" />
-                          <span className="text-sm text-gray-900 dark:text-white">
-                            {file.name}
-                          </span>
-                          <span className="text-xs text-gray-500 ml-2">
-                            ({formatFileSize(file.size)})
-                          </span>
+                          <span className="text-sm text-gray-900 dark:text-white">{file.name}</span>
+                          <span className="text-xs text-gray-500 ml-2">({formatFileSize(file.size)})</span>
                         </div>
                         <button
                           onClick={() => handleFileRemove(section.id, fileIndex)}
@@ -235,32 +244,15 @@ const CredentialsUpload = () => {
           transition={{ delay: 0.8, duration: 0.5 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
         >
-          <Button
-            onClick={handleBack}
-            variant="outline"
-            size="lg"
-            className="sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 w-5 h-5" />
-            {t('common.actions.back')}
+          <Button onClick={handleBack} variant="outline" size="lg" className="sm:w-auto">
+            <ArrowLeft className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('actions.back', { ns: 'common' })}
           </Button>
-          
-          <Button
-            onClick={handleSkip}
-            variant="ghost"
-            size="lg"
-            className="sm:w-auto"
-          >
-            {t('auth.credentialsUpload.skip')}
+          <Button onClick={handleSkip} variant="ghost" size="lg" className="sm:w-auto">
+            {t('credentialsUpload.skip', { ns: 'auth' })}
           </Button>
-          
-          <Button
-            onClick={handleSubmit}
-            loading={isLoading}
-            size="lg"
-            className="sm:w-auto bg-brand-500 hover:bg-brand-600 text-white"
-          >
-            {isLoading ? t('common.loading.uploading') : t('auth.credentialsUpload.continue')}
+          <Button onClick={handleSubmit} loading={isLoading} size="lg" className="sm:w-auto bg-brand-500 hover:bg-brand-600 text-white">
+            {isLoading ? t('loading.uploading', { ns: 'common' }) : t('credentialsUpload.continue', { ns: 'auth' })}
           </Button>
         </motion.div>
       </motion.div>
@@ -269,3 +261,5 @@ const CredentialsUpload = () => {
 }
 
 export default CredentialsUpload
+
+ 

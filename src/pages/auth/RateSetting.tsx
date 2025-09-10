@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { useThemeStore } from '@/stores/themeStore'
 import { ArrowLeft, DollarSign, Clock, Calendar, Briefcase } from 'lucide-react'
 
 const RateSetting = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { language } = useThemeStore()
   const [isLoading, setIsLoading] = useState(false)
+  
+  const isRTL = language === 'ar'
   const [rates, setRates] = useState({
     hourly: '',
     daily: '',
@@ -51,24 +55,24 @@ const RateSetting = () => {
   const rateTypes = [
     {
       id: 'hourly',
-      title: t('auth.rateSetting.hourlyRate'),
+      title: t('rateSetting.hourlyRate', { ns: 'auth' }),
       icon: Clock,
       placeholder: '100',
-      description: 'Per hour of work'
+      description: t('rateSetting.hourlyDescription', { ns: 'auth' })
     },
     {
       id: 'daily',
-      title: t('auth.rateSetting.dailyRate'),
+      title: t('rateSetting.dailyRate', { ns: 'auth' }),
       icon: Calendar,
       placeholder: '800',
-      description: 'Per day of work'
+      description: t('rateSetting.dailyDescription', { ns: 'auth' })
     },
     {
       id: 'project',
-      title: t('auth.rateSetting.projectRate'),
+      title: t('rateSetting.projectRate', { ns: 'auth' }),
       icon: Briefcase,
       placeholder: '5000',
-      description: 'Per complete project'
+      description: t('rateSetting.projectDescription', { ns: 'auth' })
     }
   ]
 
@@ -95,18 +99,18 @@ const RateSetting = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
+            className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center"
           >
-            {t('auth.rateSetting.title')}
+            {t('rateSetting.title', { ns: 'auth' })}
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-gray-600 dark:text-gray-300"
+            className="text-gray-600 dark:text-gray-300 text-center"
           >
-            {t('auth.rateSetting.subtitle')}
+            {t('rateSetting.subtitle', { ns: 'auth' })}
           </motion.p>
         </div>
 
@@ -119,8 +123,10 @@ const RateSetting = () => {
         >
           {/* Currency Selection */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              {t('auth.rateSetting.currency')}
+            <h3 className={`text-lg font-semibold text-gray-900 dark:text-white mb-4 ${
+              isRTL ? 'text-right' : 'text-left'
+            }`}>
+              {t('rateSetting.currency', { ns: 'auth' })}
             </h3>
             
             <div className="grid grid-cols-2 gap-4">
@@ -135,7 +141,7 @@ const RateSetting = () => {
                 <div className="text-center">
                   <div className="text-2xl mb-2">🇸🇦</div>
                   <div className="font-medium text-gray-900 dark:text-white">
-                    {t('auth.rateSetting.currencySAR')}
+                    {t('rateSetting.currencySAR', { ns: 'auth' })}
                   </div>
                 </div>
               </button>
@@ -151,7 +157,7 @@ const RateSetting = () => {
                 <div className="text-center">
                   <div className="text-2xl mb-2">🇺🇸</div>
                   <div className="font-medium text-gray-900 dark:text-white">
-                    {t('auth.rateSetting.currencyUSD')}
+                    {t('rateSetting.currencyUSD', { ns: 'auth' })}
                   </div>
                 </div>
               </button>
@@ -172,15 +178,21 @@ const RateSetting = () => {
                   transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
                   className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm"
                 >
-                  <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center mr-3">
+                  <div className={`flex items-center mb-4 ${isRTL ? 'justify-end' : ''}`}>
+                    <div className={`w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center ${
+                      isRTL ? 'ml-3' : 'mr-3'
+                    }`}>
                       <Icon className="w-5 h-5 text-brand-600 dark:text-brand-400" />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <div className="flex-1">
+                      <h3 className={`text-lg font-semibold text-gray-900 dark:text-white ${
+                        isRTL ? 'text-right' : 'text-left'
+                      }`}>
                         {rateType.title}
                       </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className={`text-sm text-gray-500 dark:text-gray-400 ${
+                        isRTL ? 'text-right' : 'text-left'
+                      }`}>
                         {rateType.description}
                       </p>
                     </div>
@@ -210,7 +222,7 @@ const RateSetting = () => {
             size="lg"
             className="w-full bg-brand-500 hover:bg-brand-600 text-white"
           >
-            {isLoading ? t('common.loading.saving') : t('auth.rateSetting.continue')}
+            {isLoading ? t('loading.saving', { ns: 'common' }) : t('rateSetting.continue', { ns: 'auth' })}
           </Button>
         </motion.div>
 
@@ -227,8 +239,8 @@ const RateSetting = () => {
             size="lg"
             className="w-full"
           >
-            <ArrowLeft className="mr-2 w-5 h-5" />
-            {t('common.actions.back')}
+            <ArrowLeft className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('actions.back', { ns: 'common' })}
           </Button>
         </motion.div>
       </motion.div>

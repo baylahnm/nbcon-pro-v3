@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { useThemeStore } from '@/stores/themeStore'
 import { ArrowLeft, MapPin, Bell, Camera, Folder, Shield } from 'lucide-react'
 
 const Permissions = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { language } = useThemeStore()
   const [isLoading, setIsLoading] = useState(false)
+  
+  const isRTL = language === 'ar'
   const [permissions, setPermissions] = useState({
     location: false,
     notifications: false,
@@ -19,29 +23,29 @@ const Permissions = () => {
   const permissionList = [
     {
       id: 'location',
-      title: t('auth.permissions.location.title'),
-      description: t('auth.permissions.location.description'),
+      title: t('permissions.location.title', { ns: 'auth' }),
+      description: t('permissions.location.description', { ns: 'auth' }),
       icon: MapPin,
       required: true
     },
     {
       id: 'notifications',
-      title: t('auth.permissions.notifications.title'),
-      description: t('auth.permissions.notifications.description'),
+      title: t('permissions.notifications.title', { ns: 'auth' }),
+      description: t('permissions.notifications.description', { ns: 'auth' }),
       icon: Bell,
       required: false
     },
     {
       id: 'camera',
-      title: t('auth.permissions.camera.title'),
-      description: t('auth.permissions.camera.description'),
+      title: t('permissions.camera.title', { ns: 'auth' }),
+      description: t('permissions.camera.description', { ns: 'auth' }),
       icon: Camera,
       required: false
     },
     {
       id: 'storage',
-      title: t('auth.permissions.storage.title'),
-      description: t('auth.permissions.storage.description'),
+      title: t('permissions.storage.title', { ns: 'auth' }),
+      description: t('permissions.storage.description', { ns: 'auth' }),
       icon: Folder,
       required: false
     }
@@ -110,18 +114,18 @@ const Permissions = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
+            className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center"
           >
-            {t('auth.permissions.title')}
+            {t('permissions.title', { ns: 'auth' })}
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-gray-600 dark:text-gray-300"
+            className="text-gray-600 dark:text-gray-300 text-center"
           >
-            {t('auth.permissions.subtitle')}
+            {t('permissions.subtitle', { ns: 'auth' })}
           </motion.p>
         </div>
 
@@ -144,23 +148,31 @@ const Permissions = () => {
                 transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm"
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start">
-                    <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center mr-4">
-                      <Icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                 <div className={`flex items-start justify-between ${isRTL ? '' : ''}`}>
+                   <div className={`flex items-start ${isRTL ? 'justify-end flex-1' : ''}`}>
+                     <div className={`w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center ${
+                       isRTL ? 'ml-4' : 'mr-4'
+                     }`}>
+                       <Icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
+                     </div>
+                    <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
+                      <div className={`flex items-center mb-2 ${isRTL ? 'justify-end' : ''}`}>
+                        <h3 className={`text-lg font-semibold text-gray-900 dark:text-white ${
+                          isRTL ? 'text-right' : 'text-left'
+                        }`}>
                           {permission.title}
                         </h3>
                         {permission.required && (
-                          <span className="ml-2 px-2 py-1 text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full">
-                            Required
+                          <span className={`px-2 py-1 text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full ${
+                            isRTL ? 'mr-2' : 'ml-2'
+                          }`}>
+                            {t('permissions.required', { ns: 'auth' })}
                           </span>
                         )}
                       </div>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      <p className={`text-gray-600 dark:text-gray-300 text-sm ${
+                        isRTL ? 'text-right' : 'text-left'
+                      }`}>
                         {permission.description}
                       </p>
                     </div>
@@ -194,9 +206,9 @@ const Permissions = () => {
             transition={{ delay: 0.7, duration: 0.5 }}
             className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg"
           >
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
-              <strong>Note:</strong> Location permission is required for geofenced check-ins and location-based job matching.
-            </p>
+             <p className="text-sm text-yellow-800 dark:text-yellow-200">
+               {t('permissions.locationNote', { ns: 'auth' })}
+             </p>
           </motion.div>
         )}
 
@@ -213,8 +225,8 @@ const Permissions = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <ArrowLeft className="mr-2 w-5 h-5" />
-            {t('common.actions.back')}
+            <ArrowLeft className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('actions.back', { ns: 'common' })}
           </Button>
           
           <Button
@@ -223,7 +235,7 @@ const Permissions = () => {
             size="lg"
             className="sm:w-auto"
           >
-            {t('auth.permissions.deny')}
+            {t('permissions.deny', { ns: 'auth' })}
           </Button>
           
           <Button
@@ -233,7 +245,7 @@ const Permissions = () => {
             size="lg"
             className="sm:w-auto bg-brand-500 hover:bg-brand-600 text-white"
           >
-            {isLoading ? t('common.loading.processing') : t('auth.permissions.continue')}
+            {isLoading ? t('loading.processing', { ns: 'common' }) : t('permissions.continue', { ns: 'auth' })}
           </Button>
         </motion.div>
 
@@ -244,9 +256,9 @@ const Permissions = () => {
           transition={{ delay: 0.9, duration: 0.5 }}
           className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
         >
-          <p>
-            You can change these permissions later in your device settings.
-          </p>
+           <p>
+             {t('permissions.settingsNote', { ns: 'auth' })}
+           </p>
         </motion.div>
       </motion.div>
     </div>

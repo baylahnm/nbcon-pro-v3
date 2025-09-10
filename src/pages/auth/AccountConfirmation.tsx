@@ -121,7 +121,7 @@ const AccountConfirmation = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
           >
-            {t('auth.accountConfirmation.title')}
+            {t('accountConfirmation.title', { ns: 'auth' })}
           </motion.h1>
           
           <motion.p
@@ -130,7 +130,7 @@ const AccountConfirmation = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="text-gray-600 dark:text-gray-300"
           >
-            {t('auth.accountConfirmation.subtitle')}
+            {t('accountConfirmation.subtitle', { ns: 'auth' })}
           </motion.p>
         </div>
 
@@ -145,13 +145,13 @@ const AccountConfirmation = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
               <User className="w-5 h-5 mr-2 text-brand-500" />
-              {t('auth.accountConfirmation.role')}
+              {t('accountConfirmation.role', { ns: 'auth' })}
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  {t('auth.accountConfirmation.role')}
+                  {t('accountConfirmation.role', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   Engineer
@@ -160,7 +160,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  {t('auth.accountConfirmation.phone')}
+                  {t('accountConfirmation.phone', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.phone}
@@ -169,7 +169,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  {t('auth.accountConfirmation.email')}
+                  {t('accountConfirmation.email', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.profile.email}
@@ -191,7 +191,7 @@ const AccountConfirmation = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
               <MapPin className="w-5 h-5 mr-2 text-brand-500" />
-              {t('auth.accountConfirmation.serviceArea')}
+              {t('accountConfirmation.serviceArea', { ns: 'auth' })}
             </h3>
             
             <div className="space-y-2">
@@ -219,7 +219,7 @@ const AccountConfirmation = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
               <DollarSign className="w-5 h-5 mr-2 text-brand-500" />
-              {t('auth.accountConfirmation.rates')}
+              {t('accountConfirmation.rates', { ns: 'auth' })}
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -267,7 +267,7 @@ const AccountConfirmation = () => {
             className="sm:w-auto"
           >
             <ArrowLeft className="mr-2 w-5 h-5" />
-            {t('common.actions.back')}
+            {t('actions.back', { ns: 'common' })}
           </Button>
           
           <Button
@@ -277,7 +277,7 @@ const AccountConfirmation = () => {
             className="sm:w-auto"
           >
             <Edit className="mr-2 w-5 h-5" />
-            {t('auth.accountConfirmation.edit')}
+            {t('accountConfirmation.edit', { ns: 'auth' })}
           </Button>
           
           <Button
@@ -286,7 +286,7 @@ const AccountConfirmation = () => {
             size="lg"
             className="sm:w-auto bg-brand-500 hover:bg-brand-600 text-white"
           >
-            {isLoading ? t('common.loading.processing') : t('auth.accountConfirmation.confirm')}
+            {isLoading ? t('loading.processing', { ns: 'common' }) : t('accountConfirmation.confirm', { ns: 'auth' })}
           </Button>
         </motion.div>
 

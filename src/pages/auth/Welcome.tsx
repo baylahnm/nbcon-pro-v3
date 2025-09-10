@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { useThemeStore } from '@/stores/themeStore'
 import { CheckCircle, ArrowRight, Play } from 'lucide-react'
 
 const Welcome = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { language } = useThemeStore()
   const [isLoading, setIsLoading] = useState(false)
+  
+  const isRTL = language === 'ar'
 
   const handleTutorial = async () => {
     setIsLoading(true)
@@ -36,23 +40,23 @@ const Welcome = () => {
 
   const features = [
     {
-      title: 'AI-Powered Matching',
-      description: 'Get matched with the perfect engineers for your projects',
+      title: t('welcome.features.aiMatching.title', { ns: 'auth' }),
+      description: t('welcome.features.aiMatching.description', { ns: 'auth' }),
       icon: '🤖'
     },
     {
-      title: 'Secure Payments',
-      description: 'Escrow-based payments ensure project completion',
+      title: t('welcome.features.securePayments.title', { ns: 'auth' }),
+      description: t('welcome.features.securePayments.description', { ns: 'auth' }),
       icon: '🔒'
     },
     {
-      title: 'Real-time Tracking',
-      description: 'Monitor project progress with live updates',
+      title: t('welcome.features.realTimeTracking.title', { ns: 'auth' }),
+      description: t('welcome.features.realTimeTracking.description', { ns: 'auth' }),
       icon: '📊'
     },
     {
-      title: 'Professional Network',
-      description: 'Connect with verified engineers and clients',
+      title: t('welcome.features.professionalNetwork.title', { ns: 'auth' }),
+      description: t('welcome.features.professionalNetwork.description', { ns: 'auth' }),
       icon: '🌐'
     }
   ]
@@ -80,18 +84,18 @@ const Welcome = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="text-3xl font-bold text-gray-900 dark:text-white mb-4"
+          className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center"
         >
-          {t('auth.welcome.title')}
+          {t('welcome.title', { ns: 'auth' })}
         </motion.h1>
         
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="text-xl text-gray-600 dark:text-gray-300 mb-8"
+          className="text-xl text-gray-600 dark:text-gray-300 mb-8 text-center"
         >
-          {t('auth.welcome.subtitle')}
+          {t('welcome.subtitle', { ns: 'auth' })}
         </motion.p>
 
         {/* Features Grid */}
@@ -107,13 +111,19 @@ const Welcome = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm text-left"
+              className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm ${
+                isRTL ? 'text-right' : 'text-left'
+              }`}
             >
               <div className="text-3xl mb-3">{feature.icon}</div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className={`text-lg font-semibold text-gray-900 dark:text-white mb-2 ${
+                isRTL ? 'text-right' : 'text-left'
+              }`}>
                 {feature.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
+              <p className={`text-gray-600 dark:text-gray-300 text-sm ${
+                isRTL ? 'text-right' : 'text-left'
+              }`}>
                 {feature.description}
               </p>
             </motion.div>
@@ -133,8 +143,8 @@ const Welcome = () => {
             size="lg"
             className="w-full bg-brand-500 hover:bg-brand-600 text-white"
           >
-            <Play className="mr-2 w-5 h-5" />
-            {t('auth.welcome.tutorial')}
+            <Play className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('welcome.tutorial', { ns: 'auth' })}
           </Button>
           
           <Button
@@ -143,8 +153,8 @@ const Welcome = () => {
             size="lg"
             className="w-full"
           >
-            {t('auth.welcome.getStarted')}
-            <ArrowRight className="ml-2 w-5 h-5" />
+            {t('welcome.getStarted', { ns: 'auth' })}
+            <ArrowRight className={`w-5 h-5 ${isRTL ? 'mr-2' : 'ml-2'}`} />
           </Button>
           
           <Button
@@ -153,7 +163,7 @@ const Welcome = () => {
             size="lg"
             className="w-full"
           >
-            {t('auth.welcome.skip')}
+            {t('welcome.skip', { ns: 'auth' })}
           </Button>
         </motion.div>
 
@@ -164,7 +174,9 @@ const Welcome = () => {
           transition={{ delay: 0.9, duration: 0.5 }}
           className="mt-8 text-sm text-gray-500 dark:text-gray-400"
         >
-          <p>Ready to revolutionize engineering services in Saudi Arabia?</p>
+          <p className="text-center">
+            {t('welcome.footer', { ns: 'auth' })}
+          </p>
         </motion.div>
       </motion.div>
     </div>
