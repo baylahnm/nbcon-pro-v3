@@ -26,12 +26,12 @@ import {
   Target,
   Award
 } from 'lucide-react'
+import { DirectionalIcon } from '@/components/system/DirectionalIcon'
 
 export default function Jobs() {
-  const { t, i18n } = useTranslation('common')
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('browse')
-  const [isRTL, setIsRTL] = useState(i18n.language === 'ar')
 
   const tabs = [
     { id: 'browse', label: t('jobs.browse', 'Browse Jobs'), icon: Search },
@@ -129,11 +129,11 @@ export default function Jobs() {
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder={t('jobs.searchJobs', 'Search jobs...')}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
+                className="w-full ps-10 pe-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
               />
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function Jobs() {
               <option>{t('jobs.mecca', 'Mecca')}</option>
             </select>
             <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
+              <Filter className="w-4 h-4 me-2" />
               {t('jobs.filters', 'Filters')}
             </Button>
           </div>
@@ -177,21 +177,21 @@ export default function Jobs() {
                   </h3>
                   {job.featured && (
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                      <Star className="w-3 h-3 mr-1" />
+                      <Star className="w-3 h-3 me-1" />
                       {t('jobs.featured', 'Featured')}
                     </span>
                   )}
                   {job.urgent && (
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                      <Zap className="w-3 h-3 mr-1" />
+                      <Zap className="w-3 h-3 me-1" />
                       {t('jobs.urgent', 'Urgent')}
                     </span>
                   )}
                 </div>
                 <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  <Briefcase className="w-4 h-4 mr-1" />
+                  <Briefcase className="w-4 h-4 me-1" />
                   {job.company}
-                  <MapPin className="w-4 h-4 ml-4 mr-1" />
+                  <MapPin className="w-4 h-4 ms-4 me-1" />
                   {job.location}
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
@@ -210,19 +210,19 @@ export default function Jobs() {
                 <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-4">
                     <span className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
+                      <Clock className="w-4 h-4 me-1" />
                       {job.posted}
                     </span>
                     <span className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
+                      <Users className="w-4 h-4 me-1" />
                       {job.applicants} {t('jobs.applicants', 'applicants')}
                     </span>
                     <span className="flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
+                      <Star className="w-4 h-4 me-1" />
                       {job.rating}
                     </span>
                   </div>
-                  <div className="text-right">
+                  <div className="text-end">
                     <div className="font-semibold text-gray-900 dark:text-white">
                       {job.budget}
                     </div>
@@ -239,7 +239,7 @@ export default function Jobs() {
                   {t('jobs.apply', 'Apply')}
                 </Button>
                 <Button variant="outline" size="sm">
-                  <Eye className="w-4 h-4 mr-1" />
+                  <Eye className="w-4 h-4 me-1" />
                   {t('jobs.view', 'View')}
                 </Button>
                 <Button variant="ghost" size="sm">
@@ -447,16 +447,18 @@ export default function Jobs() {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate(-1)}
-                className="mr-4"
+                className="me-4"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <DirectionalIcon>
+                  <ArrowLeft className="w-4 h-4" />
+                </DirectionalIcon>
               </Button>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                 {t('jobs.title', 'Jobs')}
               </h1>
             </div>
             <Button>
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4 me-2" />
               {t('jobs.postJob', 'Post Job')}
             </Button>
           </div>
@@ -481,7 +483,7 @@ export default function Jobs() {
                         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
-                    <Icon className="w-5 h-5 mr-3" />
+                    <Icon className="w-5 h-5 me-3" />
                     {tab.label}
                   </button>
                 )
