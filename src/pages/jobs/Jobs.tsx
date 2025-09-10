@@ -95,30 +95,30 @@ export default function Jobs() {
   const mockMyJobs = [
     {
       id: 'MY-001',
-      title: t('jobs.myJobs.sample1.title', 'Mechanical System Design'),
+      title: t('jobs.myJobs.sample1.title'),
       status: 'in-progress',
       progress: 65,
       deadline: '2024-02-15',
-      client: t('jobs.myJobs.sample1.client', 'Al-Noor Industries'),
-      budget: t('jobs.myJobs.sample1.budget', '12,000 SAR')
+      client: t('jobs.myJobs.sample1.client'),
+      budget: t('jobs.myJobs.sample1.budget')
     },
     {
       id: 'MY-002',
-      title: t('jobs.myJobs.sample2.title', 'Building Inspection Report'),
+      title: t('jobs.myJobs.sample2.title'),
       status: 'pending-review',
       progress: 100,
       deadline: '2024-01-30',
-      client: t('jobs.myJobs.sample2.client', 'Riyadh Municipality'),
-      budget: t('jobs.myJobs.sample2.budget', '8,500 SAR')
+      client: t('jobs.myJobs.sample2.client'),
+      budget: t('jobs.myJobs.sample2.budget')
     },
     {
       id: 'MY-003',
-      title: t('jobs.myJobs.sample3.title', 'Renovation Project Planning'),
+      title: t('jobs.myJobs.sample3.title'),
       status: 'completed',
       progress: 100,
       deadline: '2024-01-20',
-      client: t('jobs.myJobs.sample3.client', 'Private Client'),
-      budget: t('jobs.myJobs.sample3.budget', '5,000 SAR')
+      client: t('jobs.myJobs.sample3.client'),
+      budget: t('jobs.myJobs.sample3.budget')
     }
   ]
 
