@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   Search, 
   Filter, 
   Star, 
@@ -229,34 +229,22 @@ const EngineerFiltering = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="me-4" onClick={() => navigate('/')}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Find Engineers
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button
-                onClick={() => setShowFilters(!showFilters)}
-                variant={showFilters ? 'default' : 'outline'}
-                size="sm"
-              >
-                <SlidersHorizontal className="w-4 h-4 me-2" />
-                Filters
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <PageLayout
+      title="Find Engineers"
+      searchPlaceholder="Search engineers by name, skills, or location..."
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      headerActions={
+        <Button
+          onClick={() => setShowFilters(!showFilters)}
+          variant={showFilters ? 'default' : 'outline'}
+          size="sm"
+        >
+          <SlidersHorizontal className="w-4 h-4 me-2" />
+          Filters
+        </Button>
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-8">
           {/* Filters Sidebar */}
@@ -634,7 +622,7 @@ const EngineerFiltering = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   )
 }
 

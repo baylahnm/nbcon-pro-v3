@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   Send, 
   Mic, 
   MicOff, 
@@ -300,58 +300,36 @@ const LiveChat = () => {
   }, [messages])
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="me-4" onClick={() => navigate('/')}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Live Chat
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-gray-400'}`}></div>
-                <span className="text-sm text-gray-600 dark:text-gray-300">
-                  {isOnline ? 'Online' : 'Offline'}
-                </span>
-              </div>
-              
-              <Button
-                onClick={() => navigate('/video-calls')}
-                variant="outline"
-                size="sm"
-              >
-                <Video className="w-4 h-4 me-2" />
-                Video Calls
-              </Button>
-            </div>
+    <PageLayout
+      title="Live Chat"
+      searchPlaceholder="Search conversations..."
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      showViewToggle={false}
+      headerActions={
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+            <span className="text-sm text-gray-600 dark:text-gray-300">
+              {isOnline ? 'Online' : 'Offline'}
+            </span>
           </div>
+          
+          <Button
+            onClick={() => navigate('/video-calls')}
+            variant="outline"
+            size="sm"
+          >
+            <Video className="w-4 h-4 me-2" />
+            Video Calls
+          </Button>
         </div>
-      </header>
-
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-12rem)]">
           {/* Chats List */}
           <div className="lg:col-span-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-            {/* Search Bar */}
-            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-              <div className="relative">
-                <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search conversations..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full ps-10 pe-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
-                />
-              </div>
-            </div>
 
             {/* Chats */}
             <div className="overflow-y-auto h-[calc(100%-5rem)]">
@@ -636,7 +614,7 @@ const LiveChat = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   )
 }
 

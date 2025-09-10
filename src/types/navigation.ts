@@ -9,6 +9,8 @@ export interface MenuItem {
   children?: MenuItem[];
   roles?: UserRole[];
   badge?: string | number;
+  isExpandable?: boolean;
+  subItems?: MenuItem[];
 }
 
 export interface MenuSection {

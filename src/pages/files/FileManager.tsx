@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   Search, 
   Filter, 
   Upload,
@@ -279,6 +279,11 @@ const FileManager = () => {
     }
   })
 
+  const filterTabs = fileTypeOptions.map(option => ({
+    id: option.id,
+    label: `${option.label} (${option.count})`
+  }))
+
   const handleItemSelect = (itemId: string) => {
     setSelectedFiles(prev => 
       prev.includes(itemId) 
@@ -358,43 +363,38 @@ const FileManager = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="me-4" onClick={() => navigate('/')}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t('files.title', 'File Manager')}
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button
-                onClick={() => setShowCreateFolder(true)}
-                variant="outline"
-                size="sm"
-              >
-                <FolderPlus className="w-4 h-4 me-2" />
-                {t('files.newFolder', 'New Folder')}
-              </Button>
-              
-              <Button
-                onClick={() => setShowUpload(true)}
-                size="sm"
-                className="bg-brand-500 hover:bg-brand-600 text-white"
-              >
-                <Upload className="w-4 h-4 me-2" />
-                {t('files.uploadFiles', 'Upload Files')}
-              </Button>
-            </div>
-          </div>
+    <PageLayout
+      title={t('files.title', 'File Manager')}
+      searchPlaceholder={t('files.search', 'Search files and folders...')}
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      viewMode={viewMode}
+      onViewModeChange={setViewMode}
+      filterTabs={filterTabs}
+      activeTab={filterType}
+      onTabChange={setFilterType}
+      headerActions={
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={() => setShowCreateFolder(true)}
+            variant="outline"
+            size="sm"
+          >
+            <FolderPlus className="w-4 h-4 me-2" />
+            {t('files.newFolder', 'New Folder')}
+          </Button>
+          
+          <Button
+            onClick={() => setShowUpload(true)}
+            size="sm"
+            className="bg-brand-500 hover:bg-brand-600 text-white"
+          >
+            <Upload className="w-4 h-4 me-2" />
+            {t('files.uploadFiles', 'Upload Files')}
+          </Button>
         </div>
-      </header>
-
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filters */}
         <motion.div
@@ -780,7 +780,7 @@ const FileManager = () => {
           </motion.div>
         )}
       </div>
-    </div>
+    </PageLayout>
   )
 }
 

@@ -923,14 +923,15 @@ export const advancedFeaturesMenu: MenuSection[] = [
   }
 ];
 
-// Main sidebar navigation structure
+// New hierarchical sidebar navigation structure
 export const sidebarNavigation = [
   {
     id: 'dashboard',
     label: 'Dashboard',
     labelAr: 'لوحة التحكم',
     icon: '🏠',
-    path: '/'
+    path: '/',
+    isExpandable: false
   },
   {
     id: 'browse',
@@ -938,14 +939,83 @@ export const sidebarNavigation = [
     labelAr: 'تصفح',
     icon: '🔍',
     path: '/browse-services',
-    roles: ['client', 'engineer']
+    isExpandable: true,
+    roles: ['client', 'engineer'],
+    subItems: [
+      {
+        id: 'browse-services',
+        label: 'Browse Services',
+        labelAr: 'تصفح الخدمات',
+        icon: '🔍',
+        path: '/browse-services'
+      },
+      {
+        id: 'browse-engineers',
+        label: 'Browse Engineers',
+        labelAr: 'تصفح المهندسين',
+        icon: '👥',
+        path: '/engineers/browse'
+      },
+      {
+        id: 'advanced-search',
+        label: 'Advanced Search',
+        labelAr: 'البحث المتقدم',
+        icon: '🔎',
+        path: '/search/advanced'
+      }
+    ]
   },
   {
     id: 'jobs',
     label: 'Jobs',
     labelAr: 'الوظائف',
     icon: '💼',
-    path: '/jobs/browse'
+    path: '/jobs/browse',
+    isExpandable: true,
+    subItems: [
+      {
+        id: 'browse-jobs',
+        label: 'Browse Available Jobs',
+        labelAr: 'تصفح الوظائف المتاحة',
+        icon: '🔍',
+        path: '/jobs/browse'
+      },
+      {
+        id: 'real-time-matching',
+        label: 'Real-time Job Matching',
+        labelAr: 'مطابقة الوظائف الفورية',
+        icon: '⚡',
+        path: '/jobs/real-time-matching'
+      },
+      {
+        id: 'job-tracking',
+        label: 'Job Status Tracking',
+        labelAr: 'تتبع حالة الوظيفة',
+        icon: '📍',
+        path: '/jobs/status-tracking'
+      },
+      {
+        id: 'emergency-jobs',
+        label: 'Emergency Job Requests',
+        labelAr: 'طلبات الوظائف الطارئة',
+        icon: '🚨',
+        path: '/jobs/emergency'
+      },
+      {
+        id: 'job-recommendations',
+        label: 'Automated Recommendations',
+        labelAr: 'التوصيات الآلية',
+        icon: '🤖',
+        path: '/jobs/recommendations'
+      },
+      {
+        id: 'post-job',
+        label: 'Post New Job',
+        labelAr: 'نشر وظيفة جديدة',
+        icon: '➕',
+        path: '/jobs/post'
+      }
+    ]
   },
   {
     id: 'payments',
@@ -953,7 +1023,52 @@ export const sidebarNavigation = [
     labelAr: 'المدفوعات',
     icon: '💰',
     path: '/payments',
-    roles: ['client', 'engineer']
+    isExpandable: true,
+    roles: ['client', 'engineer'],
+    subItems: [
+      {
+        id: 'earnings-dashboard',
+        label: 'Earnings Dashboard',
+        labelAr: 'لوحة الأرباح',
+        icon: '💰',
+        path: '/payments/earnings'
+      },
+      {
+        id: 'payment-methods',
+        label: 'Payment Methods',
+        labelAr: 'طرق الدفع',
+        icon: '💳',
+        path: '/payments/methods'
+      },
+      {
+        id: 'escrow-payments',
+        label: 'Escrow Payments',
+        labelAr: 'مدفوعات الضمان',
+        icon: '🔒',
+        path: '/payments/escrow'
+      },
+      {
+        id: 'payout-settings',
+        label: 'Payout Settings',
+        labelAr: 'إعدادات المدفوعات',
+        icon: '🏦',
+        path: '/payments/payouts'
+      },
+      {
+        id: 'time-tracking',
+        label: 'Time Tracking',
+        labelAr: 'تتبع الوقت',
+        icon: '⏱️',
+        path: '/payments/time-tracking'
+      },
+      {
+        id: 'quote-builder',
+        label: 'Quote Builder',
+        labelAr: 'منشئ العروض',
+        icon: '📋',
+        path: '/payments/quote-builder'
+      }
+    ]
   },
   {
     id: 'messages',
@@ -961,34 +1076,145 @@ export const sidebarNavigation = [
     labelAr: 'الرسائل',
     icon: '💬',
     path: '/messaging',
-    badge: 3 // Example notification count
+    isExpandable: true,
+    badge: 3,
+    subItems: [
+      {
+        id: 'live-chat',
+        label: 'Live Chat',
+        labelAr: 'الدردشة المباشرة',
+        icon: '💬',
+        path: '/messaging/chat'
+      },
+      {
+        id: 'notifications',
+        label: 'Notifications',
+        labelAr: 'الإشعارات',
+        icon: '🔔',
+        path: '/messaging/notifications'
+      },
+      {
+        id: 'message-center',
+        label: 'Message Center',
+        labelAr: 'مركز الرسائل',
+        icon: '📬',
+        path: '/messaging/center'
+      }
+    ]
   },
   {
     id: 'analytics',
     label: 'Analytics',
     labelAr: 'التحليلات',
     icon: '📊',
-    path: '/analytics'
+    path: '/analytics',
+    isExpandable: true,
+    subItems: [
+      {
+        id: 'overview',
+        label: 'Overview',
+        labelAr: 'نظرة عامة',
+        icon: '📊',
+        path: '/analytics/overview'
+      },
+      {
+        id: 'performance',
+        label: 'Performance',
+        labelAr: 'الأداء',
+        icon: '📈',
+        path: '/analytics/performance'
+      },
+      {
+        id: 'reports',
+        label: 'Reports',
+        labelAr: 'التقارير',
+        icon: '📋',
+        path: '/analytics/reports'
+      },
+      {
+        id: 'insights',
+        label: 'Insights',
+        labelAr: 'الرؤى',
+        icon: '💡',
+        path: '/analytics/insights'
+      }
+    ]
   },
   {
     id: 'settings',
     label: 'Settings',
     labelAr: 'الإعدادات',
     icon: '⚙️',
-    path: '/settings'
+    path: '/settings',
+    isExpandable: true,
+    subItems: [
+      {
+        id: 'profile-settings',
+        label: 'Profile Settings',
+        labelAr: 'إعدادات الملف الشخصي',
+        icon: '👤',
+        path: '/settings/profile'
+      },
+      {
+        id: 'account-settings',
+        label: 'Account Settings',
+        labelAr: 'إعدادات الحساب',
+        icon: '⚙️',
+        path: '/settings/account'
+      },
+      {
+        id: 'preferences',
+        label: 'Preferences',
+        labelAr: 'التفضيلات',
+        icon: '🎨',
+        path: '/settings/preferences'
+      },
+      {
+        id: 'security',
+        label: 'Security',
+        labelAr: 'الأمان',
+        icon: '🔒',
+        path: '/settings/security'
+      }
+    ]
   },
   {
     id: 'help',
-    label: 'Help Center',
-    labelAr: 'مركز المساعدة',
+    label: 'Help',
+    labelAr: 'المساعدة',
     icon: '❓',
-    path: '/support'
+    path: '/support',
+    isExpandable: true,
+    subItems: [
+      {
+        id: 'help-center',
+        label: 'Help Center',
+        labelAr: 'مركز المساعدة',
+        icon: '❓',
+        path: '/support'
+      },
+      {
+        id: 'contact-support',
+        label: 'Contact Support',
+        labelAr: 'اتصل بالدعم',
+        icon: '📞',
+        path: '/support/contact'
+      },
+      {
+        id: 'documentation',
+        label: 'Documentation',
+        labelAr: 'الوثائق',
+        icon: '📚',
+        path: '/support/docs'
+      }
+    ]
   },
   {
     id: 'logout',
     label: 'Logout',
     labelAr: 'تسجيل الخروج',
     icon: '🚪',
-    path: '/logout'
+    path: '/logout',
+    isExpandable: false
   }
 ];
