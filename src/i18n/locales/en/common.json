@@ -341,6 +341,57 @@
     "viewDetails": "View Details",
     "noResultsTitle": "No services found",
     "noResultsHint": "Try adjusting your search criteria or browse different categories.",
-    "clearFilters": "Clear Filters"
+    "clearFilters": "Clear Filters",
+    "serviceImage": "Service Image",
+    "samples": {
+      "1": {
+        "title": "Office Building Design",
+        "engineer": "Ahmed Al-Rashid",
+        "location": "Riyadh",
+        "price": "SAR 15,000",
+        "duration": "2-3 weeks",
+        "description": "Complete architectural design for modern office building with sustainable features."
+      },
+      "2": {
+        "title": "HVAC System Design",
+        "engineer": "Sarah Al-Mansouri",
+        "location": "Jeddah",
+        "price": "SAR 8,500",
+        "duration": "1-2 weeks",
+        "description": "Energy-efficient HVAC system design for commercial buildings."
+      },
+      "3": {
+        "title": "Structural Analysis",
+        "engineer": "Mohammed Al-Zahrani",
+        "location": "Dammam",
+        "price": "SAR 12,000",
+        "duration": "1 week",
+        "description": "Comprehensive structural analysis and safety assessment."
+      },
+      "4": {
+        "title": "Electrical Installation",
+        "engineer": "Fatima Al-Shehri",
+        "location": "Riyadh",
+        "price": "SAR 6,500",
+        "duration": "1-2 weeks",
+        "description": "Complete electrical system design and installation planning."
+      },
+      "5": {
+        "title": "Road Construction",
+        "engineer": "Khalid Al-Otaibi",
+        "location": "Tabuk",
+        "price": "SAR 25,000",
+        "duration": "4-6 weeks",
+        "description": "Highway construction project with modern infrastructure."
+      },
+      "6": {
+        "title": "Water Treatment Plant",
+        "engineer": "Noura Al-Ghamdi",
+        "location": "Jeddah",
+        "price": "SAR 35,000",
+        "duration": "6-8 weeks",
+        "description": "Advanced water treatment facility design and implementation."
+      }
+    }
   }
 }

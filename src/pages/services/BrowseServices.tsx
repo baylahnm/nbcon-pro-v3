@@ -13,6 +13,7 @@ import {
   Grid,
   List
 } from 'lucide-react'
+import { DirectionalIcon } from '@/components/system/DirectionalIcon'
 
 const BrowseServices = () => {
   const { t } = useTranslation('common')
@@ -32,88 +33,89 @@ const BrowseServices = () => {
   const services = [
     {
       id: '1',
-      title: 'Office Building Design',
-      engineer: 'Ahmed Al-Rashid',
+      title: t('servicesPage.samples.1.title'),
+      engineer: t('servicesPage.samples.1.engineer'),
       rating: 4.9,
       reviews: 127,
-      location: 'Riyadh',
-      price: 'SAR 15,000',
-      duration: '2-3 weeks',
+      location: t('servicesPage.samples.1.location'),
+      price: t('servicesPage.samples.1.price'),
+      duration: t('servicesPage.samples.1.duration'),
       category: 'architectural',
       image: '/api/placeholder/300/200',
-      description: 'Complete architectural design for modern office building with sustainable features.'
+      description: t('servicesPage.samples.1.description')
     },
     {
       id: '2',
-      title: 'HVAC System Design',
-      engineer: 'Sarah Al-Mansouri',
+      title: t('servicesPage.samples.2.title'),
+      engineer: t('servicesPage.samples.2.engineer'),
       rating: 4.8,
       reviews: 89,
-      location: 'Jeddah',
-      price: 'SAR 8,500',
-      duration: '1-2 weeks',
+      location: t('servicesPage.samples.2.location'),
+      price: t('servicesPage.samples.2.price'),
+      duration: t('servicesPage.samples.2.duration'),
       category: 'mechanical',
       image: '/api/placeholder/300/200',
-      description: 'Energy-efficient HVAC system design for commercial buildings.'
+      description: t('servicesPage.samples.2.description')
     },
     {
       id: '3',
-      title: 'Structural Analysis',
-      engineer: 'Mohammed Al-Zahrani',
+      title: t('servicesPage.samples.3.title'),
+      engineer: t('servicesPage.samples.3.engineer'),
       rating: 4.9,
       reviews: 156,
-      location: 'Dammam',
-      price: 'SAR 12,000',
-      duration: '1 week',
+      location: t('servicesPage.samples.3.location'),
+      price: t('servicesPage.samples.3.price'),
+      duration: t('servicesPage.samples.3.duration'),
       category: 'structural',
       image: '/api/placeholder/300/200',
-      description: 'Comprehensive structural analysis and safety assessment.'
+      description: t('servicesPage.samples.3.description')
     },
     {
       id: '4',
-      title: 'Electrical Installation',
-      engineer: 'Fatima Al-Shehri',
+      title: t('servicesPage.samples.4.title'),
+      engineer: t('servicesPage.samples.4.engineer'),
       rating: 4.7,
       reviews: 98,
-      location: 'Riyadh',
-      price: 'SAR 6,500',
-      duration: '1-2 weeks',
+      location: t('servicesPage.samples.4.location'),
+      price: t('servicesPage.samples.4.price'),
+      duration: t('servicesPage.samples.4.duration'),
       category: 'electrical',
       image: '/api/placeholder/300/200',
-      description: 'Complete electrical system design and installation planning.'
+      description: t('servicesPage.samples.4.description')
     },
     {
       id: '5',
-      title: 'Road Construction',
-      engineer: 'Khalid Al-Otaibi',
+      title: t('servicesPage.samples.5.title'),
+      engineer: t('servicesPage.samples.5.engineer'),
       rating: 4.8,
       reviews: 134,
-      location: 'Tabuk',
-      price: 'SAR 25,000',
-      duration: '4-6 weeks',
+      location: t('servicesPage.samples.5.location'),
+      price: t('servicesPage.samples.5.price'),
+      duration: t('servicesPage.samples.5.duration'),
       category: 'civil',
       image: '/api/placeholder/300/200',
-      description: 'Highway construction project with modern infrastructure.'
+      description: t('servicesPage.samples.5.description')
     },
     {
       id: '6',
-      title: 'Water Treatment Plant',
-      engineer: 'Noura Al-Ghamdi',
+      title: t('servicesPage.samples.6.title'),
+      engineer: t('servicesPage.samples.6.engineer'),
       rating: 4.9,
       reviews: 76,
-      location: 'Jeddah',
-      price: 'SAR 35,000',
-      duration: '6-8 weeks',
+      location: t('servicesPage.samples.6.location'),
+      price: t('servicesPage.samples.6.price'),
+      duration: t('servicesPage.samples.6.duration'),
       category: 'civil',
       image: '/api/placeholder/300/200',
-      description: 'Advanced water treatment facility design and implementation.'
+      description: t('servicesPage.samples.6.description')
     }
   ]
 
   const filteredServices = services.filter(service => {
-    const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         service.engineer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         service.description.toLowerCase().includes(searchQuery.toLowerCase())
+    const q = searchQuery.toLowerCase()
+    const matchesSearch = service.title.toLowerCase().includes(q) ||
+                         service.engineer.toLowerCase().includes(q) ||
+                         service.description.toLowerCase().includes(q)
     const matchesCategory = selectedCategory === 'all' || service.category === selectedCategory
     return matchesSearch && matchesCategory
   })
@@ -125,8 +127,10 @@ const BrowseServices = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4">
-                <ArrowLeft className="w-5 h-5" />
+              <Button variant="ghost" size="sm" className="me-4">
+                <DirectionalIcon>
+                  <ArrowLeft className="w-5 h-5" />
+                </DirectionalIcon>
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t('servicesPage.headerTitle')}
@@ -153,13 +157,13 @@ const BrowseServices = () => {
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
             {/* Search Bar */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
                 placeholder={t('servicesPage.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="w-full ps-10 pe-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
               />
             </div>
             
@@ -235,7 +239,7 @@ const BrowseServices = () => {
                 viewMode === 'list' ? 'w-48 h-32' : 'w-full h-48'
               }`}>
                 <div className="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-                  <span>Service Image</span>
+                  <span>{t('servicesPage.serviceImage')}</span>
                 </div>
               </div>
 
@@ -247,10 +251,10 @@ const BrowseServices = () => {
                   </h3>
                   <div className="flex items-center">
                     <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="ml-1 text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="ms-1 text-sm font-medium text-gray-900 dark:text-white">
                       {service.rating}
                     </span>
-                    <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="ms-1 text-sm text-gray-500 dark:text-gray-400">
                       ({service.reviews})
                     </span>
                   </div>
@@ -266,11 +270,11 @@ const BrowseServices = () => {
 
                 <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <span className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-1" />
+                    <MapPin className="w-4 h-4 me-1" />
                     {service.location}
                   </span>
                   <span className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1" />
+                    <Clock className="w-4 h-4 me-1" />
                     {service.duration}
                   </span>
                 </div>
