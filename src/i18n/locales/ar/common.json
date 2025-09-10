@@ -46,7 +46,8 @@
       "reports": "التقارير",
       "businessIntelligence": "ذكاء الأعمال",
       "security": "الأمان"
-    }
+    },
+    "engineerDashboard": "لوحة تحكم المهندس"
   },
   "actions": {
     "continue": "متابعة",
@@ -171,5 +172,24 @@
     "version": "الإصدار",
     "folder": "مجلد",
     "emptyHint": "حاول تعديل معايير البحث أو قم برفع بعض الملفات."
+  },
+  "analytics": {
+    "title": "التحليلات",
+    "description": "تتبع أداء عملك والرؤى التحليلية",
+    "overview": "نظرة عامة",
+    "revenue": "الإيرادات",
+    "jobs": "الوظائف",
+    "users": "المستخدمون",
+    "performance": "الأداء",
+    "reports": "التقارير",
+    "totalRevenue": "إجمالي الإيرادات",
+    "fromLastMonth": "مقارنة بالشهر الماضي",
+    "totalJobs": "إجمالي الوظائف",
+    "thisMonth": "هذا الشهر",
+    "performanceReport": "تقرير الأداء",
+    "refresh": "تحديث",
+    "recentActivity": "النشاط الأخير",
+    "activitySample": "تم قبول عرضك لـ \"تصميم نظام تكييف لمبنى تجاري\"",
+    "last2hours": "منذ ساعتين"
   }
 }

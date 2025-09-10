@@ -46,7 +46,8 @@
       "reports": "Reports",
       "businessIntelligence": "Business Intelligence",
       "security": "Security"
-    }
+    },
+    "engineerDashboard": "Engineer Dashboard"
   },
   "actions": {
     "continue": "Continue",
@@ -274,7 +275,10 @@
     "revenueReport": "Revenue Report",
     "jobReport": "Job Report",
     "performanceReport": "Performance Report",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "recentActivity": "Recent Activity",
+    "activitySample": "Your quote for \"HVAC System Design for Commercial Building\" was accepted",
+    "last2hours": "2 hours ago"
   },
   "support": {
     "title": "Help Center",
