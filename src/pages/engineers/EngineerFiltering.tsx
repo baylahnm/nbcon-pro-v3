@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { PageLayout } from '@/components/layout/PageLayout'
 import { SkillChip } from '@/components/ui/SkillChip'
 import { toSkillSlug } from '@/i18n/skillMap'
+import { createEngineerPool, buildEngineersForTab, normalizeSkillId } from '@/domain/engineerPool'
 import { 
   Search, 
   Filter, 
@@ -27,6 +28,26 @@ const EngineerFiltering = () => {
   const navigate = useNavigate()
   const isRTL = i18n.language === 'ar'
   
+  // Title localization helper similar to RealTimeMatching
+  const localizeTitle = (title: string) => {
+    const map: Record<string, string> = {
+      'Senior Civil Engineer': 'engineerTitles.seniorCivilEngineer',
+      'Mechanical Engineer': 'engineerTitles.mechanicalEngineer',
+      'Structural Engineer': 'engineerTitles.structuralEngineer',
+      'Electrical Engineer': 'engineerTitles.electricalEngineer',
+      'Project Manager': 'engineerTitles.projectManager',
+      'Architect': 'engineerTitles.architect',
+      'Environmental Engineer': 'engineerTitles.environmentalEngineer',
+    }
+    const key = map[title]
+    return key ? t(key, title) : title
+  }
+
+  const localizeExperience = (s: string) => {
+    if (i18n.language !== 'ar') return s
+    return s.replace(/years?/gi, t('engineerFiltering.engineer.years', 'years'))
+  }
+
   // Helper functions for translations
   const getEngineerName = (id: string) => {
     const engineerMap: { [key: string]: string } = {
@@ -232,92 +253,8 @@ const EngineerFiltering = () => {
     }
   ], [t, i18n.language])
 
-  const engineers = [
-    {
-      id: '1',
-      engineerId: 'ahmed',
-      name: 'Ahmed Al-Rashid',
-      title: 'Senior Civil Engineer',
-      rating: 4.9,
-      reviews: 127,
-      location: 'Riyadh',
-      experience: '8 years',
-      availability: t('engineerFiltering.availability.now', 'Available now'),
-      responseTime: '2 hours',
-      hourlyRate: 'SAR 150',
-      skills: ['AutoCAD', 'Revit', 'Project Management', 'Structural Analysis'],
-      certifications: ['PE License', 'PMP', 'LEED'],
-      languages: ['Arabic', 'English'],
-      portfolio: 12,
-      completionRate: '98%',
-      isVerified: true,
-      isOnline: true,
-      avatar: '/api/placeholder/60/60'
-    },
-    {
-      id: '2',
-      engineerId: 'sarah',
-      name: 'Sarah Al-Mansouri',
-      title: 'Mechanical Engineer',
-      rating: 4.8,
-      reviews: 89,
-      location: 'Jeddah',
-      experience: '6 years',
-      availability: t('engineerFiltering.availability.thisWeek', 'Available this week'),
-      responseTime: '1 hour',
-      hourlyRate: 'SAR 120',
-      skills: ['HVAC Design', 'Energy Efficiency', 'Building Systems', '3D Modeling'],
-      certifications: ['PE License', 'LEED'],
-      languages: ['Arabic', 'English', 'French'],
-      portfolio: 8,
-      completionRate: '96%',
-      isVerified: true,
-      isOnline: false,
-      avatar: '/api/placeholder/60/60'
-    },
-    {
-      id: '3',
-      engineerId: 'mohammed',
-      name: 'Mohammed Al-Zahrani',
-      title: 'Structural Engineer',
-      rating: 4.9,
-      reviews: 156,
-      location: 'Dammam',
-      experience: '10 years',
-      availability: t('engineerFiltering.availability.thisMonth', 'Available this month'),
-      responseTime: '3 hours',
-      hourlyRate: 'SAR 180',
-      skills: ['Structural Analysis', 'Safety Assessment', 'Building Codes', 'Seismic Design'],
-      certifications: ['PE License', 'PMP', 'SCE Certified'],
-      languages: ['Arabic', 'English'],
-      portfolio: 15,
-      completionRate: '99%',
-      isVerified: true,
-      isOnline: true,
-      avatar: '/api/placeholder/60/60'
-    },
-    {
-      id: '4',
-      engineerId: 'fatima',
-      name: 'Fatima Al-Shehri',
-      title: 'Electrical Engineer',
-      rating: 4.7,
-      reviews: 98,
-      location: 'Riyadh',
-      experience: '5 years',
-      availability: t('engineerFiltering.availability.now', 'Available now'),
-      responseTime: '4 hours',
-      hourlyRate: 'SAR 100',
-      skills: ['Power Systems', 'Lighting Design', 'Smart Buildings', 'Renewable Energy'],
-      certifications: ['PE License', 'AutoCAD Certified'],
-      languages: ['Arabic', 'English', 'German'],
-      portfolio: 6,
-      completionRate: '94%',
-      isVerified: true,
-      isOnline: false,
-      avatar: '/api/placeholder/60/60'
-    }
-  ]
+  const engineerPool = useMemo(() => createEngineerPool(t, i18n.language), [t, i18n.language])
+  const engineers = useMemo(() => buildEngineersForTab(engineerPool, activeSkillTab, 'ef-'), [engineerPool, activeSkillTab])
 
   const filteredEngineers = engineers.filter(engineer => {
     const matchesSearch = engineer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -334,13 +271,13 @@ const EngineerFiltering = () => {
     const matchesLocation = !filters.location || engineer.location.toLowerCase().includes(filters.location.toLowerCase())
     const matchesExperience = !filters.experience || engineer.experience === filters.experience
     const matchesRating = !filters.rating || engineer.rating >= parseFloat(filters.rating)
-    const matchesAvailability = !filters.availability || engineer.availability === filters.availability
-    const matchesSkills = filters.skills.length === 0 || filters.skills.every(skill => engineer.skills.includes(skill))
-    const matchesCertifications = filters.certifications.length === 0 || filters.certifications.every(cert => engineer.certifications.includes(cert))
-    const matchesLanguages = filters.languages.length === 0 || filters.languages.every(lang => engineer.languages.includes(lang))
+    const matchesAvailability = !filters.availability || engineer.availabilityKey === filters.availability
+    const matchesSkills = filters.skills.length === 0 || filters.skills.every(skill => engineer.skills.includes(normalizeSkillId(skill) || (toSkillSlug(skill) as any) || (skill as any)))
+    const matchesCertifications = filters.certifications.length === 0 || (engineer.certifications || []).length === 0 || filters.certifications.every(cert => (engineer.certifications || []).includes(cert))
+    const matchesLanguages = filters.languages.length === 0 || (engineer.languages || []).length === 0 || filters.languages.every(lang => (engineer.languages || []).includes(lang))
     
-    // Skill tab filtering
-    const matchesSkillTab = activeSkillTab === 'all' || engineer.skills.includes(activeSkillTab)
+    // Skill tab filtering (normalize camelCase ids to slugs)
+    const matchesSkillTab = activeSkillTab === 'all' || engineer.skills.includes((normalizeSkillId(activeSkillTab) as any) || (activeSkillTab as any))
     
     return matchesSearch && matchesLocation && matchesExperience && matchesRating && 
            matchesAvailability && matchesSkills && matchesCertifications && matchesLanguages && matchesSkillTab
@@ -389,16 +326,16 @@ const EngineerFiltering = () => {
     navigate('/ai-matches')
   }
 
-  const getAvailabilityColor = (availability: string) => {
-    // Check both English and Arabic versions
-    if (availability === 'Available now' || availability === t('engineerFiltering.availability.now', 'Available now')) {
-      return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-    } else if (availability === 'Available this week' || availability === t('engineerFiltering.availability.thisWeek', 'Available this week')) {
-      return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
-    } else if (availability === 'Available this month' || availability === t('engineerFiltering.availability.thisMonth', 'Available this month')) {
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
-    } else {
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
+  const getAvailabilityColor = (availabilityKey: 'now' | 'thisWeek' | 'thisMonth') => {
+    switch (availabilityKey) {
+      case 'now':
+        return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+      case 'thisWeek':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
+      case 'thisMonth':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
     }
   }
 
@@ -662,7 +599,7 @@ const EngineerFiltering = () => {
                             <h3 className={`font-semibold text-gray-900 dark:text-white ${
                               viewMode === 'list' ? 'text-base' : 'text-lg'
                             }`}>
-                              {isRTL ? getEngineerName(engineer.engineerId) : engineer.name}
+                              {engineer.name}
                             </h3>
                             {engineer.isVerified && (
                               <CheckCircle className="w-4 h-4 text-green-500 ms-2" />
@@ -674,7 +611,7 @@ const EngineerFiltering = () => {
                           <p className={`text-gray-600 dark:text-gray-300 ${
                             viewMode === 'list' ? 'text-xs' : 'text-sm'
                           }`}>
-                            {isRTL ? getEngineerTitle(engineer.engineerId) : engineer.title}
+                            {localizeTitle(engineer.title)}
                           </p>
                         </div>
                       </div>

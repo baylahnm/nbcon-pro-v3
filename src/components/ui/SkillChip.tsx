@@ -8,8 +8,10 @@ interface SkillChipProps {
 
 export function SkillChip({ label, className = '' }: SkillChipProps) {
   const { t } = useTranslation(['skills'])
-  const slug = toSkillSlug(label)
-  const text = slug ? t(`${slug}`, { ns: 'skills' }) : label // fallback if unknown
+  // Support both display labels (e.g., "AutoCAD") and slugs (e.g., "autocad")
+  const raw = label.trim()
+  const slug = toSkillSlug(raw) || raw
+  const text = t(`${slug}`, { ns: 'skills', defaultValue: raw })
   
   return (
     <span 

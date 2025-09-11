@@ -5,7 +5,7 @@ import { useThemeStore } from '../../stores/themeStore';
 import { cn } from '../../lib/utils';
 
 export default function Header() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   const { theme, setTheme } = useThemeStore();
   const isRTL = i18n.language === 'ar';
 
@@ -27,7 +27,7 @@ export default function Header() {
             <Search className="absolute top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 inset-s-3" />
             <input
               type="text"
-              placeholder={t('common.search', 'Search...')}
+              placeholder={t('common:search', 'Search...')}
               className="w-full h-10 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 ps-10 pe-4"
             />
           </div>

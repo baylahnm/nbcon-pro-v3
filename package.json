@@ -11,6 +11,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:rtl": "eslint --ext .tsx,.ts src",
     "scan:rtl": "node scripts/scan-rtl.js",
+    "scan:i18n": "node scripts/scan-i18n-pages.mjs",
     "test:e2e": "playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

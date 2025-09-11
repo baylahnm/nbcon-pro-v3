@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { PageLayout } from '@/components/layout/PageLayout'
 import { Button } from '@/components/ui/button'
 import { SkillChip } from '@/components/ui/SkillChip'
+import { formatSar } from '@/i18n/formatters'
+import { createEngineerPool, buildEngineersForTab } from '@/domain/engineerPool'
 import {
   Search,
   Filter,
@@ -37,6 +39,48 @@ const AdvancedSearch = () => {
     languages: [] as string[]
   })
 
+  // Title + experience localization helpers
+  const localizeTitle = (title: string) => {
+    const map: Record<string, string> = {
+      'Senior Civil Engineer': 'common:engineerTitles.seniorCivilEngineer',
+      'Mechanical Engineer': 'common:engineerTitles.mechanicalEngineer',
+      'Structural Engineer': 'common:engineerTitles.structuralEngineer',
+      'Electrical Engineer': 'common:engineerTitles.electricalEngineer',
+      'Project Manager': 'common:engineerTitles.projectManager',
+      'Architect': 'common:engineerTitles.architect',
+      'Environmental Engineer': 'common:engineerTitles.environmentalEngineer',
+    }
+    const key = map[title]
+    return key ? (t as any)(key, title) : title
+  }
+
+  const localizeExperience = (s: string) => {
+    if (i18n.language !== 'ar') return s
+    return s.replace(/years?/gi, (t as any)('engineerFiltering.engineer.years', { ns: 'common', defaultValue: 'years' }))
+  }
+
+  // Engineer results (pooled across skills)
+  const engineerPool = useMemo(() => createEngineerPool(t as any, i18n.language), [t, i18n.language])
+  const engineerResults = useMemo(() => buildEngineersForTab(engineerPool, 'all', 'adv-'), [engineerPool])
+  const filteredEngineers = useMemo(() => {
+    let list = engineerResults
+    const q = searchQuery.toLowerCase()
+    if (q) {
+      list = list.filter(e =>
+        e.name.toLowerCase().includes(q) ||
+        e.title.toLowerCase().includes(q) ||
+        e.location.toLowerCase().includes(q) ||
+        e.skills.some(slug => (t as any)(`skills:${slug}`, slug).toLowerCase().includes(q))
+      )
+    }
+    if (filters.location) {
+      list = list.filter(e => e.location.toLowerCase().includes(filters.location))
+    }
+    if (filters.rating) {
+      list = list.filter(e => e.rating >= parseFloat(filters.rating))
+    }
+    return list
+  }, [engineerResults, searchQuery, filters, t])
   // Use slugs for data consistency
   const experienceLevels = [
     { slug: '0-2', label: t('engineerFiltering.experience.0-2', '0-2 years') },
@@ -413,19 +457,48 @@ const AdvancedSearch = () => {
 
         {/* Search Results */}
         <div className="space-y-6">
-          <div className="text-center py-12">
-            <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              {t('jobs:filters.noResults', 'No results found')}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              {t('jobs:filters.noResultsHelp', 'Try adjusting your search criteria or filters to find what you\'re looking for.')}
-            </p>
-            <Button onClick={() => setShowFilters(true)}>
-              <Filter className={`w-4 h-4 ${isRTL ? 'ms-2' : 'me-2'}`} />
-              {t('jobs:filters.adjustFilters', 'Adjust Filters')}
-            </Button>
-          </div>
+          {(activeTab === 'engineers' || activeTab === 'all') && filteredEngineers.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {filteredEngineers.map((e) => (
+                <div key={e.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{e.name}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{localizeTitle(e.title)}</p>
+                    </div>
+                    <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                      {e.matchScore}%
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    <div className="flex items-center"><MapPin className="w-4 h-4 me-1" />{e.location}</div>
+                    <div className="flex items-center"><Clock className="w-4 h-4 me-1" />{localizeExperience(e.experience)}</div>
+                    <div className="flex items-center"><Star className="w-4 h-4 me-1 text-yellow-400 fill-current" />{e.rating} ({e.reviews})</div>
+                    <div className="flex items-center"><DollarSign className="w-4 h-4 me-1" />{formatSar(parseFloat(String(e.hourlyRate).replace(/[^0-9.]/g, '')))}</div>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {e.skills.slice(0,3).map((s, idx) => (
+                      <SkillChip key={idx} label={s} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                {t('jobs:filters.noResults', 'No results found')}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                {t('jobs:filters.noResultsHelp', 'Try adjusting your search criteria or filters to find what you\'re looking for.')}
+              </p>
+              <Button onClick={() => setShowFilters(true)}>
+                <Filter className={`w-4 h-4 ${isRTL ? 'ms-2' : 'me-2'}`} />
+                {t('jobs:filters.adjustFilters', 'Adjust Filters')}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </PageLayout>

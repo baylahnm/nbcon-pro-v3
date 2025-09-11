@@ -27,13 +27,44 @@ import {
 } from 'lucide-react'
 
 const JobStatusTracking = () => {
-  const { t, i18n } = useTranslation(['jobs', 'common'])
+  const { t, i18n } = useTranslation(['common', 'jobs'])
   const navigate = useNavigate()
   const [selectedJob, setSelectedJob] = useState<string | null>(null)
   const [filterStatus, setFilterStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const isRTL = i18n.language === 'ar'
+
+  // Helpers to fetch localized text with graceful fallbacks when *_Key fields are missing
+  const getJobTitle = (job: any) =>
+    job.titleKey
+      ? t(`common:statusTracking.jobTitles.${job.titleKey}`, { defaultValue: job.titleKey })
+      : (job.title || '')
+
+  const getClient = (job: any) =>
+    job.clientKey
+      ? t(`common:statusTracking.clients.${job.clientKey}`, { defaultValue: job.clientKey })
+      : (job.client || '')
+
+  const getLocation = (job: any) =>
+    job.locationKey
+      ? t(`common:statusTracking.locations.${job.locationKey}`, { defaultValue: job.locationKey })
+      : (job.location || '')
+
+  const getDescription = (job: any) =>
+    job.descriptionKey
+      ? t(`common:statusTracking.descriptions.${job.descriptionKey}`, { defaultValue: job.descriptionKey })
+      : (job.description || '')
+
+  const getDeliverableTitle = (d: any) =>
+    d.titleKey
+      ? t(`common:statusTracking.deliverableTitles.${d.titleKey}`, { defaultValue: d.titleKey })
+      : (d.title || '')
+
+  const getTeamRole = (member: any) =>
+    member.roleKey
+      ? t(`common:statusTracking.teamRoles.${member.roleKey}`, { defaultValue: member.roleKey })
+      : (member.role || '')
 
   const jobs = useMemo(() => [
     {
@@ -140,8 +171,9 @@ const JobStatusTracking = () => {
     },
     {
       id: '2',
-      title: 'Shopping Mall Renovation',
-      client: 'Saudi Aramco',
+      // keys for i18n
+      titleKey: 'shoppingMallRenovation',
+      clientKey: 'saudiAramco',
       engineer: 'Sarah Al-Mansouri',
       status: 'completed',
       progress: 100,
@@ -151,40 +183,40 @@ const JobStatusTracking = () => {
       budget: 38000,
       spent: 38000,
       currency: 'SAR',
-      location: 'Dhahran, Saudi Arabia',
-      description: 'Comprehensive renovation and modernization of existing shopping mall.',
+      locationKey: 'dhahran',
+      descriptionKey: 'shoppingMallRenovation',
       milestones: [
         {
           id: '1',
-          title: 'Site Assessment',
+          titleKey: 'siteAssessment',
           status: 'completed',
           dueDate: '2023-11-08',
           completedDate: '2023-11-06',
-          description: 'Complete site assessment and analysis'
+          descriptionKey: 'siteAssessment'
         },
         {
           id: '2',
-          title: 'Renovation Plans',
+          titleKey: 'renovationPlans',
           status: 'completed',
           dueDate: '2023-11-22',
           completedDate: '2023-11-20',
-          description: 'Develop comprehensive renovation plans'
+          descriptionKey: 'renovationPlans'
         },
         {
           id: '3',
-          title: 'Implementation',
+          titleKey: 'implementation',
           status: 'completed',
           dueDate: '2024-01-01',
           completedDate: '2023-12-28',
-          description: 'Execute renovation implementation'
+          descriptionKey: 'implementation'
         },
         {
           id: '4',
-          title: 'Final Inspection',
+          titleKey: 'finalInspection',
           status: 'completed',
           dueDate: '2024-01-15',
           completedDate: '2024-01-15',
-          description: 'Final inspection and handover'
+          descriptionKey: 'finalInspection'
         }
       ],
       deliverables: [
@@ -235,8 +267,8 @@ const JobStatusTracking = () => {
     },
     {
       id: '3',
-      title: 'Residential Complex Design',
-      client: 'NEOM',
+      titleKey: 'residentialComplexDesign',
+      clientKey: 'neom',
       engineer: 'Mohammed Al-Zahrani',
       status: 'pending',
       progress: 0,
@@ -246,40 +278,40 @@ const JobStatusTracking = () => {
       budget: 52000,
       spent: 0,
       currency: 'SAR',
-      location: 'Tabuk, Saudi Arabia',
-      description: 'Sustainable residential complex design for NEOM smart city.',
+      locationKey: 'tabuk',
+      descriptionKey: 'residentialComplexDesign',
       milestones: [
         {
           id: '1',
-          title: 'Project Kickoff',
+          titleKey: 'projectKickoff',
           status: 'pending',
           dueDate: '2024-02-01',
           completedDate: null,
-          description: 'Project kickoff meeting and initial planning'
+          descriptionKey: 'projectKickoff'
         },
         {
           id: '2',
-          title: 'Master Plan',
+          titleKey: 'masterPlan',
           status: 'pending',
           dueDate: '2024-02-15',
           completedDate: null,
-          description: 'Develop master plan and site layout'
+          descriptionKey: 'masterPlan'
         },
         {
           id: '3',
-          title: 'Building Designs',
+          titleKey: 'buildingDesigns',
           status: 'pending',
           dueDate: '2024-03-01',
           completedDate: null,
-          description: 'Design individual building units'
+          descriptionKey: 'buildingDesigns'
         },
         {
           id: '4',
-          title: 'Final Review',
+          titleKey: 'finalReview',
           status: 'pending',
           dueDate: '2024-03-15',
           completedDate: null,
-          description: 'Final review and client approval'
+          descriptionKey: 'finalReview'
         }
       ],
       deliverables: [],
@@ -309,31 +341,31 @@ const JobStatusTracking = () => {
   const statusTabs = useMemo(() => [
     {
       id: 'all',
-      label: t('jobs:filters.allResults', 'All Jobs'),
+      label: t('common:statusTracking.allJobs', { defaultValue: 'All Jobs' }),
       icon: Search,
       count: jobs.length
     },
     {
       id: 'pending',
-      label: t('jobs:status.pending', 'Pending'),
+      label: t('common:statusTracking.pending', { defaultValue: 'Pending' }),
       icon: Clock,
       count: jobs.filter(j => j.status === 'pending').length
     },
     {
       id: 'in_progress',
-      label: t('jobs:status.inProgress', 'In Progress'),
+      label: t('common:statusTracking.inProgress', { defaultValue: 'In Progress' }),
       icon: Play,
       count: jobs.filter(j => j.status === 'in_progress').length
     },
     {
       id: 'completed',
-      label: t('jobs:status.completed', 'Completed'),
+      label: t('common:statusTracking.completed', { defaultValue: 'Completed' }),
       icon: CheckCircle,
       count: jobs.filter(j => j.status === 'completed').length
     },
     {
       id: 'on_hold',
-      label: t('jobs:status.paused', 'On Hold'),
+      label: t('common:statusTracking.onHold', { defaultValue: 'On Hold' }),
       icon: Pause,
       count: jobs.filter(j => j.status === 'on_hold').length
     }
@@ -350,16 +382,17 @@ const JobStatusTracking = () => {
 
     // Filter by search query
     if (searchQuery) {
+      const q = searchQuery.toLowerCase()
       filtered = filtered.filter(job =>
-        t(`jobs.statusTracking.jobTitles.${job.titleKey}`, job.titleKey).toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t(`jobs.statusTracking.clients.${job.clientKey}`, job.clientKey).toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.engineer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t(`jobs.statusTracking.locations.${job.locationKey}`, job.locationKey).toLowerCase().includes(searchQuery.toLowerCase())
+        getJobTitle(job).toLowerCase().includes(q) ||
+        getClient(job).toLowerCase().includes(q) ||
+        job.engineer.toLowerCase().includes(q) ||
+        getLocation(job).toLowerCase().includes(q)
       )
     }
 
     return filtered
-  }, [jobs, filterStatus, searchQuery, t])
+  }, [jobs, filterStatus, searchQuery, t, i18n.language])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -416,9 +449,9 @@ const JobStatusTracking = () => {
 
   return (
     <PageLayout
-      title={t('jobs:statusTracking.title', 'Job Status Tracking')}
-      description={t('jobs:statusTracking.description', 'Track and manage your job progress, milestones, and team collaboration')}
-      searchPlaceholder={t('jobs:statusTracking.searchPlaceholder', 'Search jobs by title, client, or engineer...')}
+      title={t('common:statusTracking.title', { defaultValue: 'Job Status Tracking' })}
+      description={t('common:statusTracking.description', { defaultValue: 'Track and manage your job progress, milestones, and team collaboration' })}
+      searchPlaceholder={t('common:statusTracking.searchPlaceholder', { defaultValue: 'Search jobs by title, client, or engineer...' })}
       searchValue={searchQuery}
       onSearchChange={setSearchQuery}
       filterTabs={statusTabs}
@@ -433,7 +466,7 @@ const JobStatusTracking = () => {
           variant="outline"
           size="sm"
         >
-          {t('jobs:statusTracking.viewArchive', 'View Archive')}
+          {t('common:statusTracking.viewArchive', { defaultValue: 'View Archive' })}
         </Button>
       }
     >
@@ -462,25 +495,25 @@ const JobStatusTracking = () => {
                   <div className="flex-1">
                     <div className={`flex items-center ${viewMode === 'list' ? 'mb-1' : 'mb-2'}`}>
                       <h3 className={`font-semibold text-gray-900 dark:text-white ${viewMode === 'list' ? 'text-lg' : 'text-xl'}`}>
-                        {t(`jobs.statusTracking.jobTitles.${job.titleKey}`, job.titleKey)}
+                        {getJobTitle(job)}
                       </h3>
                       <span className={`${isRTL ? 'ms-3' : 'ms-3'} px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(job.status)}`}>
-                        {t(`jobs:status.${job.status}`, job.status.replace('_', ' ').toUpperCase())}
+                        {t(`common:statusTracking.${job.status === 'in_progress' ? 'inProgress' : job.status === 'on_hold' ? 'onHold' : job.status}`, { defaultValue: job.status.replace('_', ' ').toUpperCase() })}
                       </span>
                       <span className={`${isRTL ? 'ms-2' : 'ms-2'} px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(job.priority)}`}>
-                        {t(`jobs:filters.${job.priority}`, job.priority.toUpperCase())}
+                        {t(`common:statusTracking.${job.priority}`, { defaultValue: job.priority.toUpperCase() })}
                       </span>
                     </div>
                     
                     <div className={`flex items-center text-sm text-gray-600 dark:text-gray-400 ${viewMode === 'list' ? 'space-x-4 mb-1' : 'space-x-6 mb-3'}`}>
-                      <span>{t('jobs:filters.client', 'Client')}: {t(`jobs:clients.${job.clientKey}`, job.clientKey)}</span>
-                      <span>{t('jobs:filters.engineer', 'Engineer')}: {job.engineer}</span>
-                      <span>{t('jobs:filters.location', 'Location')}: {t(`jobs:locations.${job.locationKey}`, job.locationKey)}</span>
+                      <span>{t('common:statusTracking.client', { defaultValue: 'Client' })}: {getClient(job)}</span>
+                      <span>{t('common:statusTracking.engineer', { defaultValue: 'Engineer' })}: {job.engineer}</span>
+                      <span>{t('common:statusTracking.location', { defaultValue: 'Location' })}: {getLocation(job)}</span>
                     </div>
                     
                     {viewMode === 'grid' && (
                       <p className="text-gray-600 dark:text-gray-300 text-sm">
-                        {t(`jobs:descriptions.${job.descriptionKey}`, job.descriptionKey)}
+                        {getDescription(job)}
                       </p>
                     )}
                   </div>
@@ -490,10 +523,10 @@ const JobStatusTracking = () => {
                       {job.currency} {job.budget.toLocaleString()}
                     </div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {t('jobs.statusTracking.spent', 'Spent')}: {job.currency} {job.spent.toLocaleString()}
+                      {t('common:statusTracking.spent', { defaultValue: 'Spent' })}: {job.currency} {job.spent.toLocaleString()}
                     </div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {job.progress}% {t('jobs.statusTracking.complete', 'Complete')}
+                      {job.progress}% {t('common:statusTracking.complete', { defaultValue: 'Complete' })}
                     </div>
                   </div>
                 </div>
@@ -503,7 +536,7 @@ const JobStatusTracking = () => {
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('jobs.statusTracking.progress', 'Progress')}
+                        {t('common:statusTracking.progress', { defaultValue: 'Progress' })}
                       </span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">
                         {job.progress}%
@@ -522,15 +555,15 @@ const JobStatusTracking = () => {
                 <div className={`flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 ${viewMode === 'list' ? 'mt-2' : ''}`}>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 me-1" />
-                    <span>{t('jobs.statusTracking.start', 'Start')}: {new Date(job.startDate).toLocaleDateString()}</span>
+                    <span>{t('common:statusTracking.start', { defaultValue: 'Start' })}: {new Date(job.startDate).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 me-1" />
-                    <span>{t('jobs.statusTracking.end', 'End')}: {new Date(job.endDate).toLocaleDateString()}</span>
+                    <span>{t('common:statusTracking.end', { defaultValue: 'End' })}: {new Date(job.endDate).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 me-1" />
-                    <span>{t('jobs.statusTracking.lastUpdate', 'Last Update')}: {new Date(job.lastUpdate).toLocaleDateString()}</span>
+                    <span>{t('common:statusTracking.lastUpdate', { defaultValue: 'Last Update' })}: {new Date(job.lastUpdate).toLocaleDateString()}</span>
                   </div>
                 </div>
               </div>
@@ -547,7 +580,7 @@ const JobStatusTracking = () => {
                     {/* Milestones */}
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                        {t('jobs:statusTracking.milestones', 'Milestones')}
+                        {t('common:statusTracking.milestones', { defaultValue: 'Milestones' })}
                       </h4>
                       <div className="space-y-4">
                         {job.milestones.map((milestone, idx) => (
@@ -568,21 +601,21 @@ const JobStatusTracking = () => {
                             <div className="flex-1">
                               <div className="flex items-center justify-between mb-1">
                                 <h5 className="font-medium text-gray-900 dark:text-white">
-                                  {t(`jobs:milestoneTitles.${milestone.titleKey}`, milestone.titleKey)}
+                                  {t(`statusTracking.milestoneTitles.${milestone.titleKey}`, { ns: 'common', defaultValue: milestone.titleKey })}
                                 </h5>
                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getMilestoneStatusColor(milestone.status)}`}>
-                                  {t(`jobs:status.${milestone.status}`, milestone.status.replace('_', ' ').toUpperCase())}
+                                  {t(`common:statusTracking.${milestone.status === 'in_progress' ? 'inProgress' : milestone.status}`, { defaultValue: milestone.status.replace('_', ' ').toUpperCase() })}
                                 </span>
                               </div>
                               
                               <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                                {t(`jobs:milestoneDescriptions.${milestone.descriptionKey}`, milestone.descriptionKey)}
+                                {t(`common:statusTracking.milestoneDescriptions.${milestone.descriptionKey}`, { defaultValue: milestone.descriptionKey })}
                               </p>
                               
                               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                                <span>{t('jobs:filters.due', 'Due')}: {new Date(milestone.dueDate).toLocaleDateString()}</span>
+                                <span>{t('common:statusTracking.due', { defaultValue: 'Due' })}: {new Date(milestone.dueDate).toLocaleDateString()}</span>
                                 {milestone.completedDate && (
-                                  <span>{t('jobs:status.completed', 'Completed')}: {new Date(milestone.completedDate).toLocaleDateString()}</span>
+                                  <span>{t('common:statusTracking.completed', { defaultValue: 'Completed' })}: {new Date(milestone.completedDate).toLocaleDateString()}</span>
                                 )}
                               </div>
                             </div>
@@ -596,7 +629,7 @@ const JobStatusTracking = () => {
                       {/* Team */}
                       <div>
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                          {t('jobs:filters.teamMembers', 'Team Members')}
+                          {t('common:statusTracking.teamMembers', { defaultValue: 'Team Members' })}
                         </h4>
                         <div className="space-y-3">
                           {job.team.map((member) => (
@@ -611,7 +644,7 @@ const JobStatusTracking = () => {
                                   {member.name}
                                 </h5>
                                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                                  {t(`jobs:teamRoles.${member.roleKey}`, member.roleKey)}
+                                  {getTeamRole(member)}
                                 </p>
                               </div>
                               <div className={`w-2 h-2 rounded-full ${
@@ -625,7 +658,7 @@ const JobStatusTracking = () => {
                       {/* Deliverables */}
                       <div>
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                          {t('jobs:statusTracking.deliverables', 'Deliverables')}
+                          {t('common:statusTracking.deliverables', { defaultValue: 'Deliverables' })}
                         </h4>
                         <div className="space-y-3">
                           {job.deliverables.map((deliverable) => (
@@ -634,7 +667,7 @@ const JobStatusTracking = () => {
                                 <FileText className={`w-5 h-5 text-gray-400 ${isRTL ? 'ms-3' : 'me-3'}`} />
                                 <div>
                                   <h5 className="font-medium text-gray-900 dark:text-white">
-                                    {t(`jobs:deliverableTitles.${deliverable.titleKey}`, deliverable.titleKey)}
+                                    {getDeliverableTitle(deliverable)}
                                   </h5>
                                   <p className="text-sm text-gray-600 dark:text-gray-300">
                                     {deliverable.type} • {deliverable.size || 'Pending'}
@@ -644,7 +677,7 @@ const JobStatusTracking = () => {
                               
                               <div className="flex items-center space-x-2">
                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getMilestoneStatusColor(deliverable.status)}`}>
-                                  {t(`jobs.statusTracking.deliverableStatus.${deliverable.status}`, deliverable.status.toUpperCase())}
+                                  {t(`common:statusTracking.deliverableStatus.${deliverable.status === 'in_progress' ? 'inProgress' : deliverable.status}`, { defaultValue: deliverable.status.toUpperCase() })}
                                 </span>
                                 {deliverable.status === 'completed' && (
                                   <Button variant="outline" size="sm">
@@ -668,7 +701,7 @@ const JobStatusTracking = () => {
                         size="sm"
                       >
                         <Play className="w-4 h-4 me-2" />
-                        {t('jobs.statusTracking.startJob', 'Start')}
+                        {t('common:statusTracking.startJob', { defaultValue: 'Start' })}
                       </Button>
                       
                       <Button
@@ -677,7 +710,7 @@ const JobStatusTracking = () => {
                         size="sm"
                       >
                         <Pause className="w-4 h-4 me-2" />
-                        {t('jobs.statusTracking.pauseJob', 'Pause')}
+                        {t('common:statusTracking.pauseJob', { defaultValue: 'Pause' })}
                       </Button>
                       
                       <Button
@@ -686,7 +719,7 @@ const JobStatusTracking = () => {
                         size="sm"
                       >
                         <MessageCircle className="w-4 h-4 me-2" />
-                        {t('jobs.statusTracking.message', 'Message')}
+                        {t('common:statusTracking.message', { defaultValue: 'Message' })}
                       </Button>
                     </div>
                     
@@ -697,7 +730,7 @@ const JobStatusTracking = () => {
                         size="sm"
                       >
                         <Upload className="w-4 h-4 me-2" />
-                        {t('jobs.statusTracking.upload', 'Upload')}
+                        {t('common:statusTracking.upload', { defaultValue: 'Upload' })}
                       </Button>
                       
                       <Button
@@ -706,7 +739,7 @@ const JobStatusTracking = () => {
                         size="sm"
                       >
                         <Eye className="w-4 h-4 me-2" />
-                        {t('jobs.statusTracking.viewDetails', 'View Details')}
+                        {t('common:statusTracking.viewDetails', { defaultValue: 'View Details' })}
                       </Button>
                     </div>
                   </div>
@@ -718,11 +751,11 @@ const JobStatusTracking = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {t('jobs:filters.next', 'Next')}: {job.nextMilestoneKey ? t(`jobs:milestoneTitles.${job.nextMilestoneKey}`, job.nextMilestoneKey) : 'N/A'}
+                      {t('common:statusTracking.next', { defaultValue: 'Next' })}: {job.nextMilestoneKey ? t(`common:statusTracking.milestoneTitles.${job.nextMilestoneKey}`, { defaultValue: job.nextMilestoneKey }) : 'N/A'}
                     </span>
                     {job.nextDueDate && (
                       <span className="text-sm text-gray-600 dark:text-gray-400">
-                        {t('jobs:filters.due', 'Due')}: {new Date(job.nextDueDate).toLocaleDateString()}
+                        {t('common:statusTracking.due', { defaultValue: 'Due' })}: {new Date(job.nextDueDate).toLocaleDateString()}
                       </span>
                     )}
                   </div>
@@ -732,7 +765,7 @@ const JobStatusTracking = () => {
                     variant="outline"
                     size="sm"
                   >
-                    {selectedJob === job.id ? t('jobs.statusTracking.hideDetails', 'Hide Details') : t('jobs.statusTracking.viewDetails', 'View Details')}
+                    {selectedJob === job.id ? t('common:statusTracking.hideDetails', { defaultValue: 'Hide Details' }) : t('common:statusTracking.viewDetails', { defaultValue: 'View Details' })}
                   </Button>
                 </div>
               </div>
@@ -752,19 +785,19 @@ const JobStatusTracking = () => {
               <Clock className="w-12 h-12 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              {t('jobs.statusTracking.noJobsFound', 'No jobs found')}
+              {t('common:statusTracking.noJobsFound', { defaultValue: 'No jobs found' })}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               {filterStatus === 'all' 
-                ? t('jobs.statusTracking.noJobsHint', 'You don\'t have any jobs yet. Create a new job to get started.')
-                : t('jobs.statusTracking.noJobsStatusHint', `No jobs with status "${filterStatus.replace('_', ' ')}" found.`, { status: filterStatus.replace('_', ' ') })
+                ? t('common:statusTracking.noJobsHint', { defaultValue: "You don't have any jobs yet. Create a new job to get started." })
+                : t('common:statusTracking.noJobsStatusHint', { defaultValue: `No jobs with status "${filterStatus.replace('_', ' ')}" found.`, status: filterStatus.replace('_', ' ') })
               }
             </p>
             <Button
               onClick={() => navigate('/quick-job-post')}
               className="bg-brand-500 hover:bg-brand-600 text-white"
             >
-              {t('jobs.statusTracking.createNewJob', 'Create New Job')}
+              {t('common:statusTracking.createNewJob', { defaultValue: 'Create New Job' })}
             </Button>
           </motion.div>
         )}

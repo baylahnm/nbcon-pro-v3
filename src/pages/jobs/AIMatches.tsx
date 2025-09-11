@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { PageLayout } from '@/components/layout/PageLayout'
 import { Button } from '@/components/ui/button'
+import { formatSar } from '@/i18n/formatters'
+import { createEngineerPool, buildEngineersForTab } from '@/domain/engineerPool'
 import { 
   Star, 
   MapPin, 
@@ -18,91 +20,37 @@ import {
 } from 'lucide-react'
 
 const AIMatches = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
   const [selectedEngineers, setSelectedEngineers] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [filterMatch, setFilterMatch] = useState('all')
 
-  const matches = [
-    {
-      id: '1',
-      name: 'Ahmed Al-Rashid',
-      title: 'Senior Civil Engineer',
-      rating: 4.9,
-      reviews: 127,
-      location: 'Riyadh',
-      experience: '8 years',
-      matchScore: 95,
-      price: 'SAR 15,000',
-      availability: 'Available',
-      specialties: ['Structural Design', 'Project Management', 'Building Codes'],
+  // Use the pooled engineers across all skills as recommendations
+  const matches = useMemo(() => {
+    const pool = createEngineerPool(t, i18n.language)
+    const list = buildEngineersForTab(pool, 'all', 'aim-')
+    return list.map((e) => ({
+      id: e.id,
+      name: e.name,
+      title: e.title,
+      rating: e.rating,
+      reviews: e.reviews,
+      location: e.location,
+      experience: e.experience,
+      matchScore: e.matchScore,
+      price: formatSar(parseFloat(String(e.hourlyRate).replace(/[^0-9.]/g, '')) * 100),
+      availability: e.availability,
+      specialties: e.skills,
       portfolio: [
-        { title: 'Office Complex Design', year: '2023', value: 'SAR 2.5M' },
-        { title: 'Shopping Mall Renovation', year: '2022', value: 'SAR 1.8M' }
+        { title: t('projects.officeBuildingDesign', 'Office Building Design'), year: '2023', value: formatSar(2500000) },
+        { title: t('projects.shoppingMallRenovation', 'Shopping Mall Renovation'), year: '2022', value: formatSar(1800000) }
       ],
-      responseTime: '2 hours',
-      completionRate: '98%'
-    },
-    {
-      id: '2',
-      name: 'Sarah Al-Mansouri',
-      title: 'Mechanical Engineer',
-      rating: 4.8,
-      reviews: 89,
-      location: 'Jeddah',
-      experience: '6 years',
-      matchScore: 92,
-      price: 'SAR 12,000',
-      availability: 'Available',
-      specialties: ['HVAC Design', 'Energy Efficiency', 'Building Systems'],
-      portfolio: [
-        { title: 'Hospital HVAC System', year: '2023', value: 'SAR 3.2M' },
-        { title: 'Hotel Climate Control', year: '2022', value: 'SAR 1.5M' }
-      ],
-      responseTime: '1 hour',
-      completionRate: '96%'
-    },
-    {
-      id: '3',
-      name: 'Mohammed Al-Zahrani',
-      title: 'Structural Engineer',
-      rating: 4.9,
-      reviews: 156,
-      location: 'Dammam',
-      experience: '10 years',
-      matchScore: 88,
-      price: 'SAR 18,000',
-      availability: 'Available',
-      specialties: ['Structural Analysis', 'Seismic Design', 'Concrete Structures'],
-      portfolio: [
-        { title: 'Highway Bridge Design', year: '2023', value: 'SAR 5.0M' },
-        { title: 'Industrial Complex', year: '2022', value: 'SAR 4.2M' }
-      ],
-      responseTime: '3 hours',
-      completionRate: '99%'
-    },
-    {
-      id: '4',
-      name: 'Fatima Al-Shehri',
-      title: 'Electrical Engineer',
-      rating: 4.7,
-      reviews: 98,
-      location: 'Riyadh',
-      experience: '5 years',
-      matchScore: 85,
-      price: 'SAR 10,000',
-      availability: 'Available',
-      specialties: ['Power Systems', 'Lighting Design', 'Smart Buildings'],
-      portfolio: [
-        { title: 'Smart Office Building', year: '2023', value: 'SAR 2.8M' },
-        { title: 'Residential Complex', year: '2022', value: 'SAR 1.2M' }
-      ],
-      responseTime: '4 hours',
-      completionRate: '94%'
-    }
-  ]
+      responseTime: e.responseTime,
+      completionRate: e.completionRate || '96%'
+    }))
+  }, [t, i18n.language])
 
   // Filter tabs for match score
   const matchTabs = useMemo(() => [
@@ -153,9 +101,9 @@ const AIMatches = () => {
         engineer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         engineer.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         engineer.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        engineer.specialties.some(specialty => 
-          specialty.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        (Array.isArray(engineer.specialties) && engineer.specialties.some((slug: string) => 
+          t(`skills:${slug}`, slug).toLowerCase().includes(searchQuery.toLowerCase())
+        ))
       )
     }
 
