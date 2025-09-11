@@ -1,0 +1,19 @@
+{
+  "autocad": "AutoCAD",
+  "revit": "Revit",
+  "project-management": "Project Management",
+  "structural-analysis": "Structural Analysis",
+  "hvac-design": "HVAC Design",
+  "energy-efficiency": "Energy Efficiency",
+  "building-systems": "Building Systems",
+  "3d-modeling": "3D Modeling",
+  "safety-assessment": "Safety Assessment",
+  "building-codes": "Building Codes",
+  "seismic-design": "Seismic Design",
+  "power-systems": "Power Systems",
+  "lighting-design": "Lighting Design",
+  "smart-buildings": "Smart Buildings",
+  "renewable-energy": "Renewable Energy"
+}
+
+

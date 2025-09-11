@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   Search, 
   Filter, 
   Upload,
@@ -43,7 +43,7 @@ import {
 } from 'lucide-react'
 
 const FileManager = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])
@@ -279,6 +279,11 @@ const FileManager = () => {
     }
   })
 
+  const filterTabs = fileTypeOptions.map(option => ({
+    id: option.id,
+    label: `${option.label} (${option.count})`
+  }))
+
   const handleItemSelect = (itemId: string) => {
     setSelectedFiles(prev => 
       prev.includes(itemId) 
@@ -358,43 +363,38 @@ const FileManager = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                File Manager
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button
-                onClick={() => setShowCreateFolder(true)}
-                variant="outline"
-                size="sm"
-              >
-                <FolderPlus className="w-4 h-4 mr-2" />
-                New Folder
-              </Button>
-              
-              <Button
-                onClick={() => setShowUpload(true)}
-                size="sm"
-                className="bg-brand-500 hover:bg-brand-600 text-white"
-              >
-                <Upload className="w-4 h-4 mr-2" />
-                Upload Files
-              </Button>
-            </div>
-          </div>
+    <PageLayout
+      title={t('files.title', 'File Manager')}
+      searchPlaceholder={t('files.search', 'Search files and folders...')}
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      viewMode={viewMode}
+      onViewModeChange={setViewMode}
+      filterTabs={filterTabs}
+      activeTab={filterType}
+      onTabChange={setFilterType}
+      headerActions={
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={() => setShowCreateFolder(true)}
+            variant="outline"
+            size="sm"
+          >
+            <FolderPlus className="w-4 h-4 me-2" />
+            {t('files.newFolder', 'New Folder')}
+          </Button>
+          
+          <Button
+            onClick={() => setShowUpload(true)}
+            size="sm"
+            className="bg-brand-500 hover:bg-brand-600 text-white"
+          >
+            <Upload className="w-4 h-4 me-2" />
+            {t('files.uploadFiles', 'Upload Files')}
+          </Button>
         </div>
-      </header>
-
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filters */}
         <motion.div
@@ -406,13 +406,13 @@ const FileManager = () => {
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
             {/* Search Bar */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute inset-s-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search files and folders..."
+                placeholder={t('files.search', 'Search files and folders...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="w-full ps-10 pe-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
               />
             </div>
             
@@ -425,7 +425,7 @@ const FileManager = () => {
               >
                 {sortOptions.map((option) => (
                   <option key={option.id} value={option.id}>
-                    Sort by {option.label}
+                    {t('files.sortBy', 'Sort by')} {option.label}
                   </option>
                 ))}
               </select>
@@ -488,7 +488,7 @@ const FileManager = () => {
                 variant="outline"
                 size="sm"
               >
-                {selectedFiles.length === sortedItems.length ? 'Deselect All' : 'Select All'}
+                {selectedFiles.length === sortedItems.length ? t('files.deselectAll', 'Deselect All') : t('files.selectAll', 'Select All')}
               </Button>
             </div>
           </div>
@@ -505,7 +505,7 @@ const FileManager = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                  {selectedFiles.length} items selected
+                  {selectedFiles.length} {t('files.itemsSelected', 'items selected')}
                 </span>
               </div>
               
@@ -515,8 +515,8 @@ const FileManager = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
+                  <Download className="w-4 h-4 me-2" />
+                  {t('actions.download', 'Download')}
                 </Button>
                 
                 <Button
@@ -524,8 +524,8 @@ const FileManager = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <Move className="w-4 h-4 mr-2" />
-                  Move
+                  <Move className="w-4 h-4 me-2" />
+                  {t('files.move', 'Move')}
                 </Button>
                 
                 <Button
@@ -533,8 +533,8 @@ const FileManager = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
+                  <Copy className="w-4 h-4 me-2" />
+                  {t('files.copy', 'Copy')}
                 </Button>
                 
                 <Button
@@ -543,8 +543,8 @@ const FileManager = () => {
                   size="sm"
                   className="text-red-600 hover:text-red-700"
                 >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Delete
+                  <Trash2 className="w-4 h-4 me-2" />
+                  {t('actions.delete', 'Delete')}
                 </Button>
               </div>
             </div>
@@ -581,7 +581,7 @@ const FileManager = () => {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center">
-                        <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center mr-3">
+                        <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center me-3">
                           <Icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -619,20 +619,20 @@ const FileManager = () => {
                     {/* Details */}
                     <div className="space-y-2 text-xs text-gray-600 dark:text-gray-400 mb-4">
                       <div className="flex justify-between">
-                        <span>Size:</span>
+                        <span>{t('files.size', 'Size')}:</span>
                         <span>{item.size}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Modified:</span>
+                        <span>{t('files.modified', 'Modified')}:</span>
                         <span>{formatDate(item.modified)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Owner:</span>
-                        <span className="truncate ml-2">{item.owner}</span>
+                        <span>{t('files.owner', 'Owner')}:</span>
+                        <span className="truncate ms-2">{item.owner}</span>
                       </div>
                       {item.type === 'file' && item.version && (
                         <div className="flex justify-between">
-                          <span>Version:</span>
+                          <span>{t('files.version', 'Version')}:</span>
                           <span>{item.version}</span>
                         </div>
                       )}
@@ -717,7 +717,7 @@ const FileManager = () => {
                         )}
                       </div>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {item.type === 'folder' ? 'Folder' : item.fileType?.toUpperCase()} • {item.size} • {formatDate(item.modified)}
+                        {(item.type === 'folder' ? t('files.folder', 'Folder') : item.fileType?.toUpperCase())} • {item.size} • {formatDate(item.modified)}
                       </p>
                     </div>
                     
@@ -765,22 +765,22 @@ const FileManager = () => {
               <File className="w-12 h-12 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No files found
+              {t('empty.noResults', 'No results found')}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Try adjusting your search criteria or upload some files.
+              {t('files.emptyHint', 'Try adjusting your search criteria or upload some files.')}
             </p>
             <Button
               onClick={() => setShowUpload(true)}
               className="bg-brand-500 hover:bg-brand-600 text-white"
             >
-              <Upload className="w-4 h-4 mr-2" />
-              Upload Files
+              <Upload className="w-4 h-4 me-2" />
+              {t('files.uploadFiles', 'Upload Files')}
             </Button>
           </motion.div>
         )}
       </div>
-    </div>
+    </PageLayout>
   )
 }
 

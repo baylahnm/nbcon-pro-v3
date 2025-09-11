@@ -51,6 +51,14 @@
 - **Routing**: React Router
 - **i18n**: react-i18next
 
+## i18n/RTL Updates
+
+- Centralized dir switching in `App.tsx` (sets `documentElement.dir` and `lang`).
+- Replaced hardcoded literals with i18n keys across Services, Jobs, Payments, Dashboards, Notifications, Messaging, Support, Files.
+- Added ESLint guard (`react/jsx-no-literals`) to prevent new hardcoded UI strings.
+- Added `src/i18n/format.ts` for number/currency/date formatting with Arabic‑Indic option and Hijri placeholder.
+- E2E test `tests/i18n.ar.spec.ts` verifies AR titles for key routes.
+
 ## RTL Implementation
 - All UI components support RTL mirroring
 - Arabic text uses `dir="rtl"` attribute

@@ -83,12 +83,12 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
           )}
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-red-500 ms-1">*</span>}
         </label>
       )}
       
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 inset-s-0 ps-3 flex items-center pointer-events-none">
           <Phone className="w-4 h-4 text-gray-400" aria-hidden="true" />
         </div>
         
@@ -101,7 +101,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
           onFocus={handleFocus}
           disabled={disabled}
           className={cn(
-            'block w-full pl-10 pr-10 py-3 border rounded-lg',
+            'block w-full ps-10 pe-10 py-3 border rounded-lg',
             'focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent',
             'disabled:bg-gray-50 dark:disabled:bg-gray-800 disabled:cursor-not-allowed',
             'transition-colors',
@@ -117,7 +117,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         />
         
         {errorMessage && (
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+          <div className="absolute inset-y-0 inset-e-0 pe-3 flex items-center">
             <AlertCircle className="w-4 h-4 text-red-500" aria-hidden="true" />
           </div>
         )}

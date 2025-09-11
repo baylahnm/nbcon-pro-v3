@@ -5,7 +5,7 @@ import { useThemeStore } from '../../stores/themeStore';
 import { cn } from '../../lib/utils';
 
 export default function Header() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   const { theme, setTheme } = useThemeStore();
   const isRTL = i18n.language === 'ar';
 
@@ -24,25 +24,17 @@ export default function Header() {
         {/* Search Bar */}
         <div className="flex-1 max-w-2xl">
           <div className="relative">
-            <Search className={cn(
-              "absolute top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400",
-              isRTL ? "right-3" : "left-3"
-            )} />
+            <Search className="absolute top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 inset-s-3" />
             <input
               type="text"
-              placeholder={t('common.search', 'Search...')}
-              className={cn(
-                "w-full h-10 bg-gray-100 dark:bg-gray-700 rounded-lg",
-                "text-gray-900 dark:text-gray-100 placeholder-gray-500",
-                "focus:outline-none focus:ring-2 focus:ring-primary/50",
-                isRTL ? "pr-10 pl-4" : "pl-10 pr-4"
-              )}
+              placeholder={t('common:search', 'Search...')}
+              className="w-full h-10 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 ps-10 pe-4"
             />
           </div>
         </div>
 
         {/* Header Actions */}
-        <div className="flex items-center gap-2 ml-6">
+        <div className="flex items-center gap-2 ms-6">
           {/* Language Toggle */}
           <button
             onClick={toggleLanguage}
@@ -50,7 +42,7 @@ export default function Header() {
             aria-label="Toggle language"
           >
             <Globe className="w-5 h-5" />
-            <span className="ml-1 text-sm font-medium">
+            <span className="ms-1 text-sm font-medium">
               {i18n.language.toUpperCase()}
             </span>
           </button>
@@ -74,7 +66,7 @@ export default function Header() {
             aria-label="Notifications"
           >
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            <span className="absolute top-1 inset-e-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </button>
 
           {/* Settings */}

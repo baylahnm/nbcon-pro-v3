@@ -46,6 +46,7 @@ import AdvancedJobBuilder from './pages/jobs/AdvancedJobBuilder'
 import JobTemplatesLibrary from './pages/jobs/JobTemplatesLibrary'
 import EngineerFiltering from './pages/engineers/EngineerFiltering'
 import PortfolioViewer from './pages/engineers/PortfolioViewer'
+import AdvancedSearch from './pages/search/AdvancedSearch'
 import RealTimeMatching from './pages/jobs/RealTimeMatching'
 import QuoteComparison from './pages/jobs/QuoteComparison'
 import JobStatusTracking from './pages/jobs/JobStatusTracking'
@@ -156,6 +157,7 @@ function App() {
 
         {/* Jobs Routes */}
         <Route path="/jobs" element={<Jobs />} />
+        <Route path="/jobs/post" element={<QuickJobPost />} />
         <Route path="/jobs/quick-post" element={<QuickJobPost />} />
         <Route path="/jobs/advanced-builder" element={<AdvancedJobBuilder />} />
         <Route path="/jobs/templates" element={<JobTemplatesLibrary />} />
@@ -176,6 +178,9 @@ function App() {
         <Route path="/engineers/browse" element={<EngineerFiltering />} />
         <Route path="/engineers/favorites" element={<EngineerFiltering />} />
 
+        {/* Search Routes */}
+        <Route path="/search/advanced" element={<AdvancedSearch />} />
+
         {/* Financial Routes */}
         <Route path="/financial/earnings" element={<Payments />} />
         <Route path="/financial/payment-methods" element={<Payments />} />
@@ -187,6 +192,8 @@ function App() {
         {/* Budget Routes */}
         <Route path="/budget/tracker" element={<Payments />} />
         <Route path="/payments" element={<Payments />} />
+        <Route path="/payments/earnings" element={<Payments />} />
+        <Route path="/payments/payouts" element={<Payments />} />
         <Route path="/payments/methods" element={<Payments />} />
         <Route path="/payments/escrow" element={<Payments />} />
         <Route path="/budget/intelligence" element={<Payments />} />

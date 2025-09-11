@@ -37,3 +37,7 @@ coverage/
 
 # Documentation
 README.txt
+
+# Supabase (MCP)
+.cursor/mcp.json
+.cursor/figma-mcp.json

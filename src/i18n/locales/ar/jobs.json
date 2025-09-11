@@ -1,0 +1,122 @@
+{
+  "advancedSearch": {
+    "title": "البحث المتقدم",
+    "filters": "المرشحات",
+    "searchPlaceholder": "ابحث بالاسم أو المهارات أو الموقع أو الكلمات المفتاحية..."
+  },
+  "filters": {
+    "anyRating": "أي تقييم",
+    "allLocations": "جميع المواقع",
+    "allExperience": "كل مستويات الخبرة",
+    "anyAvailability": "أي توفر",
+    "anyResponseTime": "أي وقت استجابة",
+    "anyBudget": "أي ميزانية",
+    "skills": "المهارات",
+    "certifications": "الشهادات",
+    "languages": "اللغات",
+    "clearAll": "مسح الكل",
+    "adjustFilters": "تعديل المرشحات",
+    "allResults": "كل النتائج",
+    "engineers": "المهندسون",
+    "services": "الخدمات",
+    "jobs": "الوظائف",
+    "noResults": "لا توجد نتائج",
+    "noResultsHelp": "جرّب تعديل معايير البحث أو المرشحات."
+  },
+  "skills": {
+    "autocad": "أوتوكاد",
+    "revit": "ريفيت",
+    "projectManagement": "إدارة المشاريع",
+    "structuralAnalysis": "التحليل الإنشائي",
+    "hvacDesign": "تصميم أنظمة التكييف والتهوية والتبريد (HVAC)",
+    "energyEfficiency": "كفاءة الطاقة",
+    "buildingSystems": "أنظمة المباني",
+    "modeling3d": "النمذجة ثلاثية الأبعاد (3D)",
+    "safetyAssessment": "تقييم السلامة",
+    "buildingCodes": "أكواد البناء",
+    "seismicDesign": "التصميم الزلزالي",
+    "powerSystems": "أنظمة القدرة الكهربائية",
+    "lightingDesign": "تصميم الإضاءة",
+    "smartBuildings": "المباني الذكية",
+    "renewableEnergy": "الطاقة المتجددة"
+  },
+  "certifications": {
+    "peLicense": "رخصة مهندس محترف (PE)",
+    "pmp": "شهادة PMP",
+    "leed": "شهادة LEED",
+    "sceCertified": "معتمد من هيئة المهندسين",
+    "autocadCertified": "شهادة أوتوكاد"
+  },
+  "statusTracking": {
+    "title": "تتبع حالة الوظيفة",
+    "statusLabel": "الحالة",
+    "timeline": "الجدول الزمني",
+    "milestones": "المعالم",
+    "documents": "المستندات",
+    "nextAction": "الإجراء التالي",
+    "viewDetails": "عرض التفاصيل",
+    "contactEngineer": "الاتصال بالمهندس"
+  },
+  "status": {
+    "inProgress": "قيد التنفيذ",
+    "pending": "معلق",
+    "completed": "مكتمل",
+    "cancelled": "ملغي",
+    "paused": "متوقف مؤقتاً",
+    "blocked": "محجوب"
+  },
+  "milestone": {
+    "projectStarted": "بدء المشروع",
+    "siteVisit": "زيارة الموقع",
+    "reportSubmission": "تسليم التقرير",
+    "clientReview": "مراجعة العميل"
+  },
+  "languagesList": {
+    "ar": "العربية",
+    "en": "الإنجليزية",
+    "fr": "الفرنسية",
+    "de": "الألمانية",
+    "es": "الإسبانية",
+    "zh": "الصينية"
+  },
+  "engineers": {
+    "card": {
+      "viewProfile": "عرض الملف الشخصي",
+      "select": "اختيار",
+      "available": {
+        "now": "متاح الآن",
+        "week": "متاح هذا الأسبوع",
+        "month": "متاح هذا الشهر"
+      },
+      "reviews_zero": "لا توجد تقييمات",
+      "reviews_one": "تقييم واحد",
+      "reviews_two": "تقييمان",
+      "reviews_few": "{{count}} تقييمات",
+      "reviews_many": "{{count}} تقييمًا",
+      "reviews_other": "{{count}} تقييم",
+      "response_zero": "لا توجد مدة استجابة",
+      "response_one": "الاستجابة: ساعة واحدة",
+      "response_two": "الاستجابة: ساعتان",
+      "response_few": "الاستجابة: {{hours}} ساعات",
+      "response_many": "الاستجابة: {{hours}} ساعة",
+      "response_other": "الاستجابة: {{hours}} ساعة",
+      "completion": "نسبة الإنجاز: {{pct}}٪",
+      "portfolio_zero": "الأعمال: لا يوجد",
+      "portfolio_one": "الأعمال: مشروع واحد",
+      "portfolio_two": "الأعمال: مشروعان",
+      "portfolio_few": "الأعمال: {{count}} مشاريع",
+      "portfolio_many": "الأعمال: {{count}} مشروعًا",
+      "portfolio_other": "الأعمال: {{count}} مشروع",
+      "perHour": "بالساعة"
+    }
+  },
+  "cities": {
+    "riyadh": "الرياض",
+    "jeddah": "جدة",
+    "dammam": "الدمام",
+    "mecca": "مكة",
+    "medina": "المدينة المنورة",
+    "khobar": "الخبر"
+  },
+  "currency": { "sar": "ر.س" }
+}

@@ -49,7 +49,7 @@ export function LanguageSelector({
           <span className="text-2xl" role="img" aria-label={lang.name}>
             {lang.flag}
           </span>
-          <div className="text-left">
+          <div className="text-start">
             <div className="font-medium text-gray-900 dark:text-gray-100">
               {lang.name}
             </div>
@@ -92,7 +92,7 @@ export function RoleCard({
     <button
       onClick={onSelect}
       className={cn(
-        "w-full p-6 rounded-xl border-2 transition-all text-left",
+        "w-full p-6 rounded-xl border-2 transition-all text-start",
         "hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary",
         "group",
         selected
@@ -187,7 +187,7 @@ export function PhoneInput({
         Phone Number
       </label>
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 inset-s-0 ps-3 flex items-center pointer-events-none">
           <span className="text-gray-500 dark:text-gray-400 text-sm">
             {countryCode}
           </span>
@@ -198,7 +198,7 @@ export function PhoneInput({
           onChange={handleChange}
           disabled={disabled}
           className={cn(
-            "block w-full pl-12 pr-3 py-3 border rounded-lg",
+            "block w-full ps-12 pe-3 py-3 border rounded-lg",
             "focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent",
             "disabled:bg-gray-50 dark:disabled:bg-gray-800 disabled:cursor-not-allowed",
             error
@@ -470,7 +470,7 @@ export function SlideToAct({
         <div
           ref={sliderRef}
           className={cn(
-            "absolute top-1 left-1 w-10 h-10 rounded-full transition-all duration-200",
+            "absolute top-1 inset-s-1 w-10 h-10 rounded-full transition-all duration-200",
             "flex items-center justify-center text-white font-medium",
             "focus:outline-none focus:ring-2 focus:ring-primary",
             success 

@@ -47,7 +47,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
       onClick={handleSelect}
       onKeyDown={handleKeyDown}
       className={cn(
-        'w-full p-6 rounded-xl border-2 transition-all text-left',
+        'w-full p-6 rounded-xl border-2 transition-all text-start',
         'hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary',
         'group touch-target',
         selected

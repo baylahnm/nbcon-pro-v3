@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -34,7 +34,7 @@ import {
 } from 'lucide-react'
 
 const MessagingHub = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation('common')
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null)
@@ -43,86 +43,87 @@ const MessagingHub = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [showFileUpload, setShowFileUpload] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const isRTL = i18n.language === 'ar'
 
-  const conversations = [
+  const conversations = useMemo(() => [
     {
       id: '1',
       name: 'Ahmed Al-Rashid',
-      title: 'Senior Civil Engineer',
+      titleKey: 'seniorCivilEngineer',
       avatar: '/api/placeholder/40/40',
-      lastMessage: 'I\'ve completed the structural analysis. Please review the attached files.',
+      lastMessageKey: 'structuralAnalysisComplete',
       lastMessageTime: '2024-01-25T14:30:00Z',
       unreadCount: 2,
       isOnline: true,
       isPinned: true,
       isMuted: false,
-      project: 'Office Building Design',
+      projectKey: 'officeBuildingDesign',
       status: 'active'
     },
     {
       id: '2',
       name: 'Sarah Al-Mansouri',
-      title: 'Mechanical Engineer',
+      titleKey: 'mechanicalEngineer',
       avatar: '/api/placeholder/40/40',
-      lastMessage: 'The HVAC design is ready for your approval.',
+      lastMessageKey: 'hvacDesignReady',
       lastMessageTime: '2024-01-25T12:15:00Z',
       unreadCount: 0,
       isOnline: false,
       isPinned: false,
       isMuted: false,
-      project: 'Shopping Mall Renovation',
+      projectKey: 'shoppingMallRenovation',
       status: 'completed'
     },
     {
       id: '3',
       name: 'Mohammed Al-Zahrani',
-      title: 'Structural Engineer',
+      titleKey: 'structuralEngineer',
       avatar: '/api/placeholder/40/40',
-      lastMessage: 'I need clarification on the foundation requirements.',
+      lastMessageKey: 'foundationClarification',
       lastMessageTime: '2024-01-25T10:45:00Z',
       unreadCount: 1,
       isOnline: true,
       isPinned: false,
       isMuted: false,
-      project: 'Residential Complex Design',
+      projectKey: 'residentialComplexDesign',
       status: 'active'
     },
     {
       id: '4',
       name: 'Fatima Al-Shehri',
-      title: 'Electrical Engineer',
+      titleKey: 'electricalEngineer',
       avatar: '/api/placeholder/40/40',
-      lastMessage: 'The electrical plans are ready for review.',
+      lastMessageKey: 'electricalPlansReady',
       lastMessageTime: '2024-01-24T16:20:00Z',
       unreadCount: 0,
       isOnline: false,
       isPinned: false,
       isMuted: true,
-      project: 'Hospital HVAC System',
+      projectKey: 'hospitalHvacSystem',
       status: 'disputed'
     },
     {
       id: '5',
       name: 'Khalid Al-Otaibi',
-      title: 'Project Manager',
+      titleKey: 'projectManager',
       avatar: '/api/placeholder/40/40',
-      lastMessage: 'Meeting scheduled for tomorrow at 2 PM.',
+      lastMessageKey: 'meetingScheduled',
       lastMessageTime: '2024-01-24T14:10:00Z',
       unreadCount: 0,
       isOnline: true,
       isPinned: false,
       isMuted: false,
-      project: 'Industrial Plant Inspection',
+      projectKey: 'industrialPlantInspection',
       status: 'active'
     }
-  ]
+  ], [])
 
-  const messages = [
+  const messages = useMemo(() => [
     {
       id: '1',
       senderId: '1',
       senderName: 'Ahmed Al-Rashid',
-      content: 'Hello! I\'ve completed the structural analysis for the office building project.',
+      contentKey: 'hello',
       timestamp: '2024-01-25T14:30:00Z',
       type: 'text',
       isRead: true,
@@ -132,7 +133,7 @@ const MessagingHub = () => {
       id: '2',
       senderId: '1',
       senderName: 'Ahmed Al-Rashid',
-      content: 'Please find the attached structural drawings and calculations.',
+      contentKey: 'attachedFiles',
       timestamp: '2024-01-25T14:32:00Z',
       type: 'text',
       isRead: true,
@@ -157,7 +158,7 @@ const MessagingHub = () => {
       id: '3',
       senderId: 'current',
       senderName: 'You',
-      content: 'Thank you Ahmed! I\'ll review the documents and get back to you.',
+      contentKey: 'thankYou',
       timestamp: '2024-01-25T14:35:00Z',
       type: 'text',
       isRead: true,
@@ -167,7 +168,7 @@ const MessagingHub = () => {
       id: '4',
       senderId: '1',
       senderName: 'Ahmed Al-Rashid',
-      content: 'Perfect! Let me know if you need any clarifications.',
+      contentKey: 'perfect',
       timestamp: '2024-01-25T14:36:00Z',
       type: 'text',
       isRead: false,
@@ -177,18 +178,20 @@ const MessagingHub = () => {
       id: '5',
       senderId: '1',
       senderName: 'Ahmed Al-Rashid',
-      content: 'I\'ve also prepared a 3D model of the structure. Would you like me to share it?',
+      contentKey: '3dModelReady',
       timestamp: '2024-01-25T14:38:00Z',
       type: 'text',
       isRead: false,
       attachments: []
     }
-  ]
+  ], [])
 
-  const filteredConversations = conversations.filter(conv => 
-    conv.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    conv.project.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    conv.lastMessage.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredConversations = useMemo(() => 
+    conversations.filter(conv => 
+      conv.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t(`messages.projects.${conv.projectKey}`, conv.projectKey).toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t(`messages.sampleMessages.${conv.lastMessageKey}`, conv.lastMessageKey).toLowerCase().includes(searchQuery.toLowerCase())
+    ), [conversations, searchQuery, t]
   )
 
   const selectedConv = conversations.find(conv => conv.id === selectedConversation)
@@ -259,17 +262,17 @@ const MessagingHub = () => {
   }, [messages])
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
+              <Button variant="ghost" size="sm" className={isRTL ? 'ms-4' : 'mr-4'} onClick={() => navigate('/')}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Messages
+                {t('messages.title', 'Messages')}
               </h1>
             </div>
             
@@ -279,8 +282,8 @@ const MessagingHub = () => {
                 variant="outline"
                 size="sm"
               >
-                <Video className="w-4 h-4 mr-2" />
-                Video Calls
+                <Video className={`w-4 h-4 ${isRTL ? 'ms-2' : 'mr-2'}`} />
+                {t('messages.videoCall', 'Video Calls')}
               </Button>
             </div>
           </div>
@@ -294,13 +297,13 @@ const MessagingHub = () => {
             {/* Search Bar */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className={`absolute ${isRTL ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4`} />
                 <input
                   type="text"
-                  placeholder="Search conversations..."
+                  placeholder={t('messages.searchConversations', 'Search conversations...')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className={`w-full ${isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent`}
                 />
               </div>
             </div>
@@ -318,7 +321,7 @@ const MessagingHub = () => {
                     selectedConversation === conversation.id ? 'bg-brand-50 dark:bg-brand-900/20' : ''
                   }`}
                 >
-                  <div className="flex items-start space-x-3">
+                  <div className={`flex items-start ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'}`}>
                     <div className="relative">
                       <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center">
                         <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
@@ -326,7 +329,7 @@ const MessagingHub = () => {
                         </span>
                       </div>
                       {conversation.isOnline && (
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
+                        <div className={`absolute -bottom-1 ${isRTL ? '-left-1' : '-right-1'} w-4 h-4 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full`}></div>
                       )}
                     </div>
                     
@@ -335,7 +338,7 @@ const MessagingHub = () => {
                         <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                           {conversation.name}
                         </h3>
-                        <div className="flex items-center space-x-1">
+                        <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-1' : 'space-x-1'}`}>
                           {conversation.isPinned && (
                             <Star className="w-3 h-3 text-yellow-500 fill-current" />
                           )}
@@ -349,16 +352,16 @@ const MessagingHub = () => {
                       </div>
                       
                       <p className="text-xs text-gray-600 dark:text-gray-300 mb-2 truncate">
-                        {conversation.title}
+                        {t(`messages.engineerTitles.${conversation.titleKey}`, conversation.titleKey)}
                       </p>
                       
                       <p className="text-sm text-gray-600 dark:text-gray-300 truncate">
-                        {conversation.lastMessage}
+                        {t(`messages.sampleMessages.${conversation.lastMessageKey}`, conversation.lastMessageKey)}
                       </p>
                       
                       <div className="flex items-center justify-between mt-2">
                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(conversation.status)}`}>
-                          {conversation.status.toUpperCase()}
+                          {t(`messages.projectStatuses.${conversation.status}`, conversation.status).toUpperCase()}
                         </span>
                         {conversation.unreadCount > 0 && (
                           <span className="bg-brand-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
@@ -380,7 +383,7 @@ const MessagingHub = () => {
                 {/* Chat Header */}
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
+                    <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'}`}>
                       <div className="w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center">
                         <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
                           {selectedConv?.name.split(' ').map(n => n[0]).join('')}
@@ -391,12 +394,12 @@ const MessagingHub = () => {
                           {selectedConv?.name}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {selectedConv?.title}
+                          {selectedConv && t(`messages.engineerTitles.${selectedConv.titleKey}`, selectedConv.titleKey)}
                         </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-2">
+                    <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
                       <Button
                         onClick={() => handleConversationAction(selectedConversation, 'call')}
                         variant="outline"
@@ -445,16 +448,18 @@ const MessagingHub = () => {
                           </p>
                         )}
                         
-                        <p className="text-sm">{message.content}</p>
+                        <p className="text-sm">
+                          {message.contentKey ? t(`messages.sampleMessages.${message.contentKey}`, message.contentKey) : message.content}
+                        </p>
                         
                         {message.attachments && message.attachments.length > 0 && (
                           <div className="mt-2 space-y-2">
                             {message.attachments.map((attachment) => (
                               <div
                                 key={attachment.id}
-                                className="flex items-center p-2 bg-white dark:bg-gray-800 rounded border"
+                                className={`flex items-center p-2 bg-white dark:bg-gray-800 rounded border ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'}`}
                               >
-                                <FileText className="w-4 h-4 text-gray-400 mr-2" />
+                                <FileText className={`w-4 h-4 text-gray-400 ${isRTL ? 'ms-2' : 'mr-2'}`} />
                                 <div className="flex-1 min-w-0">
                                   <p className="text-xs font-medium text-gray-900 dark:text-white truncate">
                                     {attachment.name}
@@ -497,7 +502,7 @@ const MessagingHub = () => {
 
                 {/* Message Input */}
                 <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center space-x-2">
+                  <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
                     <Button
                       onClick={() => setShowFileUpload(!showFileUpload)}
                       variant="outline"
@@ -512,7 +517,7 @@ const MessagingHub = () => {
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder="Type a message..."
+                        placeholder={t('messages.typeMessage', 'Type a message...')}
                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                       />
                     </div>
@@ -541,10 +546,10 @@ const MessagingHub = () => {
                 <div className="text-center">
                   <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                    Select a conversation
+                    {t('messages.selectConversation', 'Select a conversation')}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Choose a conversation from the list to start messaging
+                    {t('messages.chooseConversation', 'Choose a conversation from the list to start messaging')}
                   </p>
                 </div>
               </div>

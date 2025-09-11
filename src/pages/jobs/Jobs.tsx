@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { 
-  ArrowLeft, 
   Search, 
   Filter, 
   Plus,
@@ -28,14 +28,17 @@ import {
 } from 'lucide-react'
 
 export default function Jobs() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation('common')
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('browse')
-  const [isRTL, setIsRTL] = useState(i18n.language === 'ar')
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('browse')
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   const tabs = [
     { id: 'browse', label: t('jobs.browse', 'Browse Jobs'), icon: Search },
-    { id: 'my-jobs', label: t('jobs.myJobs', 'My Jobs'), icon: Briefcase },
+    { id: 'my-jobs', label: t('jobs.myJobsLabel', 'My Jobs'), icon: Briefcase },
     { id: 'recommendations', label: t('jobs.recommendations', 'Recommendations'), icon: Target },
     { id: 'saved', label: t('jobs.saved', 'Saved Jobs'), icon: Bookmark },
     { id: 'applications', label: t('jobs.applications', 'Applications'), icon: CheckCircle }
@@ -44,49 +47,49 @@ export default function Jobs() {
   const mockJobs = [
     {
       id: 'JOB-001',
-      title: 'Electrical System Design for Residential Complex',
-      company: 'Al-Rashid Construction',
-      location: 'Riyadh, Saudi Arabia',
-      type: 'Full-time',
-      duration: '3 months',
-      budget: '15,000 - 20,000 SAR',
-      posted: '2 hours ago',
+      title: t('jobs.sampleJobs.job1.title'),
+      company: t('jobs.sampleJobs.job1.company'),
+      location: t('jobs.sampleJobs.job1.location'),
+      type: t('jobs.sampleJobs.job1.type'),
+      duration: t('jobs.sampleJobs.job1.duration'),
+      budget: t('jobs.sampleJobs.job1.budget'),
+      posted: t('jobs.sampleJobs.job1.posted'),
       applicants: 12,
       rating: 4.8,
-      skills: ['Electrical Engineering', 'AutoCAD', 'Project Management'],
-      description: 'We need an experienced electrical engineer to design the complete electrical system for a 200-unit residential complex...',
+      skills: t('jobs.sampleJobs.job1.skills', { returnObjects: true }) as string[],
+      description: t('jobs.sampleJobs.job1.description'),
       urgent: false,
       featured: true
     },
     {
       id: 'JOB-002',
-      title: 'HVAC System Installation Supervision',
-      company: 'Saudi Engineering Group',
-      location: 'Jeddah, Saudi Arabia',
-      type: 'Contract',
-      duration: '6 months',
-      budget: '25,000 - 30,000 SAR',
-      posted: '1 day ago',
+      title: t('jobs.sampleJobs.job2.title'),
+      company: t('jobs.sampleJobs.job2.company'),
+      location: t('jobs.sampleJobs.job2.location'),
+      type: t('jobs.sampleJobs.job2.type'),
+      duration: t('jobs.sampleJobs.job2.duration'),
+      budget: t('jobs.sampleJobs.job2.budget'),
+      posted: t('jobs.sampleJobs.job2.posted'),
       applicants: 8,
       rating: 4.6,
-      skills: ['HVAC', 'Mechanical Engineering', 'Supervision'],
-      description: 'Supervise the installation of HVAC systems for commercial buildings in Jeddah...',
+      skills: t('jobs.sampleJobs.job2.skills', { returnObjects: true }) as string[],
+      description: t('jobs.sampleJobs.job2.description'),
       urgent: true,
       featured: false
     },
     {
       id: 'JOB-003',
-      title: 'Structural Analysis for Bridge Project',
-      company: 'Ministry of Transport',
-      location: 'Dammam, Saudi Arabia',
-      type: 'Consulting',
-      duration: '2 months',
-      budget: '18,000 - 22,000 SAR',
-      posted: '3 days ago',
+      title: t('jobs.sampleJobs.job3.title'),
+      company: t('jobs.sampleJobs.job3.company'),
+      location: t('jobs.sampleJobs.job3.location'),
+      type: t('jobs.sampleJobs.job3.type'),
+      duration: t('jobs.sampleJobs.job3.duration'),
+      budget: t('jobs.sampleJobs.job3.budget'),
+      posted: t('jobs.sampleJobs.job3.posted'),
       applicants: 15,
       rating: 4.9,
-      skills: ['Structural Engineering', 'STAAD Pro', 'Bridge Design'],
-      description: 'Conduct structural analysis and design for a new bridge project in Eastern Province...',
+      skills: t('jobs.sampleJobs.job3.skills', { returnObjects: true }) as string[],
+      description: t('jobs.sampleJobs.job3.description'),
       urgent: false,
       featured: true
     }
@@ -95,48 +98,38 @@ export default function Jobs() {
   const mockMyJobs = [
     {
       id: 'MY-001',
-      title: 'Mechanical System Design',
+      title: t('jobs.myJobs.sample1.title'),
       status: 'in-progress',
       progress: 65,
       deadline: '2024-02-15',
-      client: 'Al-Noor Industries',
-      budget: '12,000 SAR'
+      client: t('jobs.myJobs.sample1.client'),
+      budget: t('jobs.myJobs.sample1.budget')
     },
     {
       id: 'MY-002',
-      title: 'Building Inspection Report',
+      title: t('jobs.myJobs.sample2.title'),
       status: 'pending-review',
       progress: 100,
       deadline: '2024-01-30',
-      client: 'Riyadh Municipality',
-      budget: '8,500 SAR'
+      client: t('jobs.myJobs.sample2.client'),
+      budget: t('jobs.myJobs.sample2.budget')
     },
     {
       id: 'MY-003',
-      title: 'Renovation Project Planning',
+      title: t('jobs.myJobs.sample3.title'),
       status: 'completed',
       progress: 100,
       deadline: '2024-01-20',
-      client: 'Private Client',
-      budget: '5,000 SAR'
+      client: t('jobs.myJobs.sample3.client'),
+      budget: t('jobs.myJobs.sample3.budget')
     }
   ]
 
   const renderBrowseJobs = () => (
     <div className="space-y-6">
-      {/* Search and Filters */}
+      {/* Additional Filters */}
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
         <div className="flex flex-col lg:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder={t('jobs.searchJobs', 'Search jobs...')}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
-              />
-            </div>
-          </div>
           <div className="flex gap-2">
             <select className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
               <option>{t('jobs.allCategories', 'All Categories')}</option>
@@ -153,7 +146,7 @@ export default function Jobs() {
               <option>{t('jobs.mecca', 'Mecca')}</option>
             </select>
             <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
+              <Filter className="w-4 h-4 me-2" />
               {t('jobs.filters', 'Filters')}
             </Button>
           </div>
@@ -177,21 +170,21 @@ export default function Jobs() {
                   </h3>
                   {job.featured && (
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                      <Star className="w-3 h-3 mr-1" />
+                      <Star className="w-3 h-3 me-1" />
                       {t('jobs.featured', 'Featured')}
                     </span>
                   )}
                   {job.urgent && (
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                      <Zap className="w-3 h-3 mr-1" />
+                      <Zap className="w-3 h-3 me-1" />
                       {t('jobs.urgent', 'Urgent')}
                     </span>
                   )}
                 </div>
                 <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  <Briefcase className="w-4 h-4 mr-1" />
+                  <Briefcase className="w-4 h-4 me-1" />
                   {job.company}
-                  <MapPin className="w-4 h-4 ml-4 mr-1" />
+                  <MapPin className="w-4 h-4 ms-4 me-1" />
                   {job.location}
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
@@ -210,19 +203,19 @@ export default function Jobs() {
                 <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-4">
                     <span className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
+                      <Clock className="w-4 h-4 me-1" />
                       {job.posted}
                     </span>
                     <span className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
+                      <Users className="w-4 h-4 me-1" />
                       {job.applicants} {t('jobs.applicants', 'applicants')}
                     </span>
                     <span className="flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
+                      <Star className="w-4 h-4 me-1" />
                       {job.rating}
                     </span>
                   </div>
-                  <div className="text-right">
+                  <div className="text-end">
                     <div className="font-semibold text-gray-900 dark:text-white">
                       {job.budget}
                     </div>
@@ -239,7 +232,7 @@ export default function Jobs() {
                   {t('jobs.apply', 'Apply')}
                 </Button>
                 <Button variant="outline" size="sm">
-                  <Eye className="w-4 h-4 mr-1" />
+                  <Eye className="w-4 h-4 me-1" />
                   {t('jobs.view', 'View')}
                 </Button>
                 <Button variant="ghost" size="sm">
@@ -437,71 +430,25 @@ export default function Jobs() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate(-1)}
-                className="mr-4"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </Button>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {t('jobs.title', 'Jobs')}
-              </h1>
-            </div>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              {t('jobs.postJob', 'Post Job')}
-            </Button>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t('jobs.description', 'Find engineering jobs and manage your applications')}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                      activeTab === tab.id
-                        ? 'bg-primary text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 mr-3" />
-                    {tab.label}
-                  </button>
-                )
-              })}
-            </nav>
-          </div>
-
-          {/* Content */}
-          <div className="lg:col-span-3">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {renderTabContent()}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <PageLayout
+      title={t('jobs.title', 'Jobs')}
+      description={t('jobs.description', 'Find engineering jobs and manage your applications')}
+      searchPlaceholder={t('jobs.searchJobs', 'Search jobs...')}
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      viewMode={viewMode}
+      onViewModeChange={setViewMode}
+      filterTabs={tabs}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      headerActions={
+        <Button>
+          <Plus className="w-4 h-4 me-2" />
+          {t('jobs.postJob', 'Post Job')}
+        </Button>
+      }
+    >
+      {renderTabContent()}
+    </PageLayout>
   )
 }

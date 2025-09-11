@@ -128,7 +128,7 @@ const Stepper: React.FC<StepperProps> = ({
               </div>
               
               {index < steps.length - 1 && (
-                <div className="absolute left-4 top-8 w-0.5 h-8 bg-gray-200 dark:bg-gray-700" />
+                <div className="absolute inset-s-4 top-8 w-0.5 h-8 bg-gray-200 dark:bg-gray-700" />
               )}
             </div>
           )

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
@@ -24,10 +24,11 @@ import {
 } from 'lucide-react'
 
 const EmergencyJobRequest = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation('common')
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(1)
+  const isRTL = i18n.language === 'ar'
   const [formData, setFormData] = useState({
     // Emergency Details
     emergencyType: '',
@@ -64,78 +65,103 @@ const EmergencyJobRequest = () => {
     termsAccepted: false
   })
 
-  const emergencyTypes = [
-    'Structural Emergency',
-    'Electrical Emergency',
-    'Mechanical Failure',
-    'Safety Hazard',
-    'Environmental Issue',
-    'System Failure',
-    'Other'
-  ]
+  const emergencyTypes = useMemo(() => [
+    { key: 'structuralEmergency', value: 'Structural Emergency' },
+    { key: 'electricalEmergency', value: 'Electrical Emergency' },
+    { key: 'mechanicalFailure', value: 'Mechanical Failure' },
+    { key: 'safetyHazard', value: 'Safety Hazard' },
+    { key: 'environmentalIssue', value: 'Environmental Issue' },
+    { key: 'systemFailure', value: 'System Failure' },
+    { key: 'other', value: 'Other' }
+  ], [])
 
-  const severityLevels = [
+  const severityLevels = useMemo(() => [
     {
       id: 'critical',
-      label: 'Critical',
-      description: 'Immediate danger to life or property',
+      key: 'critical',
+      descriptionKey: 'criticalDescription',
+      responseTimeKey: 'criticalResponseTime',
       color: 'text-red-600 bg-red-100 dark:bg-red-900/30',
-      icon: AlertTriangle,
-      responseTime: 'Within 1 hour'
+      icon: AlertTriangle
     },
     {
       id: 'high',
-      label: 'High',
-      description: 'Significant risk requiring urgent attention',
+      key: 'high',
+      descriptionKey: 'highDescription',
+      responseTimeKey: 'highResponseTime',
       color: 'text-orange-600 bg-orange-100 dark:bg-orange-900/30',
-      icon: AlertTriangle,
-      responseTime: 'Within 2 hours'
+      icon: AlertTriangle
     },
     {
       id: 'medium',
-      label: 'Medium',
-      description: 'Important but not immediately dangerous',
+      key: 'medium',
+      descriptionKey: 'mediumDescription',
+      responseTimeKey: 'mediumResponseTime',
       color: 'text-yellow-600 bg-yellow-100 dark:bg-yellow-900/30',
-      icon: Clock,
-      responseTime: 'Within 4 hours'
+      icon: Clock
     }
-  ]
+  ], [])
 
-  const projectTypes = [
-    'Building Inspection',
-    'Structural Assessment',
-    'Electrical Repair',
-    'Mechanical Repair',
-    'Safety Inspection',
-    'Environmental Assessment',
-    'System Diagnosis',
-    'Emergency Repair'
-  ]
+  const projectTypes = useMemo(() => [
+    { key: 'buildingInspection', value: 'Building Inspection' },
+    { key: 'structuralAssessment', value: 'Structural Assessment' },
+    { key: 'electricalRepair', value: 'Electrical Repair' },
+    { key: 'mechanicalRepair', value: 'Mechanical Repair' },
+    { key: 'safetyInspection', value: 'Safety Inspection' },
+    { key: 'environmentalAssessment', value: 'Environmental Assessment' },
+    { key: 'systemDiagnosis', value: 'System Diagnosis' },
+    { key: 'emergencyRepair', value: 'Emergency Repair' }
+  ], [])
 
-  const commonSkills = [
-    'Structural Engineering', 'Electrical Engineering', 'Mechanical Engineering',
-    'Safety Assessment', 'Emergency Response', 'Building Inspection',
-    'HVAC Systems', 'Power Systems', 'Fire Safety', 'Environmental Engineering'
-  ]
+  const commonSkills = useMemo(() => [
+    { key: 'structuralEngineering', value: 'Structural Engineering' },
+    { key: 'electricalEngineering', value: 'Electrical Engineering' },
+    { key: 'mechanicalEngineering', value: 'Mechanical Engineering' },
+    { key: 'safetyAssessment', value: 'Safety Assessment' },
+    { key: 'emergencyResponse', value: 'Emergency Response' },
+    { key: 'buildingInspection', value: 'Building Inspection' },
+    { key: 'hvacSystems', value: 'HVAC Systems' },
+    { key: 'powerSystems', value: 'Power Systems' },
+    { key: 'fireSafety', value: 'Fire Safety' },
+    { key: 'environmentalEngineering', value: 'Environmental Engineering' }
+  ], [])
 
-  const steps = [
-    { id: 1, title: 'Emergency Details', icon: AlertTriangle },
-    { id: 2, title: 'Contact Information', icon: Phone },
-    { id: 3, title: 'Project Details', icon: FileText },
-    { id: 4, title: 'Media & Documentation', icon: Camera },
-    { id: 5, title: 'Review & Submit', icon: CheckCircle }
-  ]
+  const budgetRanges = useMemo(() => [
+    { key: 'under1000', value: 'Under SAR 1,000' },
+    { key: '1000to5000', value: 'SAR 1,000 - 5,000' },
+    { key: '5000to10000', value: 'SAR 5,000 - 10,000' },
+    { key: '10000to25000', value: 'SAR 10,000 - 25,000' },
+    { key: 'over25000', value: 'Over SAR 25,000' },
+    { key: 'negotiable', value: 'Negotiable' }
+  ], [])
+
+  const timelineOptions = useMemo(() => [
+    { key: 'immediate', value: 'Immediate (ASAP)' },
+    { key: 'within1hour', value: 'Within 1 hour' },
+    { key: 'within2hours', value: 'Within 2 hours' },
+    { key: 'within4hours', value: 'Within 4 hours' },
+    { key: 'within24hours', value: 'Within 24 hours' },
+    { key: 'flexible', value: 'Flexible' }
+  ], [])
+
+  const steps = useMemo(() => [
+    { id: 1, key: 'emergencyDetails', icon: AlertTriangle },
+    { id: 2, key: 'contactInformation', icon: Phone },
+    { id: 3, key: 'projectDetails', icon: FileText },
+    { id: 4, key: 'mediaDocumentation', icon: Camera },
+    { id: 5, key: 'reviewSubmit', icon: CheckCircle }
+  ], [])
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSkillToggle = (skill: string) => {
+  const handleSkillToggle = (skillKey: string) => {
     setFormData(prev => ({
       ...prev,
-      skills: prev.skills.includes(skill)
-        ? prev.skills.filter(s => s !== skill)
-        : [...prev.skills, skill]
+      skills: prev.skills.includes(skillKey)
+        ? prev.skills.filter(s => s !== skillKey)
+        : [...prev.skills, skillKey]
     }))
   }
 
@@ -182,23 +208,23 @@ const EmergencyJobRequest = () => {
             {/* Emergency Type */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                Emergency Type *
+                {t('emergencyJobRequest.emergencyType', 'Emergency Type')} *
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {emergencyTypes.map((type) => (
                   <button
-                    key={type}
-                    onClick={() => handleInputChange('emergencyType', type)}
-                    className={`p-4 text-left border-2 rounded-lg transition-colors ${
-                      formData.emergencyType === type
+                    key={type.key}
+                    onClick={() => handleInputChange('emergencyType', type.key)}
+                    className={`p-4 ${isRTL ? 'text-right' : 'text-left'} border-2 rounded-lg transition-colors ${
+                      formData.emergencyType === type.key
                         ? 'border-brand-500 bg-brand-50 dark:bg-brand-900/20'
                         : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
                     }`}
                   >
                     <div className="flex items-center">
-                      <AlertTriangle className="w-5 h-5 text-red-500 mr-3" />
+                      <AlertTriangle className={`w-5 h-5 text-red-500 ${isRTL ? 'ms-3' : 'mr-3'}`} />
                       <span className="font-medium text-gray-900 dark:text-white">
-                        {type}
+                        {t(`emergencyJobRequest.emergencyTypes.${type.key}`, type.value)}
                       </span>
                     </div>
                   </button>
@@ -209,7 +235,7 @@ const EmergencyJobRequest = () => {
             {/* Severity Level */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                Severity Level *
+                {t('emergencyJobRequest.severityLevel', 'Severity Level')} *
               </label>
               <div className="space-y-3">
                 {severityLevels.map((level) => {
@@ -218,25 +244,25 @@ const EmergencyJobRequest = () => {
                     <button
                       key={level.id}
                       onClick={() => handleInputChange('severity', level.id)}
-                      className={`w-full p-4 text-left border-2 rounded-lg transition-colors ${
+                      className={`w-full p-4 ${isRTL ? 'text-right' : 'text-left'} border-2 rounded-lg transition-colors ${
                         formData.severity === level.id
                           ? 'border-brand-500 bg-brand-50 dark:bg-brand-900/20'
                           : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
                       }`}
                     >
                       <div className="flex items-start">
-                        <Icon className="w-6 h-6 text-red-500 mr-4 mt-1" />
+                        <Icon className={`w-6 h-6 text-red-500 mt-1 ${isRTL ? 'ms-4' : 'mr-4'}`} />
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-2">
                             <h3 className="font-semibold text-gray-900 dark:text-white">
-                              {level.label}
+                              {t(`emergencyJobRequest.severityLevels.${level.key}`, level.id)}
                             </h3>
                             <span className={`px-2 py-1 text-xs font-medium rounded-full ${level.color}`}>
-                              {level.responseTime}
+                              {t(`emergencyJobRequest.severityLevels.${level.responseTimeKey}`, level.id)}
                             </span>
                           </div>
                           <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {level.description}
+                            {t(`emergencyJobRequest.severityLevels.${level.descriptionKey}`, level.id)}
                           </p>
                         </div>
                       </div>
@@ -249,12 +275,12 @@ const EmergencyJobRequest = () => {
             {/* Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Emergency Description *
+                {t('emergencyJobRequest.emergencyDescription', 'Emergency Description')} *
               </label>
               <textarea
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                placeholder="Describe the emergency situation in detail..."
+                placeholder={t('emergencyJobRequest.emergencyDescriptionPlaceholder', 'Describe the emergency situation in detail...')}
                 rows={4}
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
               />
@@ -263,13 +289,13 @@ const EmergencyJobRequest = () => {
             {/* Location */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Emergency Location *
+                {t('emergencyJobRequest.emergencyLocation', 'Emergency Location')} *
               </label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => handleInputChange('location', e.target.value)}
-                placeholder="Enter the exact location of the emergency"
+                placeholder={t('emergencyJobRequest.emergencyLocationPlaceholder', 'Enter the exact location of the emergency')}
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
               />
             </div>
@@ -639,23 +665,25 @@ const EmergencyJobRequest = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
+              <Button variant="ghost" size="sm" className={isRTL ? 'ms-4' : 'mr-4'} onClick={() => navigate('/')}>
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Emergency Job Request
+                {t('emergencyJobRequest.title', 'Emergency Job Request')}
               </h1>
             </div>
             
             <div className="flex items-center space-x-2">
               <AlertTriangle className="w-6 h-6 text-red-500" />
-              <span className="text-sm text-red-600 dark:text-red-400 font-medium">EMERGENCY</span>
+              <span className="text-sm text-red-600 dark:text-red-400 font-medium">
+                {t('emergencyJobRequest.emergency', 'EMERGENCY')}
+              </span>
             </div>
           </div>
         </div>

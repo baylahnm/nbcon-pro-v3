@@ -144,7 +144,7 @@ const AccountConfirmation = () => {
           {/* Personal Information */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-              <User className="w-5 h-5 mr-2 text-brand-500" />
+              <User className="w-5 h-5 me-2 text-brand-500" />
               {t('accountConfirmation.role', { ns: 'auth' })}
             </h3>
             
@@ -178,7 +178,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Name
+                  {t('accountConfirmation.name', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.profile.firstName} {accountData.profile.lastName}
@@ -190,14 +190,14 @@ const AccountConfirmation = () => {
           {/* Service Area */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-              <MapPin className="w-5 h-5 mr-2 text-brand-500" />
+              <MapPin className="w-5 h-5 me-2 text-brand-500" />
               {t('accountConfirmation.serviceArea', { ns: 'auth' })}
             </h3>
             
             <div className="space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Address
+                  {t('accountConfirmation.address', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.serviceArea.address}
@@ -206,7 +206,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Service Radius
+                  {t('accountConfirmation.serviceRadius', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.serviceArea.radius} km
@@ -218,14 +218,14 @@ const AccountConfirmation = () => {
           {/* Rates */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-              <DollarSign className="w-5 h-5 mr-2 text-brand-500" />
+              <DollarSign className="w-5 h-5 me-2 text-brand-500" />
               {t('accountConfirmation.rates', { ns: 'auth' })}
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Hourly Rate
+                  {t('accountConfirmation.hourlyRate', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.rates.currency} {accountData.rates.hourly}
@@ -234,7 +234,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Daily Rate
+                  {t('accountConfirmation.dailyRate', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.rates.currency} {accountData.rates.daily}
@@ -243,7 +243,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Project Rate
+                  {t('accountConfirmation.projectRate', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.rates.currency} {accountData.rates.project}
@@ -266,7 +266,7 @@ const AccountConfirmation = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <ArrowLeft className="mr-2 w-5 h-5" />
+            <ArrowLeft className="me-2 w-5 h-5" />
             {t('actions.back', { ns: 'common' })}
           </Button>
           
@@ -276,7 +276,7 @@ const AccountConfirmation = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <Edit className="mr-2 w-5 h-5" />
+            <Edit className="me-2 w-5 h-5" />
             {t('accountConfirmation.edit', { ns: 'auth' })}
           </Button>
           

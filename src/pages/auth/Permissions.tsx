@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/themeStore'
 import { ArrowLeft, MapPin, Bell, Camera, Folder, Shield } from 'lucide-react'
+import { DirectionalIcon } from '@/components/system/DirectionalIcon'
 
 const Permissions = () => {
   const { t } = useTranslation()
@@ -148,31 +149,23 @@ const Permissions = () => {
                 transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm"
               >
-                 <div className={`flex items-start justify-between ${isRTL ? '' : ''}`}>
-                   <div className={`flex items-start ${isRTL ? 'justify-end flex-1' : ''}`}>
-                     <div className={`w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center ${
-                       isRTL ? 'ml-4' : 'mr-4'
-                     }`}>
+                 <div className="flex items-start justify-between">
+                   <div className="flex items-start flex-1">
+                     <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center me-4">
                        <Icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
                      </div>
-                    <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
-                      <div className={`flex items-center mb-2 ${isRTL ? 'justify-end' : ''}`}>
-                        <h3 className={`text-lg font-semibold text-gray-900 dark:text-white ${
-                          isRTL ? 'text-right' : 'text-left'
-                        }`}>
+                    <div className="flex-1">
+                      <div className="flex items-center mb-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white text-start">
                           {permission.title}
                         </h3>
                         {permission.required && (
-                          <span className={`px-2 py-1 text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full ${
-                            isRTL ? 'mr-2' : 'ml-2'
-                          }`}>
+                          <span className="px-2 py-1 text-xs bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full ms-2">
                             {t('permissions.required', { ns: 'auth' })}
                           </span>
                         )}
                       </div>
-                      <p className={`text-gray-600 dark:text-gray-300 text-sm ${
-                        isRTL ? 'text-right' : 'text-left'
-                      }`}>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm text-start">
                         {permission.description}
                       </p>
                     </div>
@@ -225,7 +218,9 @@ const Permissions = () => {
             size="lg"
             className="sm:w-auto"
           >
-            <ArrowLeft className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            <DirectionalIcon className="me-2">
+              <ArrowLeft className="w-5 h-5" />
+            </DirectionalIcon>
             {t('actions.back', { ns: 'common' })}
           </Button>
           
