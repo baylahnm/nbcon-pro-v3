@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -30,18 +30,18 @@ export default function Payments() {
   const { t, i18n } = useTranslation('common')
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('overview')
-  const [isRTL, setIsRTL] = useState(i18n.language === 'ar')
+  const isRTL = i18n.language === 'ar'
 
-  const tabs = [
+  const tabs = useMemo(() => [
     { id: 'overview', label: t('payments.overview', 'Overview'), icon: TrendingUp },
     { id: 'transactions', label: t('payments.transactions', 'Transactions'), icon: CreditCard },
     { id: 'methods', label: t('payments.methods', 'Payment Methods'), icon: Wallet },
     { id: 'escrow', label: t('payments.escrow', 'Escrow'), icon: Shield },
     { id: 'payouts', label: t('payments.payouts', 'Payouts'), icon: Download },
     { id: 'invoices', label: t('payments.invoices', 'Invoices'), icon: FileText }
-  ]
+  ], [t])
 
-  const mockTransactions = [
+  const mockTransactions = useMemo(() => [
     {
       id: 'TXN-001',
       type: 'payment',
@@ -49,7 +49,7 @@ export default function Payments() {
       currency: 'SAR',
       status: 'completed',
       date: '2024-01-15',
-      description: 'Project Payment - Site Inspection',
+      description: t('payments.transactionDescriptions.projectPayment', 'Project Payment - Site Inspection'),
       engineer: 'Ahmed Al-Rashid'
     },
     {
@@ -59,7 +59,7 @@ export default function Payments() {
       currency: 'SAR',
       status: 'pending',
       date: '2024-01-14',
-      description: 'Engineer Payout - Electrical Design',
+      description: t('payments.transactionDescriptions.engineerPayout', 'Engineer Payout - Electrical Design'),
       engineer: 'Sara Al-Mansouri'
     },
     {
@@ -69,10 +69,10 @@ export default function Payments() {
       currency: 'SAR',
       status: 'completed',
       date: '2024-01-13',
-      description: 'Refund - Cancelled Project',
+      description: t('payments.transactionDescriptions.refundCancelled', 'Refund - Cancelled Project'),
       engineer: 'Mohammed Al-Zahrani'
     }
-  ]
+  ], [t])
 
   const mockPaymentMethods = [
     {
@@ -92,6 +92,36 @@ export default function Payments() {
     }
   ]
 
+  const mockPayouts = useMemo(() => [
+    {
+      id: 'PO-001',
+      amount: 2500,
+      currency: 'SAR',
+      status: 'completed',
+      date: '2024-01-15',
+      method: 'Al Rajhi Bank',
+      reference: 'TXN-789456'
+    },
+    {
+      id: 'PO-002',
+      amount: 1800,
+      currency: 'SAR',
+      status: 'pending',
+      date: '2024-01-14',
+      method: 'PayPal',
+      reference: 'TXN-789457'
+    },
+    {
+      id: 'PO-003',
+      amount: 3200,
+      currency: 'SAR',
+      status: 'completed',
+      date: '2024-01-12',
+      method: 'Bank Transfer',
+      reference: 'TXN-789458'
+    }
+  ], [])
+
   const renderOverview = () => (
     <div className="space-y-6">
       {/* Stats Cards */}
@@ -101,7 +131,7 @@ export default function Payments() {
             <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
               <TrendingUp className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
-            <div className="ml-4">
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('payments.totalEarnings', 'Total Earnings')}
               </p>
@@ -117,7 +147,7 @@ export default function Payments() {
             <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
               <CreditCard className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
-            <div className="ml-4">
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('payments.pendingPayments', 'Pending Payments')}
               </p>
@@ -133,7 +163,7 @@ export default function Payments() {
             <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
               <Wallet className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
-            <div className="ml-4">
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('payments.availableBalance', 'Available Balance')}
               </p>
@@ -149,7 +179,7 @@ export default function Payments() {
             <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
               <Calendar className="w-6 h-6 text-orange-600 dark:text-orange-400" />
             </div>
-            <div className="ml-4">
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {t('payments.thisMonth', 'This Month')}
               </p>
@@ -186,7 +216,7 @@ export default function Payments() {
                       <Upload className="w-5 h-5 text-red-600 dark:text-red-400" />
                     )}
                   </div>
-                  <div className="ml-4">
+                  <div className={isRTL ? 'ms-4' : 'ml-4'}>
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
                       {transaction.description}
                     </p>
@@ -195,7 +225,7 @@ export default function Payments() {
                     </p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className={isRTL ? 'text-left' : 'text-right'}>
                   <p className={`text-sm font-medium ${
                     transaction.type === 'refund' ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'
                   }`}>
@@ -203,9 +233,9 @@ export default function Payments() {
                   </p>
                   <div className="flex items-center">
                     {transaction.status === 'completed' ? (
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                      <CheckCircle className={`w-4 h-4 text-green-500 ${isRTL ? 'ms-1' : 'mr-1'}`} />
                     ) : (
-                      <Clock className="w-4 h-4 text-yellow-500 mr-1" />
+                      <Clock className={`w-4 h-4 text-yellow-500 ${isRTL ? 'ms-1' : 'mr-1'}`} />
                     )}
                     <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
                       {transaction.status}
@@ -306,9 +336,9 @@ export default function Payments() {
                         ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
                         : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                     }`}>
-                      {transaction.status === 'completed' && <CheckCircle className="w-3 h-3 mr-1" />}
-                      {transaction.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
-                      {transaction.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
+                      {transaction.status === 'completed' && <CheckCircle className={`w-3 h-3 ${isRTL ? 'ms-1' : 'mr-1'}`} />}
+                      {transaction.status === 'pending' && <Clock className={`w-3 h-3 ${isRTL ? 'ms-1' : 'mr-1'}`} />}
+                      {transaction.status === 'failed' && <AlertCircle className={`w-3 h-3 ${isRTL ? 'ms-1' : 'mr-1'}`} />}
                       {transaction.status}
                     </span>
                   </td>
@@ -341,7 +371,7 @@ export default function Payments() {
           {t('payments.paymentMethods', 'Payment Methods')}
         </h3>
         <Button>
-          <Plus className="w-4 h-4 mr-2" />
+          <Plus className={`w-4 h-4 ${isRTL ? 'ms-2' : 'mr-2'}`} />
           {t('payments.addMethod', 'Add Method')}
         </Button>
       </div>
@@ -354,7 +384,7 @@ export default function Payments() {
                 <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
                   <CreditCard className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
-                <div className="ml-3">
+                <div className={isRTL ? 'ms-3' : 'ml-3'}>
                   <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
                     {method.brand || method.bankName}
                   </h4>
@@ -419,12 +449,64 @@ export default function Payments() {
   )
 
   const renderPayouts = () => (
-    <div className="space-y-6">
+    <div className="space-y-6" dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* Payout Summary */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+              <Download className="w-6 h-6 text-green-600 dark:text-green-400" />
+            </div>
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                {t('payments.availableForPayout', 'Available for Payout')}
+              </p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                8,750 SAR
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+              <Clock className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                {t('payments.pendingPayouts', 'Pending Payouts')}
+              </p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                1,200 SAR
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center">
+            <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
+              <Calendar className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            </div>
+            <div className={isRTL ? 'ms-4' : 'ml-4'}>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                {t('payments.lastPayout', 'Last Payout')}
+              </p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                2,500 SAR
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Payout Settings */}
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           {t('payments.payoutSettings', 'Payout Settings')}
         </h3>
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {t('payments.payoutMethod', 'Payout Method')}
@@ -444,6 +526,49 @@ export default function Payments() {
               <option>{t('payments.monthly', 'Monthly')}</option>
               <option>{t('payments.manual', 'Manual')}</option>
             </select>
+          </div>
+        </div>
+        <div className="mt-6">
+          <Button className="bg-green-600 hover:bg-green-700 text-white">
+            {t('payments.requestPayout', 'Request Payout')}
+          </Button>
+        </div>
+      </div>
+
+      {/* Recent Payouts */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t('payments.recentPayouts', 'Recent Payouts')}
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="space-y-4">
+            {mockPayouts.map((payout) => (
+              <div key={payout.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div className="flex items-center">
+                  <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                    <Download className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div className={isRTL ? 'ms-4' : 'ml-4'}>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {t('payments.payoutTo', 'Payout to')} {payout.method}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {payout.date} • {payout.status}
+                    </p>
+                  </div>
+                </div>
+                <div className={isRTL ? 'text-left' : 'text-right'}>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    {payout.amount} {payout.currency}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {payout.reference}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

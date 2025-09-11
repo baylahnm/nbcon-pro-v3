@@ -1,0 +1,41 @@
+{
+  "title": "البحث المتقدم",
+  "subtitle": "اعثر على المهندسين والخدمات والوظائف باستخدام مرشحات متقدمة",
+  "filtersToggle": "المرشحات",
+  "placeholder": "ابحث بالاسم أو المهارات أو الموقع أو الكلمات المفتاحية...",
+  "tabs": {
+    "allResults": "كل النتائج",
+    "engineers": "المهندسون",
+    "services": "الخدمات",
+    "jobs": "الوظائف"
+  },
+  "panel": {
+    "advancedFilters": "مرشحات متقدمة",
+    "clearAll": "مسح الكل"
+  },
+  "fields": {
+    "location": "الموقع",
+    "experience": "الخبرة",
+    "minRating": "التقييم الأدنى",
+    "budget": "نطاق الميزانية",
+    "availability": "التوفر",
+    "responseTime": "زمن الاستجابة",
+    "skills": "المهارات",
+    "certifications": "الشهادات",
+    "languages": "اللغات"
+  },
+  "options": {
+    "allLocations": "كل المواقع",
+    "allExperienceLevels": "جميع مستويات الخبرة",
+    "anyRating": "أي تقييم",
+    "anyBudget": "أي ميزانية",
+    "anyAvailability": "أي توفر",
+    "anyResponseTime": "أي زمن استجابة",
+    "stars": "نجمة"
+  },
+  "empty": {
+    "title": "لا توجد نتائج",
+    "hint": "جرّب تعديل معايير البحث أو المرشحات للوصول إلى ما تبحث عنه.",
+    "cta": "تعديل المرشحات"
+  }
+}

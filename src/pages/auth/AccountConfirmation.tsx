@@ -178,7 +178,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Name
+                  {t('accountConfirmation.name', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.profile.firstName} {accountData.profile.lastName}
@@ -197,7 +197,7 @@ const AccountConfirmation = () => {
             <div className="space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Address
+                  {t('accountConfirmation.address', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.serviceArea.address}
@@ -206,7 +206,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Service Radius
+                  {t('accountConfirmation.serviceRadius', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.serviceArea.radius} km
@@ -225,7 +225,7 @@ const AccountConfirmation = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Hourly Rate
+                  {t('accountConfirmation.hourlyRate', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.rates.currency} {accountData.rates.hourly}
@@ -234,7 +234,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Daily Rate
+                  {t('accountConfirmation.dailyRate', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.rates.currency} {accountData.rates.daily}
@@ -243,7 +243,7 @@ const AccountConfirmation = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                  Project Rate
+                  {t('accountConfirmation.projectRate', { ns: 'auth' })}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
                   {accountData.rates.currency} {accountData.rates.project}

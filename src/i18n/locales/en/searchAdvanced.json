@@ -1,0 +1,41 @@
+{
+  "title": "Advanced Search",
+  "subtitle": "Find engineers, services, and jobs with advanced filters",
+  "filtersToggle": "Filters",
+  "placeholder": "Search by name, skills, location, or keywords...",
+  "tabs": {
+    "allResults": "All Results",
+    "engineers": "Engineers",
+    "services": "Services",
+    "jobs": "Jobs"
+  },
+  "panel": {
+    "advancedFilters": "Advanced Filters",
+    "clearAll": "Clear All"
+  },
+  "fields": {
+    "location": "Location",
+    "experience": "Experience",
+    "minRating": "Minimum Rating",
+    "budget": "Budget Range",
+    "availability": "Availability",
+    "responseTime": "Response Time",
+    "skills": "Skills",
+    "certifications": "Certifications",
+    "languages": "Languages"
+  },
+  "options": {
+    "allLocations": "All Locations",
+    "allExperienceLevels": "All Experience Levels",
+    "anyRating": "Any Rating",
+    "anyBudget": "Any Budget",
+    "anyAvailability": "Any Availability",
+    "anyResponseTime": "Any Response Time",
+    "stars": "stars"
+  },
+  "empty": {
+    "title": "No results found",
+    "hint": "Try adjusting your search criteria or filters to find what you're looking for.",
+    "cta": "Adjust Filters"
+  }
+}

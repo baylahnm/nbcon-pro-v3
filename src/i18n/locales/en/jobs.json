@@ -1,0 +1,111 @@
+{
+  "advancedSearch": {
+    "title": "Advanced Search",
+    "filters": "Filters",
+    "searchPlaceholder": "Search by name, skills, location, or keywords..."
+  },
+  "filters": {
+    "anyRating": "Any Rating",
+    "allLocations": "All Locations",
+    "allExperience": "All Experience Levels",
+    "anyAvailability": "Any Availability",
+    "anyResponseTime": "Any Response Time",
+    "anyBudget": "Any Budget",
+    "skills": "Skills",
+    "certifications": "Certifications",
+    "languages": "Languages",
+    "clearAll": "Clear All",
+    "adjustFilters": "Adjust Filters",
+    "allResults": "All Results",
+    "engineers": "Engineers",
+    "services": "Services",
+    "jobs": "Jobs",
+    "noResults": "No results found",
+    "noResultsHelp": "Try adjusting your search criteria or filters to find what you're looking for."
+  },
+  "skills": {
+    "autocad": "AutoCAD",
+    "revit": "Revit",
+    "projectManagement": "Project Management",
+    "structuralAnalysis": "Structural Analysis",
+    "hvacDesign": "HVAC Design",
+    "energyEfficiency": "Energy Efficiency",
+    "buildingSystems": "Building Systems",
+    "modeling3d": "3D Modeling",
+    "safetyAssessment": "Safety Assessment",
+    "buildingCodes": "Building Codes",
+    "seismicDesign": "Seismic Design",
+    "powerSystems": "Power Systems",
+    "lightingDesign": "Lighting Design",
+    "smartBuildings": "Smart Buildings",
+    "renewableEnergy": "Renewable Energy"
+  },
+  "certifications": {
+    "peLicense": "PE License",
+    "pmp": "PMP",
+    "leed": "LEED",
+    "sceCertified": "SCE Certified",
+    "autocadCertified": "AutoCAD Certified"
+  },
+  "statusTracking": {
+    "title": "Job Status Tracking",
+    "statusLabel": "Status",
+    "timeline": "Timeline",
+    "milestones": "Milestones",
+    "documents": "Documents",
+    "nextAction": "Next Action",
+    "viewDetails": "View Details",
+    "contactEngineer": "Contact Engineer"
+  },
+  "status": {
+    "inProgress": "In Progress",
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "paused": "Paused",
+    "blocked": "Blocked"
+  },
+  "milestone": {
+    "projectStarted": "Project Started",
+    "siteVisit": "Site Visit",
+    "reportSubmission": "Report Submission",
+    "clientReview": "Client Review"
+  },
+  "languagesList": {
+    "ar": "Arabic",
+    "en": "English",
+    "fr": "French",
+    "de": "German",
+    "es": "Spanish",
+    "zh": "Chinese"
+  },
+  "engineers": {
+    "card": {
+      "viewProfile": "View Profile",
+      "select": "Select",
+      "available": {
+        "now": "Available now",
+        "week": "Available this week",
+        "month": "Available this month"
+      },
+      "reviews_zero": "0 reviews",
+      "reviews_one": "{{count}} review",
+      "reviews_other": "{{count}} reviews",
+      "response_one": "Response: {{hours}} hour",
+      "response_other": "Response: {{hours}} hours",
+      "completion": "Completion: {{pct}}%",
+      "portfolio_one": "Portfolio: {{count}} project",
+      "portfolio_other": "Portfolio: {{count}} projects",
+      "perHour": "per hour"
+    }
+  },
+  "cities": {
+    "riyadh": "Riyadh",
+    "jeddah": "Jeddah",
+    "dammam": "Dammam",
+    "mecca": "Mecca",
+    "medina": "Medina",
+    "khobar": "Khobar"
+  },
+  "currency": { "sar": "SAR" }
+}

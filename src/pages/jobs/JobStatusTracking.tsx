@@ -1,16 +1,15 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
+import { PageLayout } from '@/components/layout/PageLayout'
 import { Button } from '@/components/ui/button'
 import { 
-  ArrowLeft, 
   CheckCircle, 
   Clock, 
   AlertCircle,
   Play,
   Pause,
-  Square,
   Calendar,
   Users,
   FileText,
@@ -21,20 +20,26 @@ import {
   Edit,
   MoreVertical,
   TrendingUp,
-  TrendingDown
+  TrendingDown,
+  Search,
+  Grid3X3,
+  List
 } from 'lucide-react'
 
 const JobStatusTracking = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation(['jobs', 'common'])
   const navigate = useNavigate()
   const [selectedJob, setSelectedJob] = useState<string | null>(null)
   const [filterStatus, setFilterStatus] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const isRTL = i18n.language === 'ar'
 
-  const jobs = [
+  const jobs = useMemo(() => [
     {
       id: '1',
-      title: 'Office Building Design',
-      client: 'Al-Rajhi Construction',
+      titleKey: 'officeBuildingDesign',
+      clientKey: 'alRajhiConstruction',
       engineer: 'Ahmed Al-Rashid',
       status: 'in_progress',
       progress: 65,
@@ -44,46 +49,46 @@ const JobStatusTracking = () => {
       budget: 45000,
       spent: 29250,
       currency: 'SAR',
-      location: 'Riyadh, Saudi Arabia',
-      description: 'Complete architectural and structural design for modern office building with sustainable features.',
+      locationKey: 'riyadh',
+      descriptionKey: 'officeBuildingDesign',
       milestones: [
         {
           id: '1',
-          title: 'Initial Design Concept',
+          titleKey: 'initialDesignConcept',
           status: 'completed',
           dueDate: '2024-01-22',
           completedDate: '2024-01-20',
-          description: 'Create initial design concept and present to client'
+          descriptionKey: 'initialDesignConcept'
         },
         {
           id: '2',
-          title: 'Detailed Drawings',
+          titleKey: 'detailedDrawings',
           status: 'in_progress',
           dueDate: '2024-02-05',
           completedDate: null,
-          description: 'Develop detailed architectural and structural drawings'
+          descriptionKey: 'detailedDrawings'
         },
         {
           id: '3',
-          title: '3D Modeling',
+          titleKey: '3dModeling',
           status: 'pending',
           dueDate: '2024-02-15',
           completedDate: null,
-          description: 'Create 3D models and renderings'
+          descriptionKey: '3dModeling'
         },
         {
           id: '4',
-          title: 'Final Review',
+          titleKey: 'finalReview',
           status: 'pending',
           dueDate: '2024-02-28',
           completedDate: null,
-          description: 'Final review and client approval'
+          descriptionKey: 'finalReview'
         }
       ],
       deliverables: [
         {
           id: '1',
-          title: 'Architectural Drawings',
+          titleKey: 'architecturalDrawings',
           status: 'completed',
           uploadedAt: '2024-01-20',
           size: '2.4 MB',
@@ -91,7 +96,7 @@ const JobStatusTracking = () => {
         },
         {
           id: '2',
-          title: 'Structural Plans',
+          titleKey: 'structuralPlans',
           status: 'in_progress',
           uploadedAt: null,
           size: null,
@@ -99,7 +104,7 @@ const JobStatusTracking = () => {
         },
         {
           id: '3',
-          title: '3D Models',
+          titleKey: '3dModels',
           status: 'pending',
           uploadedAt: null,
           size: null,
@@ -110,27 +115,27 @@ const JobStatusTracking = () => {
         {
           id: '1',
           name: 'Ahmed Al-Rashid',
-          role: 'Lead Engineer',
+          roleKey: 'leadEngineer',
           status: 'active',
           avatar: '/api/placeholder/40/40'
         },
         {
           id: '2',
           name: 'Sarah Al-Mansouri',
-          role: 'Structural Engineer',
+          roleKey: 'structuralEngineer',
           status: 'active',
           avatar: '/api/placeholder/40/40'
         },
         {
           id: '3',
           name: 'Mohammed Al-Zahrani',
-          role: 'Project Manager',
+          roleKey: 'projectManager',
           status: 'active',
           avatar: '/api/placeholder/40/40'
         }
       ],
       lastUpdate: '2024-01-25T14:30:00Z',
-      nextMilestone: 'Detailed Drawings',
+      nextMilestoneKey: 'detailedDrawings',
       nextDueDate: '2024-02-05'
     },
     {
@@ -298,19 +303,63 @@ const JobStatusTracking = () => {
       nextMilestone: 'Project Kickoff',
       nextDueDate: '2024-02-01'
     }
-  ]
+  ], [])
 
-  const statusOptions = [
-    { id: 'all', label: 'All Jobs', count: jobs.length },
-    { id: 'pending', label: 'Pending', count: jobs.filter(j => j.status === 'pending').length },
-    { id: 'in_progress', label: 'In Progress', count: jobs.filter(j => j.status === 'in_progress').length },
-    { id: 'completed', label: 'Completed', count: jobs.filter(j => j.status === 'completed').length },
-    { id: 'on_hold', label: 'On Hold', count: jobs.filter(j => j.status === 'on_hold').length }
-  ]
+  // Status filter tabs
+  const statusTabs = useMemo(() => [
+    {
+      id: 'all',
+      label: t('jobs:filters.allResults', 'All Jobs'),
+      icon: Search,
+      count: jobs.length
+    },
+    {
+      id: 'pending',
+      label: t('jobs:status.pending', 'Pending'),
+      icon: Clock,
+      count: jobs.filter(j => j.status === 'pending').length
+    },
+    {
+      id: 'in_progress',
+      label: t('jobs:status.inProgress', 'In Progress'),
+      icon: Play,
+      count: jobs.filter(j => j.status === 'in_progress').length
+    },
+    {
+      id: 'completed',
+      label: t('jobs:status.completed', 'Completed'),
+      icon: CheckCircle,
+      count: jobs.filter(j => j.status === 'completed').length
+    },
+    {
+      id: 'on_hold',
+      label: t('jobs:status.paused', 'On Hold'),
+      icon: Pause,
+      count: jobs.filter(j => j.status === 'on_hold').length
+    }
+  ], [t, jobs, i18n.language])
 
-  const filteredJobs = jobs.filter(job => 
-    filterStatus === 'all' || job.status === filterStatus
-  )
+  // Filter jobs based on search and status
+  const filteredJobs = useMemo(() => {
+    let filtered = jobs
+
+    // Filter by status
+    if (filterStatus !== 'all') {
+      filtered = filtered.filter(job => job.status === filterStatus)
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(job =>
+        t(`jobs.statusTracking.jobTitles.${job.titleKey}`, job.titleKey).toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t(`jobs.statusTracking.clients.${job.clientKey}`, job.clientKey).toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.engineer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t(`jobs.statusTracking.locations.${job.locationKey}`, job.locationKey).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }
+
+    return filtered
+  }, [jobs, filterStatus, searchQuery, t])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -366,62 +415,36 @@ const JobStatusTracking = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm" className="mr-4" onClick={() => navigate('/')}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Job Status Tracking
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button
-                onClick={() => navigate('/job-archive')}
-                variant="outline"
-                size="sm"
-              >
-                View Archive
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <PageLayout
+      title={t('jobs:statusTracking.title', 'Job Status Tracking')}
+      description={t('jobs:statusTracking.description', 'Track and manage your job progress, milestones, and team collaboration')}
+      searchPlaceholder={t('jobs:statusTracking.searchPlaceholder', 'Search jobs by title, client, or engineer...')}
+      searchValue={searchQuery}
+      onSearchChange={setSearchQuery}
+      filterTabs={statusTabs}
+      activeTab={filterStatus}
+      onTabChange={setFilterStatus}
+      viewMode={viewMode}
+      onViewModeChange={setViewMode}
+      showViewToggle={true}
+      headerActions={
+        <Button
+          onClick={() => navigate('/job-archive')}
+          variant="outline"
+          size="sm"
+        >
+          {t('jobs:statusTracking.viewArchive', 'View Archive')}
+        </Button>
+      }
+    >
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Status Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <div className="flex flex-wrap gap-2">
-            {statusOptions.map((option) => (
-              <Button
-                key={option.id}
-                variant={filterStatus === option.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setFilterStatus(option.id)}
-                className="mb-2"
-              >
-                {option.label} ({option.count})
-              </Button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Jobs Grid */}
+        {/* Jobs Grid/List */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="space-y-6"
+          className={viewMode === 'grid' ? 'space-y-6' : 'space-y-4'}
         >
           {filteredJobs.map((job, index) => (
             <motion.div
@@ -429,79 +452,85 @@ const JobStatusTracking = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden"
+              className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden ${
+                viewMode === 'list' ? 'flex items-center' : ''
+              }`}
             >
               {/* Job Header */}
-              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex items-start justify-between mb-4">
+              <div className={`border-b border-gray-200 dark:border-gray-700 ${viewMode === 'list' ? 'flex-1 p-4' : 'p-6'}`}>
+                <div className={`flex items-start justify-between ${viewMode === 'list' ? 'mb-2' : 'mb-4'}`}>
                   <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        {job.title}
+                    <div className={`flex items-center ${viewMode === 'list' ? 'mb-1' : 'mb-2'}`}>
+                      <h3 className={`font-semibold text-gray-900 dark:text-white ${viewMode === 'list' ? 'text-lg' : 'text-xl'}`}>
+                        {t(`jobs.statusTracking.jobTitles.${job.titleKey}`, job.titleKey)}
                       </h3>
-                      <span className={`ml-3 px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(job.status)}`}>
-                        {job.status.replace('_', ' ').toUpperCase()}
+                      <span className={`${isRTL ? 'ms-3' : 'ms-3'} px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(job.status)}`}>
+                        {t(`jobs:status.${job.status}`, job.status.replace('_', ' ').toUpperCase())}
                       </span>
-                      <span className={`ml-2 px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(job.priority)}`}>
-                        {job.priority.toUpperCase()}
+                      <span className={`${isRTL ? 'ms-2' : 'ms-2'} px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(job.priority)}`}>
+                        {t(`jobs:filters.${job.priority}`, job.priority.toUpperCase())}
                       </span>
                     </div>
                     
-                    <div className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400 mb-3">
-                      <span>Client: {job.client}</span>
-                      <span>Engineer: {job.engineer}</span>
-                      <span>Location: {job.location}</span>
+                    <div className={`flex items-center text-sm text-gray-600 dark:text-gray-400 ${viewMode === 'list' ? 'space-x-4 mb-1' : 'space-x-6 mb-3'}`}>
+                      <span>{t('jobs:filters.client', 'Client')}: {t(`jobs:clients.${job.clientKey}`, job.clientKey)}</span>
+                      <span>{t('jobs:filters.engineer', 'Engineer')}: {job.engineer}</span>
+                      <span>{t('jobs:filters.location', 'Location')}: {t(`jobs:locations.${job.locationKey}`, job.locationKey)}</span>
                     </div>
                     
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">
-                      {job.description}
-                    </p>
+                    {viewMode === 'grid' && (
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">
+                        {t(`jobs:descriptions.${job.descriptionKey}`, job.descriptionKey)}
+                      </p>
+                    )}
                   </div>
                   
-                  <div className="text-right ml-6">
-                    <div className="text-2xl font-bold text-brand-600 dark:text-brand-400 mb-1">
+                  <div className={`text-end ${viewMode === 'list' ? 'ms-4' : 'ms-6'}`}>
+                    <div className={`font-bold text-brand-600 dark:text-brand-400 ${viewMode === 'list' ? 'text-lg mb-1' : 'text-2xl mb-1'}`}>
                       {job.currency} {job.budget.toLocaleString()}
                     </div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      Spent: {job.currency} {job.spent.toLocaleString()}
+                      {t('jobs.statusTracking.spent', 'Spent')}: {job.currency} {job.spent.toLocaleString()}
                     </div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {job.progress}% Complete
+                      {job.progress}% {t('jobs.statusTracking.complete', 'Complete')}
                     </div>
                   </div>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Progress
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {job.progress}%
-                    </span>
+                {viewMode === 'grid' && (
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {t('jobs.statusTracking.progress', 'Progress')}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {job.progress}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div 
+                        className="bg-brand-500 h-2 rounded-full transition-all duration-300" 
+                        style={{ width: `${job.progress}%` }}
+                      ></div>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-brand-500 h-2 rounded-full transition-all duration-300" 
-                      style={{ width: `${job.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
+                )}
 
                 {/* Timeline */}
-                <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                <div className={`flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 ${viewMode === 'list' ? 'mt-2' : ''}`}>
                   <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    <span>Start: {new Date(job.startDate).toLocaleDateString()}</span>
+                    <Calendar className="w-4 h-4 me-1" />
+                    <span>{t('jobs.statusTracking.start', 'Start')}: {new Date(job.startDate).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    <span>End: {new Date(job.endDate).toLocaleDateString()}</span>
+                    <Calendar className="w-4 h-4 me-1" />
+                    <span>{t('jobs.statusTracking.end', 'End')}: {new Date(job.endDate).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>Last Update: {new Date(job.lastUpdate).toLocaleDateString()}</span>
+                    <Clock className="w-4 h-4 me-1" />
+                    <span>{t('jobs.statusTracking.lastUpdate', 'Last Update')}: {new Date(job.lastUpdate).toLocaleDateString()}</span>
                   </div>
                 </div>
               </div>
@@ -518,7 +547,7 @@ const JobStatusTracking = () => {
                     {/* Milestones */}
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                        Milestones
+                        {t('jobs:statusTracking.milestones', 'Milestones')}
                       </h4>
                       <div className="space-y-4">
                         {job.milestones.map((milestone, idx) => (
@@ -539,21 +568,21 @@ const JobStatusTracking = () => {
                             <div className="flex-1">
                               <div className="flex items-center justify-between mb-1">
                                 <h5 className="font-medium text-gray-900 dark:text-white">
-                                  {milestone.title}
+                                  {t(`jobs:milestoneTitles.${milestone.titleKey}`, milestone.titleKey)}
                                 </h5>
                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getMilestoneStatusColor(milestone.status)}`}>
-                                  {milestone.status.replace('_', ' ').toUpperCase()}
+                                  {t(`jobs:status.${milestone.status}`, milestone.status.replace('_', ' ').toUpperCase())}
                                 </span>
                               </div>
                               
                               <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                                {milestone.description}
+                                {t(`jobs:milestoneDescriptions.${milestone.descriptionKey}`, milestone.descriptionKey)}
                               </p>
                               
                               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                                <span>Due: {new Date(milestone.dueDate).toLocaleDateString()}</span>
+                                <span>{t('jobs:filters.due', 'Due')}: {new Date(milestone.dueDate).toLocaleDateString()}</span>
                                 {milestone.completedDate && (
-                                  <span>Completed: {new Date(milestone.completedDate).toLocaleDateString()}</span>
+                                  <span>{t('jobs:status.completed', 'Completed')}: {new Date(milestone.completedDate).toLocaleDateString()}</span>
                                 )}
                               </div>
                             </div>
@@ -567,14 +596,14 @@ const JobStatusTracking = () => {
                       {/* Team */}
                       <div>
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                          Team Members
+                          {t('jobs:filters.teamMembers', 'Team Members')}
                         </h4>
                         <div className="space-y-3">
                           {job.team.map((member) => (
                             <div key={member.id} className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                              <div className="w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center mr-3">
+                              <div className={`w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center ${isRTL ? 'ms-3' : 'me-3'}`}>
                                 <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
-                                  {member.name.split(' ').map(n => n[0]).join('')}
+                                  {member.name.split(' ').map((n: string) => n[0]).join('')}
                                 </span>
                               </div>
                               <div className="flex-1">
@@ -582,7 +611,7 @@ const JobStatusTracking = () => {
                                   {member.name}
                                 </h5>
                                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                                  {member.role}
+                                  {t(`jobs:teamRoles.${member.roleKey}`, member.roleKey)}
                                 </p>
                               </div>
                               <div className={`w-2 h-2 rounded-full ${
@@ -596,16 +625,16 @@ const JobStatusTracking = () => {
                       {/* Deliverables */}
                       <div>
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                          Deliverables
+                          {t('jobs:statusTracking.deliverables', 'Deliverables')}
                         </h4>
                         <div className="space-y-3">
                           {job.deliverables.map((deliverable) => (
                             <div key={deliverable.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                               <div className="flex items-center">
-                                <FileText className="w-5 h-5 text-gray-400 mr-3" />
+                                <FileText className={`w-5 h-5 text-gray-400 ${isRTL ? 'ms-3' : 'me-3'}`} />
                                 <div>
                                   <h5 className="font-medium text-gray-900 dark:text-white">
-                                    {deliverable.title}
+                                    {t(`jobs:deliverableTitles.${deliverable.titleKey}`, deliverable.titleKey)}
                                   </h5>
                                   <p className="text-sm text-gray-600 dark:text-gray-300">
                                     {deliverable.type} • {deliverable.size || 'Pending'}
@@ -615,7 +644,7 @@ const JobStatusTracking = () => {
                               
                               <div className="flex items-center space-x-2">
                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getMilestoneStatusColor(deliverable.status)}`}>
-                                  {deliverable.status.toUpperCase()}
+                                  {t(`jobs.statusTracking.deliverableStatus.${deliverable.status}`, deliverable.status.toUpperCase())}
                                 </span>
                                 {deliverable.status === 'completed' && (
                                   <Button variant="outline" size="sm">
@@ -638,8 +667,8 @@ const JobStatusTracking = () => {
                         variant="outline"
                         size="sm"
                       >
-                        <Play className="w-4 h-4 mr-2" />
-                        Start
+                        <Play className="w-4 h-4 me-2" />
+                        {t('jobs.statusTracking.startJob', 'Start')}
                       </Button>
                       
                       <Button
@@ -647,8 +676,8 @@ const JobStatusTracking = () => {
                         variant="outline"
                         size="sm"
                       >
-                        <Pause className="w-4 h-4 mr-2" />
-                        Pause
+                        <Pause className="w-4 h-4 me-2" />
+                        {t('jobs.statusTracking.pauseJob', 'Pause')}
                       </Button>
                       
                       <Button
@@ -656,8 +685,8 @@ const JobStatusTracking = () => {
                         variant="outline"
                         size="sm"
                       >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Message
+                        <MessageCircle className="w-4 h-4 me-2" />
+                        {t('jobs.statusTracking.message', 'Message')}
                       </Button>
                     </div>
                     
@@ -667,8 +696,8 @@ const JobStatusTracking = () => {
                         variant="outline"
                         size="sm"
                       >
-                        <Upload className="w-4 h-4 mr-2" />
-                        Upload
+                        <Upload className="w-4 h-4 me-2" />
+                        {t('jobs.statusTracking.upload', 'Upload')}
                       </Button>
                       
                       <Button
@@ -676,8 +705,8 @@ const JobStatusTracking = () => {
                         variant="outline"
                         size="sm"
                       >
-                        <Eye className="w-4 h-4 mr-2" />
-                        View Details
+                        <Eye className="w-4 h-4 me-2" />
+                        {t('jobs.statusTracking.viewDetails', 'View Details')}
                       </Button>
                     </div>
                   </div>
@@ -689,11 +718,11 @@ const JobStatusTracking = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                      Next: {job.nextMilestone || 'N/A'}
+                      {t('jobs:filters.next', 'Next')}: {job.nextMilestoneKey ? t(`jobs:milestoneTitles.${job.nextMilestoneKey}`, job.nextMilestoneKey) : 'N/A'}
                     </span>
                     {job.nextDueDate && (
                       <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Due: {new Date(job.nextDueDate).toLocaleDateString()}
+                        {t('jobs:filters.due', 'Due')}: {new Date(job.nextDueDate).toLocaleDateString()}
                       </span>
                     )}
                   </div>
@@ -703,7 +732,7 @@ const JobStatusTracking = () => {
                     variant="outline"
                     size="sm"
                   >
-                    {selectedJob === job.id ? 'Hide Details' : 'View Details'}
+                    {selectedJob === job.id ? t('jobs.statusTracking.hideDetails', 'Hide Details') : t('jobs.statusTracking.viewDetails', 'View Details')}
                   </Button>
                 </div>
               </div>
@@ -723,24 +752,24 @@ const JobStatusTracking = () => {
               <Clock className="w-12 h-12 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No jobs found
+              {t('jobs.statusTracking.noJobsFound', 'No jobs found')}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               {filterStatus === 'all' 
-                ? 'You don\'t have any jobs yet. Create a new job to get started.'
-                : `No jobs with status "${filterStatus.replace('_', ' ')}" found.`
+                ? t('jobs.statusTracking.noJobsHint', 'You don\'t have any jobs yet. Create a new job to get started.')
+                : t('jobs.statusTracking.noJobsStatusHint', `No jobs with status "${filterStatus.replace('_', ' ')}" found.`, { status: filterStatus.replace('_', ' ') })
               }
             </p>
             <Button
               onClick={() => navigate('/quick-job-post')}
               className="bg-brand-500 hover:bg-brand-600 text-white"
             >
-              Create New Job
+              {t('jobs.statusTracking.createNewJob', 'Create New Job')}
             </Button>
           </motion.div>
         )}
       </div>
-    </div>
+    </PageLayout>
   )
 }
 

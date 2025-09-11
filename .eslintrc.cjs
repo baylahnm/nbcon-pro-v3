@@ -6,7 +6,7 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'i18next'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -37,6 +37,11 @@ module.exports = {
     // Reasonable defaults
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    // i18n rules
+    'i18next/no-literal-string': ['warn', { 
+      markupOnly: true, 
+      ignoreAttribute: ['id', 'key', 'to', 'href', 'data-testid', 'className', 'aria-label', 'title'] 
+    }],
     // RTL safety guard - prevent directional utilities
     'no-restricted-syntax': [
       'error',
